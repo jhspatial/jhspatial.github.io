@@ -12,7 +12,7 @@ redirect_from:
   width: 100%;
   min-height: 400px;
   height: 60vh;
-  background-image: url('/images/behind.jpeg');
+  background-image: url('/images/copenhagen.jpg');
   background-size: cover;
   background-position: center;
   display: flex;
