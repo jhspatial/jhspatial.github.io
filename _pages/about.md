@@ -1,14 +1,14 @@
 ---
 permalink: /
 title: "Welcome To My Blog"
-author_profile: false
+author_profile: true
 redirect_from: 
   - /about/
   - /about.html
 ---
 
 <div style="
-  height: 70vh;
+  height: 50vh;   <!-- 70vh → 50vh -->
   background-image: url('/images/behind.jpeg');
   background-size: cover;
   background-position: center;
