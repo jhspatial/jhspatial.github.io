@@ -23,10 +23,10 @@ repository               : "jhspatial/jhspatial.github.io"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "profile.png"
+  avatar           : "moon.png"
   name             : "Kim Junho"
   pronouns         : # example: "she/her"  
-  bio              : "machine learning"
+  bio              : "Machine learning"
   location         : "Seoul"
   employer         : "Soongsil University"
   uri              : # URL
