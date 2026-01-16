@@ -8,7 +8,7 @@ redirect_from:
 ---
 
 <p align="center">
-  <img src="/images/behind.jpg" width="250">
+  <img src="/images/behind.jpeg" width="250">
 </p>
 
 안녕하세요.  
