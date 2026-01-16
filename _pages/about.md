@@ -1,14 +1,18 @@
 ---
 permalink: /
 title: "Welcome To My Blog"
-author_profile: true
+author_profile: false
 redirect_from: 
   - /about/
   - /about.html
 ---
 
-<p align="center">
-  <img src="/images/behind.jpeg" width="700">
-</p>
-
-This blog documents my research, projects, and academic portfolio as I study data-related fields
+<div class="hero">
+  <div class="hero-text">
+    <h1>Junho Kim</h1>
+    <p>
+      This blog documents my research, projects, and academic portfolio<br>
+      as I study data-related fields.
+    </p>
+  </div>
+</div>
