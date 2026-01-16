@@ -1,7 +1,7 @@
 ---
 layout: single
 permalink: /
-title: "Welcome To My Blog"
+title: ""
 author_profile: true
 redirect_from: 
   - /about/
@@ -28,7 +28,7 @@ redirect_from:
     border-radius: 12px;
   ">
     <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">
-      Junho Kim
+      Welcome To My Blog
     </h1>
     <p style="font-size: 1.1rem; line-height: 1.6;">
       This blog documents my research, projects, and academic portfolio<br>
