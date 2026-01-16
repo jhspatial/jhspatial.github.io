@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "Welcome To My Blog"
+title: ""
 author_profile: true
 redirect_from: 
   - /about/
@@ -10,7 +10,7 @@ redirect_from:
 <div style="
   width: 100%;
   height: 100vh;
-  background-image: url('/images/behind.jpeg');
+  background-image: url('/images/copenhagen.jpg');
   background-size: cover;
   background-position: center;
   display: flex;
@@ -26,7 +26,7 @@ redirect_from:
     border-radius: 10px;
   ">
     <h1 style="margin-bottom: 1rem;">
-      Welcome To My Blog
+      Junho's Record
     </h1>
     <p style="font-size: 1.2rem;">
       This blog documents my research, projects, and academic portfolio as I study data-related fields.
