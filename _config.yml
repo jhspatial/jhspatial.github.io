@@ -222,7 +222,7 @@ kramdown:
 # These settings control the types of collections used by the template
 collections:
   teaching:
-    output: true
+    output: false # 원래 true였음 내가 teaching 안 나오게 하려고 바꿨다.
     permalink: /:collection/:path/
   publications:
     output: true
