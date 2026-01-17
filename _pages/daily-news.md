@@ -4,6 +4,6 @@ layout: archive
 permalink: /daily-news/
 ---
 
-{% for post in site.categories.ml-study %}
+{% for post in site.categories.daily-news %}
   {% include archive-single.html %}
 {% endfor %}
