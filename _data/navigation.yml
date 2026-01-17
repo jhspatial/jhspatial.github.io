@@ -18,17 +18,17 @@ main:
     url: /portfolio/
 
   - title: "Blog"
-  url: /year-archive/
-  children:
-    - title: "Machine Learning Study"
-      url: /categories/ml-study/
-    - title: "IT Research"
-      url: /categories/it-research/
-    - title: "Research Notes"
-      url: /categories/research/
+    url: /year-archive/
+    children:
+      - title: "Machine Learning Study"
+        url: /categories/ml-study/
+      - title: "IT Research"
+        url: /categories/it-research/
+      - title: "Research Notes"
+        url: /categories/research/
 
   - title: "CV"
     url: /cv/
-
+    
   - title: "Guide"
     url: /markdown/
