@@ -1,7 +1,7 @@
 import os
-import google.generativeai as genai
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta, timezone # timezone 추가
+import google.generativeai as genai
 
 # API 키 설정
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
@@ -23,7 +23,7 @@ def run_news_agent():
         print("뉴스를 가져오지 못했습니다.")
         return
 
-    # 2. 모델 설정 (안정적인 gemini-1.5-flash 권장)
+    # 2. 모델 설정 
     model_name = 'gemini-2.5-flash' 
     model = genai.GenerativeModel(model_name)
 
@@ -51,15 +51,16 @@ def run_news_agent():
     try:
         response = model.generate_content(prompt)
         
-        # [중요] 한국 시간(KST) 설정
+        # [해결] 한국 시간(KST) 강제 지정 (UTC+9)
         kst = timezone(timedelta(hours=9))
-        now = datetime.now(kst) # 서버 시간이 아닌 한국 시간 기준으로 가져옴
+        now = datetime.now(kst) 
         
         today_file = now.strftime("%Y-%m-%d")    
         today_title = now.strftime("%Y/%m/%d")   
         
         # 파일 경로 설정
         file_name = f"_posts/{today_file}-daily-ai-news.md"
+        os.makedirs('_posts', exist_ok=True)
         
         # 4. 파일 저장
         with open(file_name, "w", encoding="utf-8") as f:
@@ -71,7 +72,7 @@ def run_news_agent():
             f.write(f"---\n\n")
             f.write(response.text)
             
-        print(f"성공적으로 발행되었습니다: {file_name}")
+        print(f"성공적으로 발행되었습니다: {file_name} (KST 기준)")
         
     except Exception as e:
         print(f"에이전트 실행 에러: {e}")
