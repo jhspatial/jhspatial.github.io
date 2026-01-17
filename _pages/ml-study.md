@@ -1,8 +1,9 @@
 ---
 title: "Machine Learning Study"
-permalink: /ml-study/
 layout: archive
-author_profile: true
+permalink: /ml-study/
+taxonomy: categories
+taxonomy_term: ml-study
 ---
 
 {% for post in site.categories.ml-study %}
