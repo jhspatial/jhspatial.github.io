@@ -37,14 +37,24 @@ def run_news_agent():
     
     try:
         response = model.generate_content(prompt)
-        # 4. 파일 저장
-        today = datetime.now().strftime("%Y-%m-%d")
-        file_name = f"_posts/{today}-daily-ai-news.md"
+        
+        # 1. 날짜 데이터 생성
+        now = datetime.now()
+        today_file = now.strftime("%Y-%m-%d")    # 파일명용 (2026-01-17)
+        today_title = now.strftime("%Y/%m/%d")   # 제목용 (2026/01/17)
+        
+        # 2. 파일 경로 및 이름 설정
+        file_name = f"_posts/{today_file}-daily-ai-news.md"
         os.makedirs('_posts', exist_ok=True)
+        
+        # 3. 파일 저장
         with open(file_name, "w", encoding="utf-8") as f:
-            f.write(f"---\nlayout: post\ntitle: \"AI 뉴스 요약\"\ndate: {today}\n---\n\n")
+            # title 부분에 today_title 변수를 삽입합니다.
+            f.write(f"---\nlayout: single\ntitle: \"{today_title} AI NEWS\"\ndate: {today_file}\n---\n\n")
             f.write(response.text)
+            
         print(f"성공적으로 발행되었습니다: {file_name}")
+        
     except Exception as e:
         print(f"에이전트 실행 에러: {e}")
 
