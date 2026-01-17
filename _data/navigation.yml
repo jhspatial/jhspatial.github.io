@@ -12,22 +12,23 @@ main:
     url: /publications/
 
   - title: "Talks"
-    url: /talks/    
+    url: /talks/
 
- # - title: "Teaching"
- #   url: /teaching/    
-    
   - title: "Portfolio"
     url: /portfolio/
-        
+
   - title: "Blog"
     url: /blog/
-    
+    children:
+      - title: "Machine Learning Study"
+        url: /ml-study/
+      - title: "IT Research"
+        url: /it-research/
+      - title: "Research Notes"
+        url: /research/
+
   - title: "CV"
     url: /cv/
-    
-  # - title: "CV"
-  #   url: /cv-json/
-    
+
   - title: "Guide"
     url: /markdown/
