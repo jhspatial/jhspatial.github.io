@@ -10,7 +10,8 @@ NEWS_API_KEY = os.getenv("NEWS_API_KEY")
 genai.configure(api_key=GEMINI_API_KEY)
 
 # 모델명을 확실하게 'gemini-1.5-flash-latest'로 변경
-model = genai.GenerativeModel('gemini-1.5-flash-latest')
+model = genai.GenerativeModel('gemini-1.5-flash')
+
 
 def get_global_news():
     url = f"https://newsapi.org/v2/everything?q=AI+technology&language=en&sortBy=publishedAt&apiKey={NEWS_API_KEY}"
