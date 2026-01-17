@@ -1,6 +1,6 @@
 ---
 title: "혼자 공부하는 머신러닝 & 딥러닝 03-02"
-layout: post
+layout: single
 categories: [ml-study]
 tags: [machine-learning, self-study]
 ---
