@@ -29,7 +29,7 @@ def run_news_agent():
 
     # 2. 모델 선택 (에러가 가장 적은 gemini-1.5-flash 혹은 2.0-flash-exp 시도)
     # 아래 이름을 번갈아가며 시도해보세요.
-    model_name = 'gemini-2.0-flash' 
+    model_name = 'gemini-2.5-flash' 
     model = genai.GenerativeModel(model_name)
 
     # 3. 에이전트 작업
