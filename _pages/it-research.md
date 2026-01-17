@@ -1,8 +1,9 @@
 ---
 title: "IT Research"
-permalink: /it-research/
 layout: archive
-author_profile: true
+permalink: /it-research/
+taxonomy: categories
+taxonomy_term: it-research
 ---
 
 {% for post in site.categories.it-research %}
