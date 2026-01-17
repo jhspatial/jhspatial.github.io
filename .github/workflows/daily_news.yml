@@ -17,14 +17,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v4 # 이전 코드의 오류 수정: setup-python을 사용해야 합니다.
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.10'  # 3.9에서 3.10으로 변경
 
       - name: Install dependencies
         run: |
-          pip install google-generativeai requests
-
+          pip install -U google-generativeai requests # -U를 붙여서 최신 라이브러리 설치
+          
       - name: Run AI Agent
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
