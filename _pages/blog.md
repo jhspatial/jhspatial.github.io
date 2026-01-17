@@ -26,4 +26,10 @@ sidebar:
 <a href="/research/">View posts →</a>
 </div>
 
+<div style="border:1px solid #ddd; padding:1.5rem; text-align:center;">
+<h3>Daily News</h3>
+<p>AI Agent가 말아주는 daily 뉴스</p>
+<a href="/daily-news/">View posts →</a>
+</div>
+
 </div>
