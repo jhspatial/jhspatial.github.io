@@ -18,7 +18,17 @@ main:
     url: /portfolio/
 
   - title: "Blog"
-    url: /year-archive/
+    url: /blog/
+
+  - title: "CV"
+    url: /cv/
+
+  - title: "Guide"
+    url: /markdown/
+
+
+blog:
+  - title: "Blog Categories"
     children:
       - title: "Machine Learning Study"
         url: /ml-study/
@@ -26,9 +36,3 @@ main:
         url: /it-research/
       - title: "Research Notes"
         url: /research/
-
-  - title: "CV"
-    url: /cv/
-
-  - title: "Guide"
-    url: /markdown/
