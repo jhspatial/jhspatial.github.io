@@ -33,8 +33,13 @@ jobs:
 
       - name: Commit and Push
         run: |
-          git config --global user.name "GitHub Action Agent"
-          git config --global user.email "action@github.com"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add _posts/*.md
-          # 변경사항이 있을 때만 커밋 (에러 방지)
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update: Daily News Post by AI Agent" && git push)
+          # 변경사항이 있을 때만 커밋하고 푸시
+          if [ -n "$(git status --porcelain)" ]; then
+            git commit -m "Update: Daily News Post by AI Agent"
+            git push
+          else
+            echo "No changes to commit"
+          fi
