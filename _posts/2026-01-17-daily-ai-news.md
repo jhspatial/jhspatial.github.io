@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "AI 뉴스 요약"
+categories: [daily-news]
 date: 2026-01-17
 ---
 
