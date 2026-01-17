@@ -36,3 +36,5 @@ blog:
         url: /it-research/
       - title: "Research Notes"
         url: /research/
+      - title: "Daily News"
+        url: /daily-news/
