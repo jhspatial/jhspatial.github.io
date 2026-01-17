@@ -1,7 +1,6 @@
 ---
-title: '첫 포스팅입니다.'
-date: 2026-01-15
-
+title: "첫 번째 테스트 포스트"
+categories: [it-research]
+tags: [jekyll, academicpages]
 ---
-
 열심히 포스팅해보겠습니다.
