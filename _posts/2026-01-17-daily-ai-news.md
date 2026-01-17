@@ -1,6 +1,6 @@
 ---
-title: "AI 뉴스 요약"
-layout: post
+title: "2026/01/17 AI 뉴스 요약"
+layout: single
 categories: [daily-news]
 date: 2026-01-17
 ---
