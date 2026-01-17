@@ -5,21 +5,21 @@ layout: single
 author_profile: true
 ---
 
-## Machine Learning Study
-{% for post in site.categories.ml-study %}
+## [Machine Learning Study](/ml-study/)
+{% for post in site.categories.ml-study limit:3 %}
   {% include archive-single.html %}
 {% endfor %}
 
 ---
 
-## IT Research
-{% for post in site.categories.it-research %}
+## [IT Research](/it-research/)
+{% for post in site.categories.it-research limit:3 %}
   {% include archive-single.html %}
 {% endfor %}
 
 ---
 
-## Research Notes
-{% for post in site.categories.research %}
+## [Research Notes](/research/)
+{% for post in site.categories.research limit:3 %}
   {% include archive-single.html %}
 {% endfor %}
