@@ -51,14 +51,15 @@ def run_news_agent():
     try:
         response = model.generate_content(prompt)
         
-        # 날짜 데이터 생성
-        now = datetime.now()
+        # [중요] 한국 시간(KST) 설정
+        kst = timezone(timedelta(hours=9))
+        now = datetime.now(kst) # 서버 시간이 아닌 한국 시간 기준으로 가져옴
+        
         today_file = now.strftime("%Y-%m-%d")    
         today_title = now.strftime("%Y/%m/%d")   
         
         # 파일 경로 설정
         file_name = f"_posts/{today_file}-daily-ai-news.md"
-        os.makedirs('_posts', exist_ok=True)
         
         # 4. 파일 저장
         with open(file_name, "w", encoding="utf-8") as f:
