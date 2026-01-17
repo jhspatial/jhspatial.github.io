@@ -1,8 +1,9 @@
 ---
 title: "Research Notes"
-permalink: /research/
 layout: archive
-author_profile: true
+permalink: /research/
+taxonomy: categories
+taxonomy_term: research
 ---
 
 {% for post in site.categories.research %}
