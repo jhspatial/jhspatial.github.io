@@ -1,3 +1,9 @@
+---
+title: "혼자 공부하는 머신러닝 & 딥러닝 03-02"
+categories: [ml-study]
+tags: [machine-learning, self-study]
+---
+
 ```python
 import numpy as np
 
