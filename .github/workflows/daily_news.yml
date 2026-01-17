@@ -1,0 +1,40 @@
+name: Daily AI News Agent
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  # UTC 12:00 = 한국 시간(KST) 오후 9:00
+  workflow_dispatch:      # 수동 실행 버튼 활성화
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # 권한 설정 추가 (중요: 에이전트가 글을 쓸 수 있게 허용)
+    permissions:
+      contents: write
+      
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4 # 이전 코드의 오류 수정: setup-python을 사용해야 합니다.
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install google-generativeai requests
+
+      - name: Run AI Agent
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+        run: python scripts/agent.py
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "GitHub Action Agent"
+          git config --global user.email "action@github.com"
+          git add _posts/*.md
+          # 변경사항이 있을 때만 커밋 (에러 방지)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update: Daily News Post by AI Agent" && git push)
