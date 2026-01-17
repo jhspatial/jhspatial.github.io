@@ -9,42 +9,44 @@ NEWS_API_KEY = os.getenv("NEWS_API_KEY")
 
 genai.configure(api_key=GEMINI_API_KEY)
 
-# 모델명을 확실하게 'gemini-1.5-flash-latest'로 변경
-model = genai.GenerativeModel('gemini-1.5-flash')
-
-
-def get_global_news():
-    url = f"https://newsapi.org/v2/everything?q=AI+technology&language=en&sortBy=publishedAt&apiKey={NEWS_API_KEY}"
-    response = requests.get(url)
-    if response.status_code == 200:
-        return response.json().get('articles', [])[:10]
-    return []
-
 def run_news_agent():
-    articles = get_global_news()
+    # [중요] 사용 가능한 모델 리스트 출력 로직 추가
+    print("--- 사용 가능한 모델 리스트 확인 ---")
+    try:
+        for m in genai.list_models():
+            if 'generateContent' in m.supported_generation_methods:
+                print(f"사용 가능 모델명: {m.name}")
+    except Exception as e:
+        print(f"모델 목록 확인 실패: {e}")
+
+    # 1. 뉴스 수집
+    url = f"https://newsapi.org/v2/everything?q=AI+technology&language=en&sortBy=publishedAt&apiKey={NEWS_API_KEY}"
+    articles = requests.get(url).json().get('articles', [])[:10]
+    
     if not articles:
         print("뉴스를 가져오지 못했습니다.")
         return
 
-    prompt = f"당신은 IT 에디터입니다. 다음 뉴스 중 3개를 골라 한국어로 요약하고 Jekyll 마크다운 형식으로 작성하세요: {articles}"
+    # 2. 모델 선택 (에러가 가장 적은 gemini-1.5-flash 혹은 2.0-flash-exp 시도)
+    # 아래 이름을 번갈아가며 시도해보세요.
+    model_name = 'gemini-1.5-flash' 
+    model = genai.GenerativeModel(model_name)
+
+    # 3. 에이전트 작업
+    prompt = f"당신은 IT 에디터입니다. 다음 뉴스를 요약해서 Jekyll 마크다운 형식으로 써주세요: {articles}"
     
-    # 생성 시도
     try:
         response = model.generate_content(prompt)
-        ai_content = response.text
-        
+        # 4. 파일 저장
         today = datetime.now().strftime("%Y-%m-%d")
         file_name = f"_posts/{today}-daily-ai-news.md"
-        
-        front_matter = f"---\nlayout: post\ntitle: \"[AI Agent] 오늘의 글로벌 뉴스\"\ndate: {today}\n---\n\n"
-        
         os.makedirs('_posts', exist_ok=True)
         with open(file_name, "w", encoding="utf-8") as f:
-            f.write(front_matter)
-            f.write(ai_content)
-        print(f"작성 완료: {file_name}")
+            f.write(f"---\nlayout: post\ntitle: \"AI 뉴스 요약\"\ndate: {today}\n---\n\n")
+            f.write(response.text)
+        print(f"성공적으로 발행되었습니다: {file_name}")
     except Exception as e:
-        print(f"에러 발생: {e}")
+        print(f"에이전트 실행 에러: {e}")
 
 if __name__ == "__main__":
     run_news_agent()
