@@ -46,9 +46,7 @@ def run_news_agent():
         return
 
     # 3. 모델 설정 (요청하신 최신 모델 적용)
-    # 2.5 버전이 출시 전일 경우 'gemini-2.0-flash'로 자동 대응되도록 설정
-    try:
-        model = genai.GenerativeModel('gemini-2.5-flash')
+    model = genai.GenerativeModel('gemini-2.5-flash')
 
     # 4. 프롬프트 설정 (기억 데이터와 새로운 뉴스 주입)
     prompt = f"""
