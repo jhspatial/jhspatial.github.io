@@ -73,10 +73,7 @@ def run_news_agent():
     memory = get_memory()
 
     # 2. 모델 설정
-    try:
-        model = genai.GenerativeModel('gemini-2.0-flash')
-    except:
-        model = genai.GenerativeModel('gemini-1.5-flash')
+    model = genai.GenerativeModel('gemini-2.5-flash')
 
     # 3. 프롬프트 구성 (데이터 주입 강화)
     prompt = f"""
