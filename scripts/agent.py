@@ -15,24 +15,40 @@ NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET")
 genai.configure(api_key=GEMINI_API_KEY)
 
 def get_market_data():
-    """야후 파이낸스에서 환율 및 주요 증시 지수를 가져옵니다."""
+    """실시간 데이터와 전일 대비 변동폭을 가져옵니다."""
+    tickers = {
+        "usd": "USDKRW=X",
+        "jpy": "JPYKRW=X",
+        "sp500": "^GSPC",
+        "nasdaq": "^IXIC"
+    }
+    results = {}
     try:
-        # 원/달러, 원/엔, S&P500(^GSPC), 나스닥(^IXIC)
-        usd_krw = yf.Ticker("USDKRW=X").history(period='1d')['Close'].iloc[-1]
-        jpy_krw = yf.Ticker("JPYKRW=X").history(period='1d')['Close'].iloc[-1]
-        sp500 = yf.Ticker("^GSPC").history(period='1d')['Close'].iloc[-1]
-        nasdaq = yf.Ticker("^IXIC").history(period='1d')['Close'].iloc[-1]
-        
-        return {
-            "usd": round(usd_krw, 2),
-            "jpy": round(jpy_krw, 2),
-            "sp500": round(sp500, 2),
-            "nasdaq": round(nasdaq, 2)
-        }
+        for key, ticker in tickers.items():
+            t = yf.Ticker(ticker)
+            # 최근 2일 데이터를 가져와서 현재가와 전일가를 비교
+            hist = t.history(period='2d')
+            if len(hist) >= 2:
+                current_price = hist['Close'].iloc[-1]
+                prev_price = hist['Close'].iloc[-2]
+                change = current_price - prev_price
+                change_percent = (change / prev_price) * 100
+                
+                # 상태 아이콘 설정
+                icon = "🔺" if change > 0 else "🔻" if change < 0 else "➖"
+                
+                results[key] = {
+                    "current": round(current_price, 2),
+                    "prev": round(prev_price, 2),
+                    "diff": round(change, 2),
+                    "percent": round(change_percent, 2),
+                    "icon": icon
+                }
+        return results
     except Exception as e:
-        print(f"시장 지표 수집 에러: {e}")
-        return {"usd": "정보 없음", "jpy": "정보 없음", "sp500": "정보 없음", "nasdaq": "정보 없음"}
-
+        print(f"시장 데이터 수집 에러: {e}")
+        return None
+        
 def get_naver_exchange_news():
     """네이버 API를 통해 국내 환율 분석 뉴스를 수집합니다."""
     queries = ["오늘 원달러 환율 시황 원인", "원엔 환율 전망 분석"]
