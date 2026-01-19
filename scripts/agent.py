@@ -7,101 +7,114 @@ import google.generativeai as genai
 # API 키 설정
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 NEWS_API_KEY = os.getenv("NEWS_API_KEY")
+NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID")
+NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET")
 
 # Gemini 설정
 genai.configure(api_key=GEMINI_API_KEY)
 
-def get_memory():
-    """_posts 폴더에서 가장 최근 게시글의 내용을 읽어와 에이전트의 기억으로 반환합니다."""
-    try:
-        # _posts 폴더 내의 모든 .md 파일을 가져와 이름순으로 정렬
-        list_of_files = glob.glob('_posts/*.md')
-        if not list_of_files:
-            return "이전에 작성한 게시글이 없습니다. 오늘이 첫 발행입니다."
-        
-        # 파일 이름순 정렬 시 가장 마지막 파일이 최신 날짜임
-        latest_file = sorted(list_of_files)[-1]
-        with open(latest_file, 'r', encoding='utf-8') as f:
-            content = f.read()
-            return content
-    except Exception as e:
-        print(f"기억 읽기 실패: {e}")
-        return "이전 기록을 불러올 수 없습니다."
+def get_naver_exchange_news():
+    """네이버 API를 통해 환율 분석 뉴스를 수집합니다."""
+    # 원달러와 원엔 환율 원인 분석을 위한 키워드 검색
+    queries = ["원달러 환율 원인 분석", "원엔 환율 전망 원인"]
+    collected_news = []
+    
+    headers = {
+        "X-Naver-Client-Id": NAVER_CLIENT_ID,
+        "X-Naver-Client-Secret": NAVER_CLIENT_SECRET
+    }
+    
+    for query in queries:
+        url = f"https://openapi.naver.com/v1/search/news.json?query={query}&display=5&sort=sim"
+        try:
+            res = requests.get(url, headers=headers)
+            items = res.json().get('items', [])
+            collected_news.extend(items)
+        except Exception as e:
+            print(f"네이버 API 호출 에러 ({query}): {e}")
+            
+    return collected_news
 
-def run_news_agent():
-    # 1. 에이전트의 '기억' 불러오기 (어제 쓴 글 확인)
-    memory = get_memory()
-
-    # 2. 뉴스 수집 (최신 AI 기술 관련 뉴스 10개)
-    url = f"https://newsapi.org/v2/everything?q=AI+technology&language=en&sortBy=publishedAt&apiKey={NEWS_API_KEY}"
+def get_global_it_news():
+    """NewsAPI를 통해 글로벌 IT/AI 뉴스를 수집합니다."""
+    url = f"https://newsapi.org/v2/everything?q=AI+technology+trend&language=en&sortBy=publishedAt&apiKey={NEWS_API_KEY}"
     try:
         res = requests.get(url)
-        articles = res.json().get('articles', [])[:10]
+        return res.json().get('articles', [])[:10]
     except Exception as e:
-        print(f"뉴스 수집 에러: {e}")
-        return
+        print(f"NewsAPI 호출 에러: {e}")
+        return []
 
-    if not articles:
-        print("뉴스를 가져오지 못했습니다.")
-        return
+def get_memory():
+    """어제 작성한 글의 내용을 읽어옵니다 (중복 방지 및 문맥 유지)."""
+    try:
+        list_of_files = glob.glob('_posts/*.md')
+        if not list_of_files:
+            return "이전 기록이 없습니다. 오늘이 첫 발행입니다."
+        latest_file = sorted(list_of_files)[-1]
+        with open(latest_file, 'r', encoding='utf-8') as f:
+            return f.read()
+    except Exception as e:
+        return f"기억 읽기 실패: {e}"
 
-    # 3. 모델 설정 (요청하신 최신 모델 적용)
+def run_news_agent():
+    # 1. 데이터 수집 (네이버 환율뉴스 + 글로벌 IT뉴스 + 어제 기억)
+    exchange_data = get_naver_exchange_news()
+    it_news_data = get_global_it_news()
+    memory = get_memory()
+
+    # 2. 모델 설정 (Gemini 2.0 Flash)
     model = genai.GenerativeModel('gemini-2.5-flash')
 
-    # 4. 프롬프트 설정 (기억 데이터와 새로운 뉴스 주입)
+    # 3. 프롬프트 구성 (두 가지 정보를 통합 분석)
     prompt = f"""
-    너는 기술 전문 블로그 'IT 인사이트'를 운영하는 전문 에디터야. 
-    너는 방금 전까지 어제자 블로그 포스팅을 마쳤고, 이제 오늘의 새로운 글을 쓸 차례야.
-    아 그리고 it관련 학과 재학중인 사람의 개인 사이트에 포스팅하는 거야.
+    너는 경제 애널리스트이자 IT 전문 에디터야. 
+    오늘 수집된 [환율 데이터]와 [IT 뉴스]를 바탕으로 한국 독자들을 위한 종합 리포트를 작성해줘.
 
-    [네가 어제 작성한 글 (기억)]
+    [어제의 기록 (중복 금지)]
     {memory}
 
-    [방금 수집된 오늘 뉴스 후보]
-    {articles}
+    [섹션 1: 실시간 환율 및 원인 분석 (네이버 데이터 기준)]
+    데이터: {exchange_data}
+    - 원/달러 및 원/엔 환율의 현재 흐름을 요약해줘.
+    - 뉴스에 언급된 환율 변동의 구체적인 '원인'을 심도 있게 분석해줘.
 
-    [작성 미션]
-    it관련 인기 뉴스 50개 정도를 보고 그 중에서 한국의 대학생이 알면 좋을 만한 것을 5개 정도 선정해줘
-    1. **중복 검토**: 위 [기억]에 포함된 뉴스 주제나 제목은 오늘 글에서 절대 다시 다루지 마. 완전히 새로운 소식을 선정해.
-    2. **TOP 5 선정**: 후보 뉴스 중 IT관련 학계, 직무를 가지고 있는 사람들이 흥미로워할 소식 5가지를 엄선해줘.
-    3. **내용 구성**: 
-       - 그리고 대학생 수준의 영어로 한문단으로 요약하고 밑에 한국어 번역한 것도 넣어줄래
-       - 💡 **전문가 견해**: 산업 전반에 미칠 영향이나 통찰을 한 문장으로 추가.
-       - 🔗 **관련 링크**: [원문 읽기](URL) 형식으로 포함.
-    4. **말투**: 독자에게 신뢰를 주는 전문적인 한국어 문체 (~입니다, ~합니다).
-    5. 5개의 기사를 넣기 전에 하루를 행복하게 보낼 수 있는 명언이나 덕담같은 거로 시작하면 좋을 것 같다
+    [섹션 2: 오늘의 글로벌 IT/AI 헤드라인 (NewsAPI 데이터 기준)]
+    데이터: {it_news_data}
+    - 가장 중요한 IT 뉴스 3가지를 선정해줘.
+    - {memory}에 언급된 소식과 중복되지 않아야 해.
+    - 각 뉴스별 핵심 요약과 경제적 관점에서의 통찰력을 덧붙여줘.
 
-    [출력 포맷]
-    - Jekyll 블로그용 마크다운 본문만 출력해 (Front Matter 제외).
-    - 각 뉴스 섹션 사이에는 구분선(---)을 넣어줘.
+    [작성 가이드라인]
+    - 말투: 전문적이고 신뢰감 있는 한국어 (~입니다).
+    - 독자층: 경제와 기술의 상관관계에 관심이 많은 한국 독자.
+    - 출력 형식: Jekyll 마크다운 본문만 (Front Matter 제외).
     """
-    
+
     try:
-        # 콘텐츠 생성
         response = model.generate_content(prompt)
         
-        # 5. 한국 시간(KST) 설정 및 날짜 추출
+        # 한국 시간(KST) 설정
         kst = timezone(timedelta(hours=9))
-        now = datetime.now(kst) 
-        today_file = now.strftime("%Y-%m-%d")    
-        today_title = now.strftime("%Y/%m/%d")   
-        
-        # 파일 저장 경로 (_posts 폴더 생성)
-        file_name = f"_posts/{today_file}-daily-ai-news.md"
+        now = datetime.now(kst)
+        today_file = now.strftime("%Y-%m-%d")
+        today_title = now.strftime("%Y/%m/%d")
+
+        # 파일 저장
+        file_name = f"_posts/{today_file}-daily-briefing.md"
         os.makedirs('_posts', exist_ok=True)
         
-        # 6. 최종 파일 쓰기
         with open(file_name, "w", encoding="utf-8") as f:
             f.write(f"---\n")
             f.write(f"layout: single\n")
-            f.write(f"title: \"{today_title} AI NEWS\"\n")
+            f.write(f"title: \"{today_title} 경제 환율 & IT 뉴스 브리핑\"\n")
             f.write(f"date: {today_file}\n")
             f.write(f"categories: [daily-news]\n")
             f.write(f"---\n\n")
             f.write(response.text)
             
-        print(f"성공적으로 발행되었습니다: {file_name} (KST 기준)")
-        
+        print(f"발행 완료: {file_name}")
+
     except Exception as e:
         print(f"에이전트 실행 에러: {e}")
 
