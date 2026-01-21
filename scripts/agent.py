@@ -51,7 +51,7 @@ def get_market_data():
         
 def get_naver_exchange_news():
     """네이버 API를 통해 국내 환율 분석 뉴스를 수집합니다."""
-    queries = ["오늘 원달러 환율 시황 원인", "원엔 환율 전망 분석"]
+    queries = ["원달러 환율 원인", "원엔 환율 원인"]
     collected_news = []
     headers = {
         "X-Naver-Client-Id": NAVER_CLIENT_ID,
@@ -68,13 +68,17 @@ def get_naver_exchange_news():
     return collected_news
 
 def get_bigtech_news():
-    """NewsAPI를 통해 미국 빅테크 및 증시 관련 뉴스를 수집합니다."""
-    # 키워드를 빅테크와 미국 증시(S&P 500, NASDAQ) 중심으로 변경
-    query = "(Apple OR Microsoft OR NVIDIA OR Google OR Amazon OR Meta OR Tesla) AND (stock market OR NASDAQ OR S&P 500)"
+    """NewsAPI를 통해 미국 빅테크 및 S&P 500 시장 뉴스를 수집합니다."""
+    # 빅테크 7대 기업 + S&P 500 지수 영향력이 큰 거시 경제 키워드 추가
+    query = (
+        "(Apple OR Microsoft OR NVIDIA OR Google OR Amazon OR Meta OR Tesla) "
+        "OR (S&P 500 OR NASDAQ OR Federal Reserve OR inflation OR interest rates)"
+    )
     url = f"https://newsapi.org/v2/everything?q={query}&language=en&sortBy=publishedAt&apiKey={NEWS_API_KEY}"
     try:
         res = requests.get(url)
-        return res.json().get('articles', [])[:10]
+        # 10개에서 15개로 늘려서 더 풍부한 정보를 AI에게 전달합니다.
+        return res.json().get('articles', [])[:15]
     except:
         return []
 
