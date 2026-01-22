@@ -11,11 +11,11 @@ main:
   - title: "Publications"
     url: /publications/
 
-  - title: "Talks"
-    url: /talks/
+  #- title: "Talks"
+   # url: /talks/
 
-  - title: "Portfolio"
-    url: /portfolio/
+  #- title: "Portfolio"
+   # url: /portfolio/
 
   - title: "Blog"
     url: /blog/
@@ -23,8 +23,8 @@ main:
   - title: "CV"
     url: /cv/
 
-  - title: "Guide"
-    url: /markdown/
+  #- title: "Guide"
+   # url: /markdown/
 
 
 blog:
