@@ -101,7 +101,7 @@ def run_news_agent():
     memory = get_memory()
 
     # 2. 모델 설정 (Gemini 2.5 Flash)
-    model = genai.GenerativeModel('gemini-2.5-pro')
+    model = genai.GenerativeModel('gemini-2.5-flash')
 
 
     # 3. 프롬프트 구성 (증시와 환율의 연결 분석 강조)
