@@ -134,7 +134,7 @@ def run_research_agent():
             f.write("layout: single\n")
             f.write(f"title: \"[Research] {today_title} 도시·환경 IT 연구 노트\"\n")
             f.write(f"date: {today_file}\n")
-            f.write("categories: [it-research]\n")
+            f.write("categories: [research]\n")
             f.write("---\n\n")
             f.write(response.text)
 
