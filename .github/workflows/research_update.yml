@@ -1,0 +1,45 @@
+name: Daily Research Note Agent
+
+on:
+  schedule:
+    - cron: '0 1 * * 1-5' # 월~금 한국 시간 오전 10시 (UTC 01:00)
+  workflow_dispatch:      # 수동 실행 가능
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install google-generativeai requests
+
+      - name: Run Research Agent
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          # ScienceON API 키를 Secrets에 등록해야 합니다. (이름: SCIENCEON_API_KEY)
+          SCIENCEON_API_KEY: ${{ secrets.SCIENCEON_API_KEY }}
+        run: python scripts/research_agent.py
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          # _research 폴더의 변경 사항을 감지하여 업로드
+          git add _research/*.md
+          if [ -n "$(git status --porcelain)" ]; then
+            git commit -m "Add: Daily Research Note by Agent"
+            git push
+          else
+            echo "No new research notes to commit"
+          fi
