@@ -15,7 +15,7 @@ NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET")
 genai.configure(api_key=GEMINI_API_KEY)
 
 def get_market_data():
-    """실시간 데이터와 전일 대비 변동폭을 가져옵니다."""
+    """야후 파이낸스의 전일 종가 데이터를 직접 활용하여 변동폭을 가져옵니다."""
     tickers = {
         "usd": "USDKRW=X",
         "jpy": "JPYKRW=X",
@@ -24,26 +24,29 @@ def get_market_data():
     }
     results = {}
     try:
-        for key, ticker in tickers.items():
-            t = yf.Ticker(ticker)
-            # 최근 2일 데이터를 가져와서 현재가와 전일가를 비교
-            hist = t.history(period='2d')
-            if len(hist) >= 2:
-                current_price = hist['Close'].iloc[-1]
-                prev_price = hist['Close'].iloc[-2]
-                change = current_price - prev_price
-                change_percent = (change / prev_price) * 100
-                
-                # 상태 아이콘 설정
-                icon = "🔺" if change > 0 else "🔻" if change < 0 else "➖"
-                
-                results[key] = {
-                    "current": round(current_price, 2),
-                    "prev": round(prev_price, 2),
-                    "diff": round(change, 2),
-                    "percent": round(change_percent, 2),
-                    "icon": icon
-                }
+        for key, symbol in tickers.items():
+            ticker = yf.Ticker(symbol)
+            
+            # 야후에서 제공하는 '전일 종가'와 '현재가' 가져오기
+            # fast_info를 사용하면 info보다 훨씬 빠르게 데이터를 가져올 수 있습니다.
+            fast_info = ticker.fast_info
+            current_price = fast_info['last_price']
+            prev_price = fast_info['previous_close']
+            
+            # 전일 대비 변동 계산 (야후 데이터 기준)
+            change = current_price - prev_price
+            change_percent = (change / prev_price) * 100
+            
+            # 시각적 아이콘 설정
+            icon = "▲" if change > 0 else "▼" if change < 0 else "-"
+            
+            results[key] = {
+                "current": round(current_price, 2),
+                "prev": round(prev_price, 2), # Gemini가 아닌 야후가 알려준 전일가
+                "diff": round(change, 2),
+                "percent": round(change_percent, 2),
+                "icon": icon
+            }
         return results
     except Exception as e:
         print(f"시장 데이터 수집 에러: {e}")
