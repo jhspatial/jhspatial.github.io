@@ -126,7 +126,7 @@ def run_research_agent():
         today_file = now.strftime("%Y-%m-%d")
         today_title = now.strftime("%Y/%m/%d")
 
-        file_name = f"_posts/{today_file}-it-research.md"
+        file_name = f"_posts/{today_file}-urban-research.md"
         os.makedirs("_posts", exist_ok=True)
 
         with open(file_name, "w", encoding="utf-8") as f:
@@ -135,7 +135,6 @@ def run_research_agent():
             f.write(f"title: \"[Research] {today_title} 도시·환경 IT 연구 노트\"\n")
             f.write(f"date: {today_file}\n")
             f.write("categories: [it-research]\n")
-            f.write("permalink: /it-research/{today_file}/\n")
             f.write("---\n\n")
             f.write(response.text)
 
