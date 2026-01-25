@@ -87,17 +87,16 @@ def get_bigtech_news():
 
 def get_memory(target_category="daily-news"):
     """
-    _posts 폴더의 md 파일들을 최신순으로 조회하여,
-    설정된 target_category(기본값: daily-news)와 일치하는
-    가장 최근 글의 내용을 반환합니다.
+    형식(리스트형, 대괄호형)에 상관없이 
+    Front Matter(헤더)에 해당 카테고리가 있는 최신 글을 찾아냅니다.
     """
     try:
-        # 파일 목록 가져오기
+        # 1. 파일 목록 가져오기
         list_of_files = glob.glob('_posts/*.md')
         if not list_of_files: 
             return "첫 발행입니다."
 
-        # 최신 파일이 먼저 오도록 역순 정렬 (매우 중요)
+        # 2. 최신 파일이 먼저 오도록 역순 정렬
         sorted_files = sorted(list_of_files, reverse=True)
 
         for file_path in sorted_files:
@@ -105,14 +104,22 @@ def get_memory(target_category="daily-news"):
                 with open(file_path, 'r', encoding='utf-8') as f:
                     content = f.read()
                     
-                    # 지킬 Front Matter 형식 확인
-                    # categories: [daily-news] 또는 categories: daily-news 모두 체크
-                    if f"categories: [{target_category}]" in content or \
-                       f"categories: {target_category}" in content or \
-                       f"category: {target_category}" in content:
-                        print(f"🔍 이전 기록 발견: {file_path}")
-                        return content
-            except Exception as e:
+                    # 3. 지킬 Front Matter(헤더) 부분만 분리하기
+                    # '---' 로 구분된 첫 번째 블록이 헤더입니다.
+                    parts = content.split('---')
+                    
+                    # 파일 구조가 정상적이라면 parts[1]이 헤더 정보입니다.
+                    if len(parts) >= 3:
+                        front_matter = parts[1]
+                        
+                        # 4. 헤더 안에 카테고리 단어가 포함되어 있는지 확인
+                        # (형식 따지지 않고 'daily-news'라는 글자가 헤더에 있는지만 봅니다)
+                        if target_category in front_matter:
+                            print(f"🔍 [{target_category}] 기록 발견: {file_path}")
+                            # 본문 내용(헤더 제외)만 반환하거나, 전체를 반환
+                            return content
+                            
+            except Exception:
                 continue # 파일 읽기 에러나면 다음 파일로 넘어감
                     
         return f"'{target_category}' 카테고리의 이전 기록이 없습니다."
