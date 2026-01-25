@@ -85,23 +85,46 @@ def get_bigtech_news():
     except:
         return []
 
-def get_memory():
-    """어제 작성한 글 읽기"""
+def get_memory(target_category="daily-news"):
+    """
+    _posts 폴더의 md 파일들을 최신순으로 조회하여,
+    설정된 target_category(기본값: daily-news)와 일치하는
+    가장 최근 글의 내용을 반환합니다.
+    """
     try:
+        # 파일 목록 가져오기
         list_of_files = glob.glob('_posts/*.md')
-        if not list_of_files: return "첫 발행입니다."
-        latest_file = sorted(list_of_files)[-1]
-        with open(latest_file, 'r', encoding='utf-8') as f:
-            return f.read()
-    except:
-        return "기록 없음"
+        if not list_of_files: 
+            return "첫 발행입니다."
+
+        # 최신 파일이 먼저 오도록 역순 정렬 (매우 중요)
+        sorted_files = sorted(list_of_files, reverse=True)
+
+        for file_path in sorted_files:
+            try:
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                    
+                    # 지킬 Front Matter 형식 확인
+                    # categories: [daily-news] 또는 categories: daily-news 모두 체크
+                    if f"categories: [{target_category}]" in content or \
+                       f"categories: {target_category}" in content or \
+                       f"category: {target_category}" in content:
+                        print(f"🔍 이전 기록 발견: {file_path}")
+                        return content
+            except Exception as e:
+                continue # 파일 읽기 에러나면 다음 파일로 넘어감
+                    
+        return f"'{target_category}' 카테고리의 이전 기록이 없습니다."
+    except Exception as e:
+        return f"메모리 읽기 실패: {str(e)}"
 
 def run_news_agent():
     # 1. 데이터 수집
     market = get_market_data()
     exchange_news = get_naver_exchange_news()
     bigtech_news = get_bigtech_news()
-    memory = get_memory()
+    memory = get_memory("daily-news")
 
     # 2. 모델 설정 (Gemini 2.5 Flash)
     model = genai.GenerativeModel('gemini-2.5-flash')
