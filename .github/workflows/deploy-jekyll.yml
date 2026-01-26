@@ -16,7 +16,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.x' # Use a compatible Ruby version, e.g., '3.2' or '3.3'
+          ruby-version: '3.3' # Use a compatible Ruby version, e.g., '3.2' or '3.3'
           bundler-cache: true # runs bundle install and caches dependencies
 
       - name: Build Jekyll site
