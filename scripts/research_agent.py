@@ -4,7 +4,7 @@ import google.generativeai as genai
 from datetime import datetime, timedelta, timezone
 import urllib3
 import json
-import xmltodict  # XML 변환용 추가
+import xmltodict
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -15,9 +15,26 @@ ACCESS_TOKEN = os.getenv("SCIENCEON_API_KEY")
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-2.5-flash')
 
+def recursive_find(data, target_keys):
+    """딕셔너리/리스트 깊숙한 곳까지 뒤져서 특정 키의 값을 찾아내는 함수"""
+    found = []
+    if isinstance(data, dict):
+        for k, v in data.items():
+            # 키 이름이 타겟과 일치하면(대소문자 무시) 저장
+            if k.lower() in target_keys:
+                found.append(v)
+            else:
+                found.extend(recursive_find(v, target_keys))
+    elif isinstance(data, list):
+        for item in data:
+            found.extend(recursive_find(item, target_keys))
+    return found
+
 def get_scienceon_papers():
     url = "https://apigateway.kisti.re.kr/openapicall.do"
-    query_json = json.dumps({"BI": "스마트시티"})
+    
+    # 쿼리: 가장 확실한 키워드로 테스트
+    query_json = json.dumps({"BI": "인공지능"})
     
     params = {
         "client_id": CLIENT_ID,
@@ -35,50 +52,50 @@ def get_scienceon_papers():
         print(f"DEBUG: Status Code: {response.status_code}")
         
         if response.status_code != 200:
+            print(f"DEBUG: API Error: {response.text[:200]}")
             return []
 
-        # 200인데 JSON 에러가 난다면 100% XML입니다.
-        # XML을 딕셔너리로 변환
+        # [중요] 디버깅을 위해 원본 데이터 앞부분만 로그에 출력
+        # 만약 이번에도 실패하면 이 로그를 보고 구조를 바로 알 수 있습니다.
+        print(f"DEBUG: Raw XML Start: {response.text[:300]}...") 
+
+        # XML -> Dictionary 변환
         data_dict = xmltodict.parse(response.text)
         
-        # ScienceON XML 구조: MetaData > recordList > record 리스트
+        # 구조를 몰라도 'Title'이나 'article_title'이라는 키를 가진 놈을 다 찾아냄
+        titles = recursive_find(data_dict, ['title', 'article_title'])
+        authors = recursive_find(data_dict, ['author', 'author_name'])
+        abstracts = recursive_find(data_dict, ['abstract', 'abst'])
+        
         paper_list = []
-        try:
-            # XML 구조를 따라가며 데이터 추출
-            metadata = data_dict.get('MetaData', {})
-            record_list = metadata.get('recordList', {})
-            records = record_list.get('record', [])
-            
-            # 검색 결과가 1개일 경우 리스트가 아닐 수 있으므로 처리
-            if isinstance(records, dict):
-                records = [records]
-
-            for rec in records:
-                # XML의 항목명은 대문자로 시작하는 경우가 많습니다 (가이드 기준)
-                paper_list.append({
-                    "title": rec.get('Title'),
-                    "author": rec.get('Author'),
-                    "abstract": rec.get('Abstract') or "초록 없음"
-                })
-        except Exception as parse_e:
-            print(f"DEBUG: XML Parsing Error: {parse_e}")
-            # 구조가 다를 경우를 대비해 원본 로그 출력 (디버깅용)
-            # print(response.text) 
+        # 찾은 제목 개수만큼 리스트 생성 (최대 5개)
+        for i in range(min(len(titles), 5)):
+            paper_list.append({
+                "title": titles[i],
+                "author": authors[i] if i < len(authors) else "저자 미상",
+                "abstract": abstracts[i] if i < len(abstracts) else "초록 없음"
+            })
             
         return paper_list
+
     except Exception as e:
-        print(f"DEBUG: General Error: {e}")
+        print(f"DEBUG: Critical Error: {e}")
         return []
 
 def run_research_agent():
     papers = get_scienceon_papers()
     
     if not papers:
-        print("DEBUG: 실제 데이터를 찾지 못해 트렌드 리포트를 작성합니다.")
-        prompt = "도시 데이터 사이언스 전공자 관점에서 최근 '스마트시티'와 '지능형 로보틱스'의 결합 트렌드에 대해 연구 노트를 작성해줘."
+        print("DEBUG: 데이터 추출 실패. (로그의 Raw XML Start를 확인하세요)")
+        # 데이터가 없을 때도 블로그 글은 발행되도록 트렌드 주제 설정
+        prompt = """
+        너는 도시 데이터 사이언스 연구원이야. 
+        API 데이터 수집에 일시적 문제가 생겼어. 
+        대신 '생성형 AI와 도시 계획(Urban Planning)'의 최신 융합 사례 3가지를 정리해줘.
+        """
     else:
-        print(f"DEBUG: {len(papers)}건의 논문 데이터를 찾았습니다.")
-        prompt = f"다음 논문 리스트를 IT 전공자 관점에서 연구 노트로 요약해줘: {papers}"
+        print(f"DEBUG: 성공! {len(papers)}건의 논문을 찾았습니다: {[p['title'] for p in papers]}")
+        prompt = f"다음 논문 리스트를 바탕으로 IT 전공자 관점의 연구 노트를 작성해줘: {papers}"
 
     response = model.generate_content(prompt)
 
