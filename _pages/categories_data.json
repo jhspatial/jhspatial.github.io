@@ -1,0 +1,26 @@
+---
+layout: null
+permalink: /categories_data.json
+---
+{
+  "categories": [
+    {% assign categories = site.categories | sort %}
+    {% for category in categories %}
+      {% assign category_name = category | first %}
+      {% assign posts = category | last %}
+      {
+        "name": "{{ category_name | slugify }}",
+        "display_name": "{{ category_name }}",
+        "url": "{{ site.baseurl }}/categories/{{ category_name | slugify }}/",
+        "posts": [
+          {% for post in posts %}
+            {
+              "title": "{{ post.title | escape }}",
+              "url": "{{ site.baseurl }}{{ post.url }}"
+            }{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        ]
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ]
+}

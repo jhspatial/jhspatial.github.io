@@ -8,6 +8,6 @@ body_class: "react-page-body"
 
 <div id="root"></div>
 
-<link href="{{ site.baseurl }}/assets/react/main.e0c79cea.css" rel="stylesheet">
+<link href="{{ site.baseurl }}/assets/react/main.074b7299.css" rel="stylesheet">
 <script type="text/javascript" src="{{ site.baseurl }}/assets/react/453.71c876a1.chunk.js"></script>
-<script type="text/javascript" src="{{ site.baseurl }}/assets/react/main.d18b5a3f.js"></script>
+<script type="text/javascript" src="{{ site.baseurl }}/assets/react/main.f0253508.js"></script>
