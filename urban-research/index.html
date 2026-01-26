@@ -1,0 +1,700 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>[Research] 도시 데이터 IT 연구 노트 - Kim Junho / Blog</title>
+
+
+
+<meta name="description" content="안녕하세요, 도시 데이터 사이언스 학부 연구생입니다. 주어진 논문 정보를 바탕으로 IT 전공자로서 도시 문제 해결을 위한 데이터 기반 접근 방식에 대한 연구 노트를 작성해 보았습니다. 특히 데이터의 수집부터 분석, 활용에 이르는 전반적인 IT 기술 스택과 인사이트에 초점을 맞추었습니다.">
+
+
+
+
+
+  <meta property="article:published_time" content="2026-01-26T00:00:00+00:00">
+
+
+
+  <link rel="canonical" href="https://jhspatial.github.io/urban-research/">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Kim Junho",
+      "url" : "https://jhspatial.github.io",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+<!-- Open Graph protocol data (https://ogp.me/), used by social media -->
+<meta property="og:locale" content="en-US">
+<meta property="og:site_name" content="Kim Junho / Blog"> 
+<meta property="og:title" content="[Research] 도시 데이터 IT 연구 노트">
+
+  <meta property="og:type" content="article">
+
+
+  <meta property="og:description" name="description" content="안녕하세요, 도시 데이터 사이언스 학부 연구생입니다. 주어진 논문 정보를 바탕으로 IT 전공자로서 도시 문제 해결을 위한 데이터 기반 접근 방식에 대한 연구 노트를 작성해 보았습니다. 특히 데이터의 수집부터 분석, 활용에 이르는 전반적인 IT 기술 스택과 인사이트에 초점을 맞추었습니다.">
+
+
+  <meta property="og:url" content="https://jhspatial.github.io/urban-research/">
+
+
+
+
+
+<!-- end Open Graph protocol -->
+
+<link href="https://jhspatial.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Kim Junho / Blog Feed">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="https://jhspatial.github.io/assets/css/main.css">
+
+    
+
+<!-- start custom head snippets -->
+
+<!-- Support for Academicons -->
+<link rel="stylesheet" href="https://jhspatial.github.io/assets/css/academicons.css"/>
+
+<!-- favicon from https://commons.wikimedia.org/wiki/File:OOjs_UI_icon_academic-progressive.svg -->
+<link rel="apple-touch-icon" sizes="180x180" href="https://jhspatial.github.io/images/apple-touch-icon-180x180.png"/>
+<link rel="icon" type="image/svg+xml" href="https://jhspatial.github.io/images/favicon.svg"/>
+<link rel="icon" type="image/png" href="https://jhspatial.github.io/images/favicon-32x32.png" sizes="32x32"/>
+<link rel="icon" type="image/png" href="https://jhspatial.github.io/images/favicon-192x192.png" sizes="192x192"/>
+<link rel="manifest" href="https://jhspatial.github.io/images/manifest.json"/>
+<link rel="icon" href="/images/favicon.ico"/>
+<meta name="theme-color" content="#ffffff"/>
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><span class="navicon"></span></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg persist ">
+            <a href="https://jhspatial.github.io/">Kim Junho / Blog</a>
+          </li>
+          
+            
+            <li class="masthead__menu-item ">
+              <a href="https://jhspatial.github.io/publications/">Publications</a>
+            </li>
+          
+            
+            <li class="masthead__menu-item ">
+              <a href="https://jhspatial.github.io/blog/">Blog</a>
+            </li>
+          
+            
+            <li class="masthead__menu-item ">
+              <a href="https://jhspatial.github.io/cv/">CV</a>
+            </li>
+          
+          <li id="theme-toggle" class="masthead__menu-item persist tail">
+            <a role="button" aria-labelledby="theme-icon"><i id="theme-icon" class="fa-solid fa-sun" aria-hidden="true" title="toggle theme"></i></a>
+          </li>
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="https://jhspatial.github.io/images/sky.jpeg" class="author__avatar" alt="Kim Junho"  fetchpriority="high" />
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Kim Junho</h3>
+    
+    <p class="author__bio">Machine learning</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      <!-- Font Awesome icons / Biographic information  -->
+      
+        <li class="author__desktop"><i class="fas fa-fw fa-location-dot icon-pad-right" aria-hidden="true"></i>Seoul</li>
+      
+      
+        <li class="author__desktop"><i class="fas fa-fw fa-building-columns icon-pad-right" aria-hidden="true"></i>Soongsil University</li>
+      
+      
+      
+        <li><a href="mailto:junho201007@soongsil.ac.kr"><i class="fas fa-fw fa-envelope icon-pad-right" aria-hidden="true"></i>Email</a></li>
+      
+
+      <!-- Font Awesome and Academicons icons / Academic websites -->
+      
+            
+      
+            
+      
+      
+                              
+      
+      
+      
+      
+      
+
+      <!-- Font Awesome icons / Repositories and software development -->
+      
+            
+            
+      
+        <li><a href="https://github.com/jhspatial"><i class="fab fa-fw fa-github icon-pad-right" aria-hidden="true"></i>GitHub</a></li>
+      
+      
+        <li><a href="https://kaggle.com/issacsnow"><i class="fab fa-fw fa-kaggle icon-pad-right" aria-hidden="true"></i>Kaggle</a></li>
+            
+            
+
+      <!-- Font Awesome icons / Social media -->
+              
+      
+      
+            
+      
+                  
+                  
+      
+            
+            
+            
+      
+            
+                  
+            
+      
+            
+            
+      
+              
+      
+                      
+      
+      
+            
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[Research] 도시 데이터 IT 연구 노트">
+    <meta itemprop="description" content="안녕하세요, 도시 데이터 사이언스 학부 연구생입니다. 주어진 논문 정보를 바탕으로 IT 전공자로서 도시 문제 해결을 위한 데이터 기반 접근 방식에 대한 연구 노트를 작성해 보았습니다. 특히 데이터의 수집부터 분석, 활용에 이르는 전반적인 IT 기술 스택과 인사이트에 초점을 맞추었습니다.">
+    <meta itemprop="datePublished" content="January 26, 2026">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">[Research] 도시 데이터 IT 연구 노트
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> 
+
+
+  
+	  6 minute read
+	
+</p>
+          
+        
+        
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Published:</strong> <time datetime="2026-01-26T00:00:00+00:00">January 26, 2026</time></p>
+            
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>안녕하세요, 도시 데이터 사이언스 학부 연구생입니다. 주어진 논문 정보를 바탕으로 IT 전공자로서 도시 문제 해결을 위한 데이터 기반 접근 방식에 대한 연구 노트를 작성해 보았습니다. 특히 데이터의 수집부터 분석, 활용에 이르는 전반적인 IT 기술 스택과 인사이트에 초점을 맞추었습니다.</p>
+
+<hr />
+
+<h3 id="도시-데이터-사이언스-연구-노트-it-전공자-관점">도시 데이터 사이언스 연구 노트 (IT 전공자 관점)</h3>
+
+<p>본 연구 노트는 ‘[예시] 스마트시티 교통 데이터 분석’과 ‘[예시] GIS 기반 환경 모니터링’ 두 논문을 중심으로, 도시 데이터를 활용한 문제 해결 접근 방식과 IT 기술의 적용 가능성에 대해 탐구합니다. 도시의 다양한 문제 해결에 있어 데이터 사이언스와 IT 기술의 역할은 점점 더 중요해지고 있으며, 이 두 예시 논문은 그 잠재력을 명확히 보여줍니다.</p>
+
+<hr />
+
+<h3 id="part-1-연구-요약">Part 1. 연구 요약</h3>
+
+<p>두 예시 논문은 각각 스마트시티의 핵심 과제인 <strong>교통 혼잡 해결</strong>과 <strong>환경 오염(미세먼지) 모니터링 및 예측</strong>이라는 두 가지 중요한 도시 문제를 다루고 있습니다.</p>
+
+<ul>
+  <li><strong>스마트시티 교통 데이터 분석:</strong> 실시간 교통 데이터를 기반으로 도시 교통 흐름을 최적화하고 관리하는 방안을 모색합니다. 이는 정체 감소, 이동 효율성 증대, 대중교통 이용률 향상 등 도시민의 삶의 질 향상에 직접적으로 기여할 수 있는 연구입니다. 핵심은 ‘실시간성’과 ‘최적화’에 있습니다.</li>
+  <li><strong>GIS 기반 환경 모니터링:</strong> 지리정보시스템(GIS)을 활용하여 미세먼지와 같은 환경 데이터를 수집, 분석하고 확산 모델링을 통해 오염 현황을 파악하며 예측하는 연구입니다. 이는 시민 건강 보호 및 효과적인 환경 정책 수립을 위한 과학적 근거를 제공하는 데 중요합니다. 핵심은 ‘공간 정보’와 ‘예측 모델링’에 있습니다.</li>
+</ul>
+
+<p>두 논문 모두 도시에서 발생하는 방대한 데이터를 수집하고, 이를 분석하여 의미 있는 인사이트를 도출하며, 궁극적으로 도시 운영의 효율성과 시민의 삶의 질을 향상시키는 것을 목표로 한다는 공통점을 가지고 있습니다. 이는 도시 문제를 해결하는 데 있어 데이터 중심 접근 방식이 필수적임을 시사합니다.</p>
+
+<hr />
+
+<h3 id="part-2-사용-데이터--기술">Part 2. 사용 데이터 &amp; 기술</h3>
+
+<p>두 논문에서 제시하는 연구 방향을 IT 전공자의 관점에서 데이터 유형 및 활용 기술 스택으로 분석하면 다음과 같습니다.</p>
+
+<h4 id="1-사용-데이터">1. 사용 데이터</h4>
+
+<ul>
+  <li><strong>교통 데이터:</strong>
+    <ul>
+      <li><strong>실시간 센서 데이터:</strong> CCTV 영상 데이터 (교통량, 속도), 루프 검지기 (차량 통행량, 속도), GPS 데이터 (차량 이동 경로), 돌발 상황 감지 센서 등.</li>
+      <li><strong>대중교통 데이터:</strong> 버스/지하철 운행 정보, 승하차 인원, 지연 정보 등.</li>
+      <li><strong>환경/부가 데이터:</strong> 기상 데이터 (강수량, 기온), 도로 공사 정보, 대형 행사 정보 등 (교통량에 영향을 미치는 요인).</li>
+    </ul>
+  </li>
+  <li><strong>환경 데이터:</strong>
+    <ul>
+      <li><strong>환경 센서 데이터:</strong> 미세먼지(PM2.5, PM10), 초미세먼지, 오존(O3), 이산화질소(NO2), 아황산가스(SO2) 등 대기질 측정소 및 IoT 센서 데이터.</li>
+      <li><strong>지리 공간 데이터:</strong> GIS 기반의 지형 정보, 건물 고도, 토지 이용 현황, 도로 네트워크, 바람 방향/속도 등.</li>
+      <li><strong>위성 이미지 데이터:</strong> 넓은 지역의 대기 오염 분포 및 변화 추이를 파악.</li>
+      <li><strong>기상 데이터:</strong> 풍향, 풍속, 기온, 습도, 강수량 등 (미세먼지 확산에 직접적인 영향).</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="2-핵심-기술-ml-분석-기술-데이터-스택">2. 핵심 기술 (ML, 분석 기술, 데이터 스택)</h4>
+
+<ul>
+  <li><strong>데이터 수집 및 전처리:</strong>
+    <ul>
+      <li><strong>IoT 플랫폼:</strong> 다양한 도시 센서(교통, 환경)에서 발생하는 데이터를 실시간으로 수집하고 관리하기 위한 플랫폼. MQTT, CoAP 등의 프로토콜 활용.</li>
+      <li><strong>스트림 데이터 처리:</strong> Kafka, Apache Flink, Apache Spark Streaming 등을 활용하여 실시간으로 유입되는 교통량, 대기질 데이터를 전처리하고 정제.</li>
+      <li><strong>API 연동:</strong> 공공 데이터 포털, 기상청 등 외부 기관의 데이터 연동 및 수집.</li>
+    </ul>
+  </li>
+  <li><strong>데이터 저장 및 관리:</strong>
+    <ul>
+      <li><strong>분산 스토리지/데이터 레이크:</strong> HDFS, Amazon S3, Azure Data Lake Storage 등을 활용하여 대규모의 정형/비정형 도시 데이터를 유연하게 저장.</li>
+      <li><strong>시계열 데이터베이스:</strong> InfluxDB, TimescaleDB 등을 활용하여 실시간 센서 데이터와 같이 시간 정보가 중요한 데이터를 효율적으로 저장 및 쿼리.</li>
+      <li><strong>지리 공간 데이터베이스:</strong> PostGIS를 포함한 PostgreSQL, MongoDB with GeoJSON 등을 활용하여 GIS 기반 환경 데이터를 효율적으로 관리하고 공간 쿼리 수행.</li>
+    </ul>
+  </li>
+  <li><strong>데이터 분석 및 모델링 (머신러닝/딥러닝 중심):</strong>
+    <ul>
+      <li><strong>시계열 예측 모델:</strong> 교통량 예측, 미세먼지 농도 예측을 위해 ARIMA, Prophet, LSTM(Long Short-Term Memory), Transformer 모델 등 활용.</li>
+      <li><strong>최적화 알고리즘:</strong> 교통 신호 제어, 경로 최적화 등을 위한 강화 학습(Reinforcement Learning), 유전 알고리즘(Genetic Algorithm) 등 적용.</li>
+      <li><strong>공간 통계 및 머신러닝:</strong> 크리깅(Kriging), 역거리 가중법(IDW) 등 공간 보간 기법과 Random Forest, XGBoost, GNN(Graph Neural Network) 등을 활용하여 미세먼지 확산 모델링 및 공간적 패턴 분석.</li>
+      <li><strong>컴퓨터 비전:</strong> CCTV 영상 데이터를 활용한 교통량 감지, 보행자/차량 분류, 돌발 상황(사고, 낙하물) 감지 등.</li>
+      <li><strong>이상 탐지:</strong> 센서 데이터의 비정상적인 패턴(교통 체증 급증, 특정 지역 오염원 발생)을 탐지하여 신속한 대응 지원.</li>
+    </ul>
+  </li>
+  <li><strong>데이터 시각화 및 서비스:</strong>
+    <ul>
+      <li><strong>GIS 기반 시각화 툴:</strong> QGIS, ArcGIS, Leaflet.js, Mapbox 등 라이브러리를 활용하여 미세먼지 확산 예측 지도, 실시간 교통 상황 지도 등 구축.</li>
+      <li><strong>대시보드/BI 툴:</strong> Grafana, Tableau, PowerBI 등을 활용하여 도시 관리자를 위한 통합 모니터링 대시보드 구축.</li>
+      <li><strong>웹/모바일 애플리케이션:</strong> 시민들에게 실시간 교통 정보, 대기질 정보 등을 제공하는 서비스 개발.</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h3 id="part-3-it-관점-인사이트">Part 3. IT 관점 인사이트</h3>
+
+<p>이 두 예시 논문이 제시하는 연구 방향을 IT 전공자로서 깊이 있게 분석했을 때, 다음과 같은 핵심 인사이트와 향후 연구/개발 과제를 도출할 수 있습니다.</p>
+
+<ol>
+  <li><strong>초대규모, 초실시간 데이터 처리 아키텍처의 중요성:</strong>
+    <ul>
+      <li>도시의 교통, 환경 센서 데이터는 그 양이 방대하고 지속적으로 실시간으로 생성됩니다. 이를 효과적으로 처리하기 위해서는 <strong>클라우드 기반의 분산 처리 아키텍처</strong> (예: AWS Lambda, Azure Functions, Google Cloud Dataflow 등 서버리스 및 매니지드 서비스)와 <strong>고성능 스트림 처리 엔진</strong> (Kafka Streams, Flink)의 도입이 필수적입니다. 데이터 수집부터 분석, 활용까지의 파이프라인 전반에서 낮은 지연 시간(low latency)을 보장하는 것이 스마트시티 서비스의 핵심입니다.</li>
+    </ul>
+  </li>
+  <li><strong>데이터 융합 및 복합 분석의 고도화:</strong>
+    <ul>
+      <li>교통 흐름은 날씨, 대기질, 행사 유무 등 다양한 요인에 의해 복합적으로 영향을 받습니다. 미세먼지 확산 또한 교통량, 바람, 지형, 산업 활동 등 여러 요소가 복합적으로 작용합니다. 따라서 단순히 개별 데이터를 분석하는 것을 넘어, <strong>이종 데이터 소스(멀티모달 데이터)를 통합하고 융합하여 복합적인 패턴을 학습하는 머신러닝 모델</strong> (예: Graph Neural Network를 활용한 교통 네트워크 분석, Convolutional LSTM을 활용한 시공간 예측)의 개발이 중요합니다. 이를 위한 <strong>데이터 통합 플랫폼(Data Fabric)</strong> 구축 또한 핵심 과제입니다.</li>
+    </ul>
+  </li>
+  <li><strong>예측 모델의 신뢰성 및 설명 가능성(XAI):</strong>
+    <ul>
+      <li>도시 정책 결정에 활용되는 예측 모델(교통 최적화, 미세먼지 확산)은 높은 정확도뿐만 아니라 <strong>모델의 예측 근거를 이해하고 설명할 수 있는 능력(Explainable AI, XAI)</strong>이 중요합니다. 왜 특정 교차로에서 정체가 심해질 것으로 예측했는지, 왜 특정 지역의 미세먼지 농도가 높아질 것으로 전망했는지에 대한 합리적인 설명은 정책 입안자들이 신뢰하고 의사결정을 내리는 데 필수적입니다. LIME, SHAP 등 XAI 기술의 적극적인 도입 및 연구가 필요합니다.</li>
+    </ul>
+  </li>
+  <li><strong>엣지 컴퓨팅(Edge Computing)의 활용:</strong>
+    <ul>
+      <li>실시간성이 중요한 교통 신호 제어, 돌발 상황 감지, 지역 단위의 미세먼지 예측 등은 중앙 클라우드까지 데이터를 전송하고 처리하는 데 시간이 소요됩니다. 이를 해결하기 위해 <strong>엣지 디바이스(교통 신호 제어기, 지역별 환경 센서)에서 직접 데이터를 처리하고 분석하며, 일부 모델을 구동하는 엣지 컴퓨팅 기술</strong>의 도입을 고려할 수 있습니다. 이는 네트워크 부하를 줄이고, 응답 시간을 단축하며, 개인 정보 보호에도 기여할 수 있습니다.</li>
+    </ul>
+  </li>
+  <li><strong>디지털 트윈(Digital Twin) 기반의 시뮬레이션 및 최적화:</strong>
+    <ul>
+      <li>도시의 물리적 환경을 가상 공간에 동일하게 구현하는 <strong>도시 디지털 트윈</strong>은 미래 도시 데이터 사이언스의 핵심이 될 것입니다. 실시간 교통 데이터, 환경 데이터, 건물 정보 등을 디지털 트윈에 연동하여 가상 시뮬레이션을 통해 교통 정책의 효과, 미세먼지 저감 대책의 영향 등을 사전에 검증하고 최적의 방안을 도출할 수 있습니다. 이는 단순히 예측을 넘어선 ‘가상 실험실’로서의 역할을 수행하며, 머신러닝 모델의 학습 환경으로도 활용될 수 있습니다.</li>
+    </ul>
+  </li>
+  <li><strong>데이터 거버넌스 및 보안:</strong>
+    <ul>
+      <li>방대한 양의 민감한 도시 데이터를 다루는 만큼, <strong>데이터 수집, 저장, 분석, 활용 전반에 걸친 강력한 데이터 거버넌스 체계</strong>와 <strong>보안 기술(암호화, 접근 제어, 블록체인 기반 데이터 무결성 검증 등)</strong> 구축이 필수적입니다. 특히 개인 정보 보호 문제와 데이터의 오남용 방지에 대한 심도 깊은 고민이 필요합니다.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>이러한 IT 관점의 인사이트를 바탕으로, 저는 도시 데이터를 활용한 문제 해결 연구에 있어 단순히 데이터 분석 모델을 만드는 것을 넘어, 데이터의 생애 주기 전반을 아우르는 견고하고 효율적인 IT 인프라와 서비스 아키텍처를 설계하는 데 기여하고 싶습니다.</p>
+
+
+        
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+      </footer>
+
+      
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="https://jhspatial.github.io/daily-news/market-tech-briefing/" class="pagination--pager" title="2026/01/26 증시 지표 &amp; 빅테크 뉴스 브리핑
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://jhspatial.github.io/daily-news/market-tech-briefing/" rel="permalink">2026/01/26 증시 지표 &amp; 빅테크 뉴스 브리핑
+</a>
+      
+    </h2>
+    
+    
+      <p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+    
+
+        
+         <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Published:</strong> <time datetime="2026-01-26T00:00:00+00:00">January 26, 2026</time></p>
+        
+
+    
+    <p class="archive__item-excerpt" itemprop="description"><h3 id="-오늘의-시장-지표">📊 오늘의 시장 지표</h3>
+
+</p>
+    
+    
+    
+
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://jhspatial.github.io/it-research/My-AiAgent/" rel="permalink">매일 아침 환율과 뉴스를 요약해주는 AI 에이전트 만들기
+</a>
+      
+    </h2>
+    
+    
+      <p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> 
+
+
+  
+	  3 minute read
+	
+</p>
+    
+
+        
+         <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Published:</strong> <time datetime="2026-01-26T00:00:00+00:00">January 26, 2026</time></p>
+        
+
+    
+    <p class="archive__item-excerpt" itemprop="description"><p><strong>매일 아침 환율, 증시, 뉴스 데이터를 요약해주는 AI Agent를 만들어보았습니다.</strong></p>
+
+</p>
+    
+    
+    
+
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://jhspatial.github.io/daily-news/market-tech-briefing/" rel="permalink">2026/01/25 증시 지표 &amp; 빅테크 뉴스 브리핑
+</a>
+      
+    </h2>
+    
+    
+      <p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+    
+
+        
+         <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Published:</strong> <time datetime="2026-01-25T00:00:00+00:00">January 25, 2026</time></p>
+        
+
+    
+    <p class="archive__item-excerpt" itemprop="description"><hr />
+
+<p>layout: single
+title: “2026/01/25 증시 지표 &amp; 빅테크 뉴스 브리핑”
+date: 2026-01-25
+categories: [daily-news]
+—</p>
+
+</p>
+    
+    
+    
+
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://jhspatial.github.io/research/urban-research/" rel="permalink">[Research] 2026/01/24 도시·환경 IT 연구 노트
+</a>
+      
+    </h2>
+    
+    
+      <p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+    
+
+        
+         <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Published:</strong> <time datetime="2026-01-24T00:00:00+00:00">January 24, 2026</time></p>
+        
+
+    
+    <p class="archive__item-excerpt" itemprop="description"><h3 id="-오늘의-연구-논문-개요">📊 오늘의 연구 논문 개요</h3>
+
+</p>
+    
+    
+    
+
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<a href="/sitemap/">Sitemap</a>
+
+<!-- Support for MatJax -->
+<script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+
+<!-- Support for Mermaid -->
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({startOnLoad:true, theme:'default'});
+    await mermaid.run({querySelector:'code.language-mermaid'});
+</script>
+
+<!-- end custom footer snippets -->
+
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="https://github.com/jhspatial"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    
+    <li><a href="https://jhspatial.github.io/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">
+  &copy; 2026 Kim Junho, Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.<br />
+  Site last updated 2026-01-26
+</div>
+
+      </footer>
+    </div>
+
+    <script type="module" src="https://jhspatial.github.io/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>
+
