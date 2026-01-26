@@ -1,75 +1,96 @@
----
-layout: single
-title: "[Research] 2026/01/24 도시·환경 IT 연구 노트"
-date: 2026-01-24
-categories: [research]
----
+import os
+import requests
+import google.generativeai as genai
+from datetime import datetime, timedelta, timezone
 
-### 📊 오늘의 연구 논문 개요
+# 1. API 설정 (GitHub Secrets에 NAVER_CLIENT_ID, NAVER_CLIENT_SECRET 등록 필요)
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID")
+NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET")
 
-| 구분 | 내용 |
-|---|---|
-| 분석 논문 수 | **2편** |
-| 주요 키워드 | 스마트시티, 도시환경, 데이터, 교통, 대기질, 머신러닝, GIS, 센서 |
-| 데이터 유형 | **정형 / 반정형** (센서 데이터, GIS 공간 데이터, 교통량 데이터 등) |
+genai.configure(api_key=GEMINI_API_KEY)
+model = genai.GenerativeModel('gemini-2.5-flash')
 
----
+def get_naver_papers():
+    """네이버 전문자료(학술논문 등) 검색"""
+    url = "https://openapi.naver.com/v1/search/doc.json"
+    headers = {
+        "X-Naver-Client-Id": NAVER_CLIENT_ID,
+        "X-Naver-Client-Secret": NAVER_CLIENT_SECRET
+    }
+    # 스마트시티, 교통 데이터, 지능형 로보틱스 관련 키워드 검색
+    params = {
+        "query": "스마트시티 교통 데이터 분석",
+        "display": 5,
+        "start": 1,
+        "sort": "sim"
+    }
+    
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        if response.status_code == 200:
+            items = response.json().get('items', [])
+            paper_list = []
+            for item in items:
+                # HTML 태그 제거 및 텍스트 정제
+                title = item['title'].replace("<b>", "").replace("</b>", "")
+                desc = item['description'].replace("<b>", "").replace("</b>", "")
+                paper_list.append({
+                    "title": title,
+                    "link": item['link'],
+                    "description": desc
+                })
+            return paper_list
+        return []
+    except:
+        return []
 
-### 🏙️ Part 1. 연구 요약
+def run_research_agent():
+    papers = get_naver_papers()
+    
+    # 데이터가 있을 경우 Gemini에게 상세 분석 요청
+    if papers:
+        prompt = f"""
+        너는 '도시 데이터 사이언스'를 전공하는 학부 연구생이야. 
+        아래 수집된 최신 전문자료(논문/보고서) 리스트를 보고 IT 전공자 관점에서 연구 노트를 작성해줘.
 
-두 논문은 **스마트시티 환경**에서 발생하는 주요 **도시 문제(교통 혼잡, 대기질 악화)**를 **데이터 기반**으로 해결하고자 하는 공통된 목적을 가지고 있습니다. 연구들은 실제 도시 데이터를 활용하여 문제 현상을 정의하고, 이를 분석하여 예측 및 모니터링 시스템을 구축하는 데 초점을 맞추고 있습니다.
+        [수집된 데이터]
+        {papers}
 
-*   **교통 혼잡 문제**: 서울시 교차로에서 발생하는 **실시간 교통량 데이터**를 통해 혼잡도를 정량적으로 정의하고, 이를 **머신러닝 모델**의 입력으로 사용하여 미래 교통량을 예측함으로써 도시 교통 문제에 대한 **예측적 대응 방안**을 모색합니다. 데이터는 특정 시간과 위치에 따른 교통량이라는 **정형 데이터** 형태로 문제를 정의합니다.
-*   **대기질 악화 문제**: 도시 내 미세먼지 문제 해결을 위해 **센서에서 수집된 미세먼지 데이터**와 해당 센서의 **GIS 위치 정보**를 결합하여 대기질 상태를 공간적으로 정의하고, 이를 **모니터링 시스템**으로 시각화하여 문제의 현재 상태를 파악합니다. 대기질 데이터는 센서에서 발생하는 시계열 **정형 데이터**이며, GIS는 위치 기반의 **반정형 공간 데이터**로 문제를 정의합니다.
+        [출력 규칙 - 반드시 준수]
+        1. 형식: 마크다운 헤더(###)와 이모지(📊, 🏙️, 💻, 🚀) 활용
+        2. 내용: 
+           - 각 논문의 **제목**과 **출처 링크**를 명시할 것
+           - IT/데이터 관점(데이터 수집 기법, 분석 모델 등)에서 분석할 것
+           - 데이터 관점이 아니어도 이쪽 도메인 분야의 지식을 더 쌓으려면 어떤 걸 공부하면 좋겠다하는 걸 알려줘
+        3. 서론/결론 없이 본문만 출력
+        """
+    else:
+        # 데이터가 없을 때의 대비책
+        prompt = "최근 스마트시티 교통 데이터 사이언스 및 지능형 로보틱스 분야의 IT 기술 트렌드에 대해 학부 연구생 관점에서 연구 노트를 작성해줘."
 
-두 연구 모두 **도시 환경의 동적인 변화**를 데이터로 포착하고, 이를 통해 도시 관리의 효율성을 높이려는 노력을 보여줍니다.
+    response = model.generate_content(prompt)
 
----
+    # 날짜 설정
+    kst = timezone(timedelta(hours=9))
+    now = datetime.now(kst)
+    today_file = now.strftime("%Y-%m-%d")
+    today_title = now.strftime("%Y/%m/%d")
 
-### 💻 Part 2. 사용 데이터 & 기술
+    os.makedirs("_posts", exist_ok=True)
+    file_name = f"_posts/{today_file}-urban-research.md"
 
-분석 대상 논문들은 스마트시티 구축의 핵심 요소인 **데이터 수집, 분석, 활용**을 위한 다양한 IT 기술 스택을 사용하고 있습니다.
+    # 블로그 Front Matter 설정 (기존 형식 유지)
+    with open(file_name, "w", encoding="utf-8") as f:
+        f.write("---\n")
+        f.write("layout: single\n")
+        f.write(f"title: \"[Research] {today_title} 도시·환경 IT 연구 노트\"\n")
+        f.write(f"date: {today_file}\n")
+        f.write("categories: [research]\n") # 요청하신 카테고리 유지
+        f.write("---\n\n")
+        f.write(response.text)
+    
+    print(f"발행 완료: {file_name}")
 
-*   **사용된 데이터 종류:**
-    *   **[정형 데이터]**
-        *   **센서 데이터**: 미세먼지 농도, 교통량 등 특정 위치에서 주기적으로 수집되는 시계열 데이터. (IoT 디바이스 및 도시 인프라 센서)
-        *   **공공데이터**: 서울시 교차로 데이터(교통량)와 같이 지자체나 공공기관에서 제공하는 행정 데이터.
-    *   **[반정형 데이터]**
-        *   **GIS(Geographic Information System) 데이터**: 지리적 위치 정보, 공간 객체 정보(도로망, 건물, 센서 위치 등)를 포함하는 공간 데이터. 대기질 센서 데이터와 결합하여 공간적 분석에 활용됩니다.
-
-*   **분석 기법:**
-    *   **머신러닝(Machine Learning)**: 교통량 예측 모델 구축에 활용되며, 과거 데이터를 학습하여 미래 패턴을 예측하는 데 중점을 둡니다. 회귀 분석, 시계열 예측 모델(LSTM, ARIMA 등) 등이 사용될 수 있습니다.
-    *   **통계 분석**: 데이터의 특성 파악, 패턴 식별, 모델 검증 등 기초적인 데이터 분석에 활용됩니다.
-    *   **공간 분석(Spatial Analysis)**: GIS 데이터를 활용하여 대기질 센서 데이터의 공간적 분포 및 관계를 분석하고 시각화하는 데 사용됩니다. 핫스팟 분석, 공간 보간법 등이 포함될 수 있습니다.
-
-*   **IT 기술 스택:**
-    *   **데이터 수집/처리**: IoT 플랫폼(센서 데이터 연동), API(공공데이터 연동), ETL(Extract, Transform, Load) 파이프라인.
-    *   **데이터 저장**: 관계형 데이터베이스(RDBMS) 또는 시계열 데이터베이스(TSDB) for sensor data, 공간 데이터베이스(PostGIS 등) for GIS data.
-    *   **데이터 분석/모델링**: Python (Pandas, NumPy, Scikit-learn), R, TensorFlow/PyTorch (딥러닝 모델 사용 시).
-    *   **시각화/모니터링**: GIS 소프트웨어(QGIS, ArcGIS), 웹 기반 지도 API (Leaflet, Mapbox), 대시보드 구축 툴 (Grafana, Tableau).
-
----
-
-### 🚀 Part 3. IT 관점 인사이트
-
-IT 전공자로서 이 연구들에서 얻을 수 있는 시사점은 다음과 같습니다.
-
-1.  **💡 실시간 데이터 파이프라인 및 IoT 인프라의 중요성**:
-    *   **인사이트**: 도시 교통 혼잡도 예측이나 대기질 모니터링은 **실시간(Real-time)** 또는 **준실시간(Near Real-time)** 데이터 처리 역량을 요구합니다. 센서에서 끊임없이 발생하는 대규모 스트리밍 데이터를 효율적으로 수집, 전송, 처리하기 위한 견고한 IoT 인프라와 데이터 파이프라인 구축이 필수적입니다.
-    *   **확장 가능성**: 스마트시티의 모든 서비스(재난 예측, 에너지 관리, 자율주행 등)는 실시간 데이터에 의존하므로, Kafka, Spark Streaming, MQTT 같은 기술을 활용한 **고성능 스트리밍 아키텍처**는 다른 도시 서비스로의 확장 기반이 됩니다. **엣지 컴퓨팅**을 통해 센서 가까이에서 데이터를 1차 처리하여 네트워크 부하를 줄이고 응답 속도를 높일 수도 있습니다.
-    *   **개선 포인트**: 센서 네트워크의 안정성 확보(통신 오류, 전력 문제), 데이터 전송 지연 최소화, 데이터 정합성 유지 기술 강화가 필요합니다.
-
-2.  **💡 공간 데이터 인프라 및 시각화 플랫폼 고도화**:
-    *   **인사이트**: GIS 데이터는 도시 데이터 분석에서 **'어디서(Where)'**라는 맥락을 제공하며, 이는 도시 문제의 본질을 이해하고 해결책을 제시하는 데 결정적인 역할을 합니다. 효과적인 공간 데이터 저장, 관리, 분석 및 시각화 시스템 구축은 스마트시티 플랫폼의 핵심 기능이 될 수 있습니다.
-    *   **확장 가능성**: 대기질 모니터링에서 나아가, 도시 범죄 예측, 시설물 관리, 최적 경로 안내 등 **위치 기반 서비스(LBS)**를 확장하는 데 강력한 GIS 엔진과 **대화형(Interactive) 시각화 대시보드**가 활용될 수 있습니다. 3D 모델링, 증강현실(AR)을 활용한 도시 데이터 시각화도 고려해볼 만합니다.
-    *   **기술적 한계**: 대용량 공간 데이터 처리 성능, 다양한 공간 데이터 형식 간의 호환성 문제, 실시간 공간 쿼리 최적화 등이 기술적인 도전 과제입니다.
-
-3.  **💡 예측 모델의 안정성, 확장성 및 해석 가능성**:
-    *   **인사이트**: 머신러닝 기반의 교통 혼잡도 예측 모델은 도시 운영의 효율성을 크게 향상시킬 수 있습니다. 그러나 도시 환경은 끊임없이 변화하므로, 모델이 항상 최적의 성능을 유지하도록 **지속적인 학습(Continuous Learning)** 및 **자동 재학습(Automated Retraining)** 시스템이 중요합니다.
-    *   **확장 가능성**: 교통 외에 전력 소비 예측, 물 수요 예측, 공공시설 이용 예측 등 다양한 도시 자원 관리에 **시계열 예측(Time Series Forecasting)** 및 **강화 학습(Reinforcement Learning)** 모델을 적용하여 최적화된 자원 배분 시스템을 구축할 수 있습니다.
-    *   **기술적 한계/개선 포인트**:
-        *   **데이터 편향 및 일반화 문제**: 특정 지역 데이터로 학습된 모델이 다른 지역에 적용될 때 성능 저하가 발생할 수 있습니다. 다양한 도시 환경 데이터를 통합 학습하여 **일반화 성능**을 높이는 연구가 필요합니다.
-        *   **모델 해석 가능성(Explainable AI, XAI)**: 도시 정책 결정에 중요한 영향을 미치는 예측 모델의 경우, 왜 특정 결과가 도출되었는지 설명할 수 있는 **설명 가능한 AI 기법** 도입이 중요합니다. 단순히 예측 정확도를 넘어, 모델의 의사결정 과정을 이해하고 신뢰할 수 있도록 해야 합니다.
-        *   **리소스 최적화**: 대규모 데이터를 처리하고 복잡한 모델을 학습시키기 위한 **클라우드 기반의 분산 컴퓨팅 환경** 최적화 및 비용 효율적인 운영 방안이 중요합니다.
-
-이러한 인사이트는 개별 논문의 연구를 넘어, **통합된 스마트시티 운영 시스템**을 구축하기 위한 IT 기술 스택과 아키텍처 설계에 중요한 지침을 제공합니다. 데이터의 수집부터 분석, 예측, 그리고 최종적인 정책 결정 지원에 이르기까지 전 과정에서 IT 기술의 역할과 개선 방향을 모색해야 합니다.
+if __name__ == "__main__":
+    run_research_agent()
