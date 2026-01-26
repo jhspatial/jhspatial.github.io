@@ -2,106 +2,78 @@ import os
 import requests
 import google.generativeai as genai
 from datetime import datetime, timedelta, timezone
-import urllib3
-import json
-import xmltodict
 
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-# 1. API 키 설정
+# 1. 환경 변수에서 키 로드
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-CLIENT_ID = os.getenv("SCIENCEON_CLIENT_ID")
-ACCESS_TOKEN = os.getenv("SCIENCEON_API_KEY")
+NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID")
+NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET")
 
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-2.5-flash')
 
-def get_scienceon_papers():
-    url = "https://apigateway.kisti.re.kr/openapicall.do"
+def get_naver_papers():
+    # 네이버 전문자료(doc) 검색 엔드포인트
+    url = "https://openapi.naver.com/v1/search/doc.json"
     
-    # [핵심 1] 명세서 규칙 준수: JSON 덤프 시 공백 제거 (separators 사용)
-    # 결과: {"BI":"스마트시티"} (띄어쓰기 없음) -> URL 인코딩 시 오류 최소화
-    query_json = json.dumps({"BI": "스마트시티"}, separators=(',', ':'))
+    headers = {
+        "X-Naver-Client-Id": NAVER_CLIENT_ID,
+        "X-Naver-Client-Secret": NAVER_CLIENT_SECRET
+    }
     
+    # 3학년 전공생 수준에 맞는 키워드로 검색
     params = {
-        "client_id": CLIENT_ID,     # 필수: 64자리 ID
-        "token": ACCESS_TOKEN,      # 필수: 액세스 토큰
-        "version": "1.0",           # 필수: 버전
-        "action": "search",         # [핵심 2] 사용자가 확인한 'search'
-        "target": "ARTI",           # [핵심 3] 논문 대상 'ARTI'
-        "searchQuery": query_json,  # [핵심 4] {"검색필드":"검색어"}
-        "curPage": "1",
-        "rowCount": "5"
+        "query": "스마트시티 교통 데이터 분석 논문",
+        "display": 5, # 5개 출력
+        "start": 1,
+        "sort": "sim"  # 유사도순
     }
     
     try:
-        # requests가 자동으로 searchQuery 값을 URI 인코딩해줍니다.
-        response = requests.get(url, params=params, verify=False, timeout=15)
-        
-        print(f"DEBUG: Status Code: {response.status_code}")
-        # 실제 요청된 URL을 확인해서 인코딩이 잘 되었는지 로그로 확인 가능
-        print(f"DEBUG: Requested URL (Encoded): {response.url}") 
-        
-        if response.status_code != 200:
-            print(f"DEBUG: API Error: {response.text[:200]}")
+        response = requests.get(url, headers=headers, params=params)
+        if response.status_code == 200:
+            items = response.json().get('items', [])
+            paper_list = []
+            for item in items:
+                # <b> 태그 제거 등 텍스트 정제
+                clean_title = item['title'].replace("<b>", "").replace("</b>", "")
+                clean_desc = item['description'].replace("<b>", "").replace("</b>", "")
+                paper_list.append({
+                    "title": clean_title,
+                    "description": clean_desc,
+                    "link": item['link']
+                })
+            return paper_list
+        else:
+            print(f"DEBUG: Naver API Error {response.status_code}")
             return []
-
-        # XML 파싱
-        data_dict = xmltodict.parse(response.text)
-        
-        # ---------------------------------------------------------
-        # [핵심 5] 만능 탐색 로직 (구조가 달라도 Title은 무조건 찾는다)
-        # ---------------------------------------------------------
-        def recursive_find(data, target_keys):
-            found = []
-            if isinstance(data, dict):
-                for k, v in data.items():
-                    if k.lower() in target_keys:
-                        found.append(v)
-                    else:
-                        found.extend(recursive_find(v, target_keys))
-            elif isinstance(data, list):
-                for item in data:
-                    found.extend(recursive_find(item, target_keys))
-            return found
-
-        titles = recursive_find(data_dict, ['title', 'article_title'])
-        authors = recursive_find(data_dict, ['author', 'author_name'])
-        abstracts = recursive_find(data_dict, ['abstract', 'abst'])
-        
-        if not titles:
-            # 데이터가 200 OK인데 내용이 없으면 XML 구조를 로그에 찍어서 확인
-            print("DEBUG: 검색 결과 없음. XML 원본 확인:")
-            print(response.text[:1000]) 
-            return []
-
-        paper_list = []
-        for i in range(min(len(titles), 5)):
-            paper_list.append({
-                "title": titles[i],
-                "author": authors[i] if i < len(authors) else "저자 미상",
-                "abstract": abstracts[i] if i < len(abstracts) else "초록 없음"
-            })
-            
-        return paper_list
-
     except Exception as e:
-        print(f"DEBUG: Critical Error: {e}")
+        print(f"DEBUG: Error - {e}")
         return []
 
 def run_research_agent():
-    papers = get_scienceon_papers()
+    papers = get_naver_papers()
     
+    # 데이터 수집 결과에 따른 프롬프트 (도시 데이터 RA 컨셉)
     if not papers:
-        print("DEBUG: 데이터 수집 실패. (로그를 확인해주세요)")
         prompt = """
-        너는 도시 데이터 사이언스 학부 연구생이야.
-        ScienceON API 연동 문제로 실제 데이터 대신,
-        '도시 데이터 분석'과 'LLM'의 결합 활용 사례 3가지를 정리해줘.
+        너는 도시 데이터 사이언스 학부 연구생이야. 
+        오늘은 검색 결과가 없어서 '지능형 로보틱스와 도시 교통의 미래'에 대한 
+        본인의 연구 견해를 마크다운 형식으로 작성해줘.
         """
     else:
-        print(f"DEBUG: 성공! {len(papers)}건의 논문 데이터 수집: {[p['title'] for p in papers]}")
-        prompt = f"다음 ScienceON 논문 검색 결과를 바탕으로 도시 환경 데이터 연구 노트를 작성해줘: {papers}"
+        prompt = f"""
+        너는 도시 데이터 사이언스 학술 블로거이자 학부 연구생이야. 
+        아래 검색된 전문자료(논문) 리스트를 보고 IT 전공자 관점에서 연구 노트를 작성해줘.
+        
+        [검색 데이터]
+        {papers}
+        
+        [작성 가이드]
+        - 📊 오늘의 연구 개요 (표 형식)
+        - 🏙️ 주요 연구 요약
+        - 💻 IT/데이터 관점의 핵심 기술 분석
+        - 🚀 한계점 및 향후 연구 방향 (연구생의 시각)
+        """
 
     response = model.generate_content(prompt)
 
@@ -113,7 +85,7 @@ def run_research_agent():
     file_name = f"_posts/{today_file}-urban-research.md"
 
     with open(file_name, "w", encoding="utf-8") as f:
-        f.write(f"---\nlayout: single\ntitle: \"[Research] {now.strftime('%Y/%m/%d')} 도시 데이터 연구 노트\"\n---\n\n")
+        f.write(f"---\nlayout: single\ntitle: \"[Research] {now.strftime('%Y/%m/%d')} 도시 데이터 IT 연구 노트\"\n---\n\n")
         f.write(response.text)
     
     print(f"발행 완료: {file_name}")

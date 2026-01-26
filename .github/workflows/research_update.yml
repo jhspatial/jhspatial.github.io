@@ -27,8 +27,8 @@ jobs:
       - name: Run Research Agent
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          SCIENCEON_API_KEY: ${{ secrets.SCIENCEON_API_KEY }}
-          SCIENCEON_CLIENT_ID: ${{ secrets.SCIENCEON_CLIENT_ID }} # 이 줄도 추가하면 더 완벽합니다
+          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
         run: python scripts/research_agent.py
 
       - name: Commit and Push
