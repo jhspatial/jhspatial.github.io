@@ -3,7 +3,7 @@ name: Daily Research Note Agent
 on:
   schedule:
     - cron: '0 0 * * *'
-  workflow_dispatch:      # 수동 실행 가능
+  workflow_dispatch:
 
 jobs:
   build:
@@ -22,19 +22,19 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install google-generativeai requests
+          pip install google-generativeai requests xmltodict
 
       - name: Run Research Agent
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           SCIENCEON_API_KEY: ${{ secrets.SCIENCEON_API_KEY }}
+          SCIENCEON_CLIENT_ID: ${{ secrets.SCIENCEON_CLIENT_ID }} # 이 줄도 추가하면 더 완벽합니다
         run: python scripts/research_agent.py
 
       - name: Commit and Push
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          # 경로를 _posts/*.md로 수정하여 에러 해결
           git add _posts/*.md
           if [ -n "$(git status --porcelain)" ]; then
             git commit -m "Update: Daily Research Note by AI Agent"

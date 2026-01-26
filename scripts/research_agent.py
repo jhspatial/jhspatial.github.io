@@ -4,23 +4,19 @@ import google.generativeai as genai
 from datetime import datetime, timedelta, timezone
 import urllib3
 import json
-from urllib.parse import quote
+import xmltodict  # XML 변환용 추가
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-# 1. API 설정 (GitHub Secrets에 맞게 확인)
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-CLIENT_ID = os.getenv("SCIENCEON_CLIENT_ID") # 64자리 영문숫자 ID
-ACCESS_TOKEN = os.getenv("SCIENCEON_API_KEY") # 발급받은 토큰값
+CLIENT_ID = os.getenv("SCIENCEON_CLIENT_ID")
+ACCESS_TOKEN = os.getenv("SCIENCEON_API_KEY")
 
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-2.5-flash')
 
 def get_scienceon_papers():
-    # 가이드에 명시된 새로운 호출 주소
     url = "https://apigateway.kisti.re.kr/openapicall.do"
-    
-    # searchQuery를 JSON 형식으로 구성 후 인코딩
     query_json = json.dumps({"BI": "스마트시티"})
     
     params = {
@@ -29,55 +25,60 @@ def get_scienceon_papers():
         "version": "1.0",
         "action": "search",
         "target": "ARTI",
-        "searchQuery": query_json, # {"BI":"스마트시티"}
+        "searchQuery": query_json,
         "curPage": "1",
         "rowCount": "5"
     }
     
     try:
-        # GET 요청 시 params 전달
         response = requests.get(url, params=params, verify=False, timeout=15)
         print(f"DEBUG: Status Code: {response.status_code}")
         
-        # 404 에러 방지용 로그
         if response.status_code != 200:
-            print(f"DEBUG: Error Response: {response.text[:200]}")
             return []
 
-        # 가이드상 응답은 XML 또는 JSON인데, 보통 MetaData 태그로 시작함
-        # 만약 JSON으로 요청했다면 아래와 같이 파싱
-        data = response.json()
+        # 200인데 JSON 에러가 난다면 100% XML입니다.
+        # XML을 딕셔너리로 변환
+        data_dict = xmltodict.parse(response.text)
         
-        # 가이드 문서 샘플 구조: MetaData > resultSummary > ...
-        # 실제 데이터는 데이터 구조에 따라 보정이 필요할 수 있습니다.
+        # ScienceON XML 구조: MetaData > recordList > record 리스트
         paper_list = []
-        
-        # JSON 응답 내에서 논문 아이템 추출 시도
-        # (가이드에는 XML 샘플만 있지만, 보통 record나 item 키를 사용함)
-        records = data.get('MetaData', {}).get('recordList', {}).get('record', [])
-        if isinstance(records, dict): records = [records]
+        try:
+            # XML 구조를 따라가며 데이터 추출
+            metadata = data_dict.get('MetaData', {})
+            record_list = metadata.get('recordList', {})
+            records = record_list.get('record', [])
+            
+            # 검색 결과가 1개일 경우 리스트가 아닐 수 있으므로 처리
+            if isinstance(records, dict):
+                records = [records]
 
-        for rec in records:
-            paper_list.append({
-                "title": rec.get('Title') or rec.get('title'),
-                "author": rec.get('Author') or rec.get('author'),
-                "abstract": rec.get('Abstract') or rec.get('abstract') or "초록 없음"
-            })
+            for rec in records:
+                # XML의 항목명은 대문자로 시작하는 경우가 많습니다 (가이드 기준)
+                paper_list.append({
+                    "title": rec.get('Title'),
+                    "author": rec.get('Author'),
+                    "abstract": rec.get('Abstract') or "초록 없음"
+                })
+        except Exception as parse_e:
+            print(f"DEBUG: XML Parsing Error: {parse_e}")
+            # 구조가 다를 경우를 대비해 원본 로그 출력 (디버깅용)
+            # print(response.text) 
             
         return paper_list
     except Exception as e:
-        print(f"DEBUG: Exception: {e}")
+        print(f"DEBUG: General Error: {e}")
         return []
 
 def run_research_agent():
     papers = get_scienceon_papers()
     
-    # 데이터가 없으면 트렌드 리포트로 대체 (안정적인 동작)
     if not papers:
-        print("DEBUG: API 데이터 수집 실패. 최신 동향으로 대체 생성합니다.")
-        prompt = "최근 '스마트시티 및 교통 데이터 사이언스' 관련 주요 IT 기술 트렌드 3가지를 학부 연구생 관점에서 마크다운으로 작성해줘."
+        print("DEBUG: 실제 데이터를 찾지 못해 트렌드 리포트를 작성합니다.")
+        prompt = "도시 데이터 사이언스 전공자 관점에서 최근 '스마트시티'와 '지능형 로보틱스'의 결합 트렌드에 대해 연구 노트를 작성해줘."
     else:
-        prompt = f"다음 논문 데이터를 바탕으로 IT 전공자 관점의 연구 노트를 작성해줘: {papers}"
+        print(f"DEBUG: {len(papers)}건의 논문 데이터를 찾았습니다.")
+        prompt = f"다음 논문 리스트를 IT 전공자 관점에서 연구 노트로 요약해줘: {papers}"
 
     response = model.generate_content(prompt)
 
