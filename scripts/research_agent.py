@@ -3,7 +3,7 @@ import requests
 import google.generativeai as genai
 from datetime import datetime, timedelta, timezone
 
-# 1. 환경 변수에서 키 로드
+# 1. API 설정 (GitHub Secrets에 NAVER_CLIENT_ID, NAVER_CLIENT_SECRET 등록 필요)
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID")
 NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET")
@@ -12,20 +12,18 @@ genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-2.5-flash')
 
 def get_naver_papers():
-    # 네이버 전문자료(doc) 검색 엔드포인트
+    """네이버 전문자료(학술논문 등) 검색"""
     url = "https://openapi.naver.com/v1/search/doc.json"
-    
     headers = {
         "X-Naver-Client-Id": NAVER_CLIENT_ID,
         "X-Naver-Client-Secret": NAVER_CLIENT_SECRET
     }
-    
-    # 3학년 전공생 수준에 맞는 키워드로 검색
+    # 스마트시티, 교통 데이터, 지능형 로보틱스 관련 키워드 검색
     params = {
-        "query": "스마트시티 교통 데이터 분석 논문",
-        "display": 5, # 5개 출력
+        "query": "스마트시티 교통 데이터 분석",
+        "display": 5,
         "start": 1,
-        "sort": "sim"  # 유사도순
+        "sort": "sim"
     }
     
     try:
@@ -34,58 +32,62 @@ def get_naver_papers():
             items = response.json().get('items', [])
             paper_list = []
             for item in items:
-                # <b> 태그 제거 등 텍스트 정제
-                clean_title = item['title'].replace("<b>", "").replace("</b>", "")
-                clean_desc = item['description'].replace("<b>", "").replace("</b>", "")
+                # HTML 태그 제거 및 텍스트 정제
+                title = item['title'].replace("<b>", "").replace("</b>", "")
+                desc = item['description'].replace("<b>", "").replace("</b>", "")
                 paper_list.append({
-                    "title": clean_title,
-                    "description": clean_desc,
-                    "link": item['link']
+                    "title": title,
+                    "link": item['link'],
+                    "description": desc
                 })
             return paper_list
-        else:
-            print(f"DEBUG: Naver API Error {response.status_code}")
-            return []
-    except Exception as e:
-        print(f"DEBUG: Error - {e}")
+        return []
+    except:
         return []
 
 def run_research_agent():
     papers = get_naver_papers()
     
-    # 데이터 수집 결과에 따른 프롬프트 (도시 데이터 RA 컨셉)
-    if not papers:
-        prompt = """
-        너는 도시 데이터 사이언스 학부 연구생이야. 
-        오늘은 검색 결과가 없어서 '지능형 로보틱스와 도시 교통의 미래'에 대한 
-        본인의 연구 견해를 마크다운 형식으로 작성해줘.
+    # 데이터가 있을 경우 Gemini에게 상세 분석 요청
+    if papers:
+        prompt = f"""
+        너는 '도시 데이터 사이언스'를 전공하는 학부 연구생이야. 
+        아래 수집된 최신 전문자료(논문/보고서) 리스트를 보고 IT 전공자 관점에서 연구 노트를 작성해줘.
+
+        [수집된 데이터]
+        {papers}
+
+        [출력 규칙 - 반드시 준수]
+        1. 형식: 마크다운 헤더(###)와 이모지(📊, 🏙️, 💻, 🚀) 활용
+        2. 내용: 
+           - 각 논문의 **제목**과 **출처 링크**를 명시할 것
+           - IT/데이터 관점(데이터 수집 기법, 분석 모델 등)에서 분석할 것
+           - 데이터가 아니어도 이쪽 도메인을 공부하려면 어떤 걸 더 공부하면 좋겠다 이런 걸 알려줘
+        3. 서론/결론 없이 본문만 출력
         """
     else:
-        prompt = f"""
-        너는 도시 데이터 사이언스 학술 블로거이자 학부 연구생이야. 
-        아래 검색된 전문자료(논문) 리스트를 보고 IT 전공자 관점에서 연구 노트를 작성해줘.
-        
-        [검색 데이터]
-        {papers}
-        
-        [작성 가이드]
-        - 📊 오늘의 연구 개요 (표 형식)
-        - 🏙️ 주요 연구 요약
-        - 💻 IT/데이터 관점의 핵심 기술 분석
-        - 🚀 한계점 및 향후 연구 방향 (연구생의 시각)
-        """
+        # 데이터가 없을 때의 대비책
+        prompt = "최근 스마트시티 교통 데이터 사이언스 및 지능형 로보틱스 분야의 IT 기술 트렌드에 대해 학부 연구생 관점에서 연구 노트를 작성해줘."
 
     response = model.generate_content(prompt)
 
+    # 날짜 설정
     kst = timezone(timedelta(hours=9))
     now = datetime.now(kst)
     today_file = now.strftime("%Y-%m-%d")
-    
+    today_title = now.strftime("%Y/%m/%d")
+
     os.makedirs("_posts", exist_ok=True)
     file_name = f"_posts/{today_file}-urban-research.md"
 
+    # 블로그 Front Matter 설정 (기존 형식 유지)
     with open(file_name, "w", encoding="utf-8") as f:
-        f.write(f"---\nlayout: single\ntitle: \"[Research] {now.strftime('%Y/%m/%d')} 도시 데이터 IT 연구 노트\"\n---\n\n")
+        f.write("---\n")
+        f.write("layout: single\n")
+        f.write(f"title: \"[Research] {today_title} 도시·환경 IT 연구 노트\"\n")
+        f.write(f"date: {today_file}\n")
+        f.write("categories: [research]\n") # 요청하신 카테고리 유지
+        f.write("---\n\n")
         f.write(response.text)
     
     print(f"발행 완료: {file_name}")
