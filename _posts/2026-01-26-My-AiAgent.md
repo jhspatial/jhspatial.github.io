@@ -75,7 +75,7 @@ tags: [IT, research, pdf]        # 검색용 태그
 
 긴 글 읽어주셔서 감사합니다!
 
-![Screenshot 2026-01-22 at 11.56.19 AM](../images/2026-01-26-My-AiAgent/Screenshot 2026-01-22 at 11.56.19 AM-9410841.png)
+![Screenshot 2026-01-22 at 11.56.19 AM](../images/2026-01-26-My-AiAgent/Screenshot 2026-01-22 at 11.56.19 AM-9411262.png)
 
 
 
