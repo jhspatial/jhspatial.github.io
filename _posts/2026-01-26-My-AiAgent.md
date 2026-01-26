@@ -2,6 +2,7 @@
 title: "매일 아침 환율과 뉴스를 요약해주는 AI 에이전트 만들기"
 categories: [it-research]        # IT Research 카테고리
 tags: [IT, research, pdf]        # 검색용 태그
+Typora-root-url: ../
 ---
 
 **매일 아침 환율, 증시, 뉴스 데이터를 요약해주는 AI Agent를 만들어보았습니다.**
@@ -73,13 +74,7 @@ tags: [IT, research, pdf]        # 검색용 태그
 
 앞으로 이 에이전트가 저의 든든한 투자 파트너가 되어줄 것이라 믿습니다. 다음에는 더 고도화된 멀티 에이전트 시스템을 도입해 볼 계획입니다.
 
-긴 글 읽어주셔서 감사합니다!
-
-![Screenshot 2026-01-22 at 11.56.19 AM](../images/2026-01-26-My-AiAgent/Screenshot 2026-01-22 at 11.56.19 AM-9411262.png)
-
-
-
-![newcapture](/images/2026-01-26-My-AiAgent/newcapture.png)
+긴 글 읽어주셔서 감사합니다!![Screenshot2222](/images/2026-01-26-My-AiAgent/Screenshot2222-9413595.png)
 
 ---
 

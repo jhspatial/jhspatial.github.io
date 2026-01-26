@@ -1,36 +1,12 @@
 ---
 permalink: /
-title: ""
-author_profile: true
-redirect_from: 
-  - /about/
-  - /about.html
+title: "About"
+layout: react-page
+author_profile: false
 ---
 
-<div style="
-  width: 100%;
-  height: 100vh;
-  background-image: url('/images/copenhagen.jpg');
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-">
+<div id="root"></div>
 
-  <div style="
-    color: white;
-    background: rgba(0,0,0,0.45);
-    padding: 2rem 3rem;
-    border-radius: 10px;
-  ">
-    <h1 style="margin-bottom: 1rem;">
-      Junho's Record
-    </h1>
-    <p style="font-size: 1.2rem;">
-      This blog documents my research, projects, and academic portfolio as I study data-related fields.
-    </p>
-  </div>
-
-</div>
+<link href="{{ site.baseurl }}/assets/react/main.0a9dbc9e.css" rel="stylesheet">
+<script type="text/javascript" src="{{ site.baseurl }}/assets/react/453.71c876a1.chunk.js"></script>
+<script type="text/javascript" src="{{ site.baseurl }}/assets/react/main.e144d0b4.js"></script>

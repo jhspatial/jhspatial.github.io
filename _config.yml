@@ -192,6 +192,7 @@ exclude:
   - README
   - tmp
   - vendor
+  - react-app
 keep_files:
   - .git
   - .svn
