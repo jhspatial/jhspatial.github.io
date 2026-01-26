@@ -108,22 +108,6 @@
             }
           
         ]
-      },
-    
-      
-      
-      {
-        "name": "research",
-        "display_name": "research",
-        "url": "/categories/research/",
-        "posts": [
-          
-            {
-              "title": "[Research] 2026/01/24 도시·환경 IT 연구 노트",
-              "url": "/research/urban-research/"
-            }
-          
-        ]
       }
     
   ]

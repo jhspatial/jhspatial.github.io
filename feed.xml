@@ -1,74 +1,123 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://jhspatial.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jhspatial.github.io/" rel="alternate" type="text/html" /><updated>2026-01-26T15:45:58+00:00</updated><id>https://jhspatial.github.io/feed.xml</id><title type="html">Kim Junho / Blog</title><subtitle>Junho&apos;s academic portfolio</subtitle><author><name>Kim Junho</name><email>junho201007@soongsil.ac.kr</email></author><entry><title type="html">[Research] 2026/01/27 도시 데이터 연구 노트</title><link href="https://jhspatial.github.io/urban-research/" rel="alternate" type="text/html" title="[Research] 2026/01/27 도시 데이터 연구 노트" /><published>2026-01-27T00:00:00+00:00</published><updated>2026-01-27T00:00:00+00:00</updated><id>https://jhspatial.github.io/urban-research</id><content type="html" xml:base="https://jhspatial.github.io/urban-research/"><![CDATA[<p>안녕하세요! 도시 데이터 사이언스 학부 연구생입니다. ScienceON API 연동 문제로 실제 데이터를 활용한 구체적인 분석 사례를 보여드리지 못하게 되어 아쉽지만, 대신 ‘도시 데이터 분석’과 ‘LLM’을 결합하여 활용할 수 있는 흥미로운 가상 사례 3가지를 정리해 보았습니다. LLM의 강력한 자연어 처리 및 생성 능력과 도시 데이터 분석의 정량적 접근 방식이 만나면 정말 혁신적인 시너지를 낼 수 있을 거라 생각합니다.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://jhspatial.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jhspatial.github.io/" rel="alternate" type="text/html" /><updated>2026-01-26T15:52:41+00:00</updated><id>https://jhspatial.github.io/feed.xml</id><title type="html">Kim Junho / Blog</title><subtitle>Junho&apos;s academic portfolio</subtitle><author><name>Kim Junho</name><email>junho201007@soongsil.ac.kr</email></author><entry><title type="html">[Research] 2026/01/27 도시 데이터 IT 연구 노트</title><link href="https://jhspatial.github.io/urban-research/" rel="alternate" type="text/html" title="[Research] 2026/01/27 도시 데이터 IT 연구 노트" /><published>2026-01-27T00:00:00+00:00</published><updated>2026-01-27T00:00:00+00:00</updated><id>https://jhspatial.github.io/urban-research</id><content type="html" xml:base="https://jhspatial.github.io/urban-research/"><![CDATA[<p>안녕하세요, 도시 데이터 과학을 탐구하는 학부 연구생 블로거입니다!</p>
+
+<p>오늘은 스마트시티 관련 최신 연구 논문들을 살펴보면서, IT 전공자의 시각으로 어떤 기술들이 활용되고 있고 또 어떤 방향으로 나아가야 할지 깊이 있게 고민해보는 시간을 가졌습니다. 스마트시티는 단순히 기술의 집합체가 아니라, 도시의 복잡한 문제를 해결하고 시민의 삶의 질을 높이는 통합적인 접근이 필요한 분야라는 것을 다시 한번 느꼈네요. 자, 그럼 오늘 제가 살펴본 연구 자료들을 함께 분석해 볼까요?</p>
 
 <hr />
 
-<h3 id="도시-데이터-분석과-llm-결합-활용-사례-가상-시나리오"><strong>도시 데이터 분석과 LLM 결합 활용 사례 (가상 시나리오)</strong></h3>
+<h3 id="-오늘의-연구-개요">📊 오늘의 연구 개요</h3>
 
-<h4 id="1-시민-의견-종합-분석-및-정책-제안-도출-시스템"><strong>1. 시민 의견 종합 분석 및 정책 제안 도출 시스템</strong></h4>
-
-<ul>
-  <li><strong>배경:</strong> 도시에서는 다양한 채널(민원 게시판, 소셜 미디어, 언론 기사, 설문조사 등)을 통해 방대한 양의 시민 의견이 쏟아져 나옵니다. 이 비정형 텍스트 데이터를 효율적으로 분석하고, 유의미한 정책 인사이트를 도출하는 것은 매우 어려운 과제입니다.</li>
-  <li><strong>LLM의 역할:</strong>
-    <ul>
-      <li><strong>비정형 데이터 분석:</strong> 수많은 시민 의견 텍스트를 입력받아, 특정 이슈(예: 대중교통 불편, 공원 부족, 치안 불안)에 대한 <strong>감성 분석(긍정/부정/중립)</strong>, <strong>핵심 주제 및 키워드 추출</strong>, <strong>의견 요약</strong> 등을 수행합니다.</li>
-      <li><strong>패턴 인식 및 분류:</strong> 유사한 불만이나 제안을 자동으로 그룹화하고, 특정 지역이나 계층에서 공통적으로 나타나는 문제점을 식별합니다.</li>
-    </ul>
-  </li>
-  <li><strong>도시 데이터 분석의 역할:</strong>
-    <ul>
-      <li><strong>지리공간적 연결:</strong> LLM이 분석한 텍스트 데이터에서 추출된 키워드나 주제(예: “우리 동네 주차 문제”)를 실제 <strong>지도상의 특정 지역(지오코딩)</strong>과 연결하고, 해당 지역의 <strong>인구 통계, 교통량, 시설물 현황</strong> 등 정형 도시 데이터와 결합합니다.</li>
-      <li><strong>시계열 분석:</strong> 특정 이슈에 대한 시민 의견의 <strong>시간별 변화 추이</strong>를 분석하여, 정책 효과나 새로운 문제 발생 시점을 파악합니다.</li>
-      <li><strong>상관관계 분석:</strong> 시민 의견 패턴과 실제 도시 데이터(예: 주차 관련 민원 증가와 등록 차량 수/주차 공간의 상관관계) 사이의 통계적 유의미성을 분석합니다.</li>
-    </ul>
-  </li>
-  <li><strong>결합 시너지:</strong> LLM이 시민의 목소리를 정교하게 ‘이해’하고 ‘정리’한 다음, 도시 데이터 분석이 이를 ‘위치’시키고 ‘정량화’하여, 시청 공무원이나 도시 계획가가 특정 지역의 주차난, 소음 문제 등에 대한 <strong>시의적절하고 데이터 기반의 정책 제안 보고서(LLM 생성)</strong>를 신속하게 도출할 수 있습니다. 예를 들어, “강남구 A동 특정 시간대 주차 민원 급증은 인근 상가 유동인구 증가와 주차 공간 부족에 기인하며, 인근 유휴 부지 활용 방안 검토가 필요함”과 같은 보고서가 자동으로 생성될 수 있습니다.</li>
-</ul>
-
-<h4 id="2-도시-현황-질의응답-및-맞춤형-정보-제공-챗봇"><strong>2. 도시 현황 질의응답 및 맞춤형 정보 제공 챗봇</strong></h4>
-
-<ul>
-  <li><strong>배경:</strong> 시민들은 도시의 다양한 정보(교통 상황, 미세먼지 농도, 시설물 위치, 축제 정보 등)에 접근하고 싶어 하지만, 복잡한 웹사이트나 모바일 앱을 일일이 찾아보는 데 어려움을 겪습니다. 또한, 비전문가가 도시 데이터를 이해하기는 쉽지 않습니다.</li>
-  <li><strong>LLM의 역할:</strong>
-    <ul>
-      <li><strong>자연어 이해:</strong> 시민이 “강남역 지금 교통 상황 어때?”, “우리 동네 미세먼지 농도 알려줘”, “가장 가까운 공원은 어디야?” 등 <strong>자연어로 질문</strong>하면 이를 정확히 이해하고 의도를 파악합니다.</li>
-      <li><strong>정보 생성 및 요약:</strong> 복잡한 도시 데이터를 바탕으로 생성된 답변을 <strong>시민이 이해하기 쉬운 언어로 가공</strong>하여 제공하고, 필요한 경우 추가 정보를 제안합니다.</li>
-      <li><strong>다국어 지원:</strong> 다양한 언어를 사용하는 외국인 관광객이나 거주자에게도 편리하게 정보를 제공합니다.</li>
-    </ul>
-  </li>
-  <li><strong>도시 데이터 분석의 역할:</strong>
-    <ul>
-      <li><strong>실시간 데이터 연동:</strong> 교통 센서, 대기질 측정소, CCTV, 대중교통 운행 정보 등 <strong>실시간으로 수집되는 방대한 도시 데이터베이스</strong>와 연동됩니다.</li>
-      <li><strong>지리공간 분석:</strong> 사용자의 현재 위치를 기반으로 가장 가까운 시설물을 찾아주거나, 특정 지역의 공간 데이터를 분석하여 정보를 제공합니다.</li>
-      <li><strong>예측 분석:</strong> 과거 데이터와 현재 데이터를 바탕으로 미래 교통 체증 예측, 미세먼지 농도 변화 예측 등 <strong>예측 정보를 제공</strong>합니다.</li>
-    </ul>
-  </li>
-  <li><strong>결합 시너지:</strong> LLM 기반 챗봇이 도시의 모든 데이터를 <strong>지능적인 인터페이스</strong>로 연결하여, 시민들이 마치 대화하듯이 원하는 도시 정보를 얻을 수 있게 됩니다. “오늘 밤 시청 앞 광장에서 하는 행사 알려줘”라고 물으면, LLM이 관련 행사 정보를 도시 이벤트 데이터베이스에서 찾아와 친절하게 설명해주고, 가는 길의 대중교통편까지 안내해주는 식입니다. 이는 도시 정보의 접근성을 획기적으로 높이고 시민 만족도를 향상시킬 수 있습니다.</li>
-</ul>
-
-<h4 id="3-재난-및-도시-문제-예측-보고서-자동-생성"><strong>3. 재난 및 도시 문제 예측 보고서 자동 생성</strong></h4>
-
-<ul>
-  <li><strong>배경:</strong> 지진, 홍수, 폭염, 감염병 확산 등 도시 재난 상황 발생 시 신속하고 정확한 정보 분석과 보고서 작성이 필수적입니다. 또한, 인구 변화, 노후 시설 증가 등으로 인한 잠재적 도시 문제를 미리 예측하고 대비하는 것이 중요합니다.</li>
-  <li><strong>LLM의 역할:</strong>
-    <ul>
-      <li><strong>보고서 초안 작성:</strong> 도시 데이터 분석 결과(예: 특정 지역의 침수 위험도 상승, 특정 감염병의 확산 경로 예측)를 바탕으로 <strong>재난 경고문, 상황 보고서, 대응 계획 초안</strong> 등을 자동으로 생성합니다.</li>
-      <li><strong>다양한 정보원 통합 요약:</strong> 언론 보도, 전문가 논평, 관련 법규, 국제 사례 등 다양한 텍스트 정보를 통합하여 보고서의 맥락을 풍부하게 만듭니다.</li>
-      <li><strong>질의응답 기반 보고서 개선:</strong> 분석가가 “이 보고서에서 가장 취약한 계층은?”, “대피소 현황은?” 등 질문하면 LLM이 보고서를 수정하거나 보완합니다.</li>
-    </ul>
-  </li>
-  <li><strong>도시 데이터 분석의 역할:</strong>
-    <ul>
-      <li><strong>위험도 예측 모델링:</strong> 과거 재난 데이터, 기상 데이터, 지리 정보, 건물 노후도, 인구 밀도 등을 활용하여 <strong>특정 지역의 재난 발생 위험도를 예측</strong>하는 모델을 구축합니다.</li>
-      <li><strong>자원 배치 최적화:</strong> 재난 발생 시 대피소, 구급차, 소방관 등 <strong>자원의 최적 배치 경로 및 수량</strong>을 분석합니다.</li>
-      <li><strong>영향 평가:</strong> 재난 발생 시 예상되는 경제적 손실, 인명 피해, 시설물 파괴 정도 등을 정량적으로 분석합니다.</li>
-    </ul>
-  </li>
-  <li><strong>결합 시너지:</strong> 도시 데이터 분석을 통해 도출된 정량적인 예측 및 분석 결과(수치, 통계, 지도)를 LLM이 <strong>의미 있는 스토리와 실행 가능한 제안이 담긴 자연어 보고서</strong>로 즉시 전환합니다. 예를 들어, 폭우 예측 시 LLM은 “이번 집중 호우로 인해 한강변 저지대 침수 위험이 높으니, 관련 지역 주민 대피 계획을 즉시 가동해야 하며, 대피소 A, B의 수용 가능 인원과 구호 물품 현황을 확인해야 함”과 같은 상세한 재난 대응 보고서를 실시간으로 생성하여, 의사결정권자들이 빠르게 조치할 수 있도록 돕습니다.</li>
-</ul>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">제목</th>
+      <th style="text-align: left">주요 내용</th>
+      <th style="text-align: left">핵심 기술/방법론</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">딥러닝 시티: 스마트 시티의 빅데이터 분석 프레임워크 제안</td>
+      <td style="text-align: left">스마트시티의 방대한 데이터를 딥러닝 기반으로 분석하고 활용하기 위한 통합 프레임워크 제안</td>
+      <td style="text-align: left">빅데이터, 딥러닝, 분석 프레임워크</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">스마트시티 데이터허브 시험검증 방안 개발을 위한 요구사항 분석</td>
+      <td style="text-align: left">다양한 스마트시티 서비스 간 데이터 공유 및 연동을 위한 데이터 허브의 안정성과 신뢰성 확보를 위한 검증 방안 모색</td>
+      <td style="text-align: left">데이터 허브, 데이터 공유, 요구사항 분석</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">토픽 모델링을 활용한 스마트시티 연구동향 분석</td>
+      <td style="text-align: left">스마트시티 관련 학술 연구의 주요 흐름과 핵심 주제를 파악하기 위한 텍스트 마이닝 기법 적용</td>
+      <td style="text-align: left">토픽 모델링, 자연어 처리</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">구조적 토픽 모델링 기반 스마트 시티 연구 동향 분석</td>
+      <td style="text-align: left">기존 토픽 모델링의 한계를 보완, 스마트시티 연구의 잠재된 구조적 주제와 동향을 심층적으로 분석</td>
+      <td style="text-align: left">구조적 토픽 모델링(STM), 자연어 처리</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">스마트 거버넌스 기반의 부산시 스마트시티 교통정책 담론분석</td>
+      <td style="text-align: left">실제 도시(부산)의 스마트 거버넌스 체계를 통해 교통 정책이 어떻게 수립되고 논의되는지 분석</td>
+      <td style="text-align: left">담론 분석, 정책 분석</td>
+    </tr>
+  </tbody>
+</table>
 
 <hr />
 
-<p>물론 실제 데이터가 있었다면 훨씬 더 구체적인 분석 예시를 보여드릴 수 있었겠지만, 이 가상 시나리오들이 도시 데이터 분석과 LLM의 협업이 가져올 미래 도시의 모습을 상상하는 데 도움이 되었으면 좋겠습니다. 언젠가는 ScienceON API를 통해 실제 연구 결과를 보여드릴 수 있기를 바랍니다!</p>]]></content><author><name>Kim Junho</name><email>junho201007@soongsil.ac.kr</email></author><summary type="html"><![CDATA[안녕하세요! 도시 데이터 사이언스 학부 연구생입니다. ScienceON API 연동 문제로 실제 데이터를 활용한 구체적인 분석 사례를 보여드리지 못하게 되어 아쉽지만, 대신 ‘도시 데이터 분석’과 ‘LLM’을 결합하여 활용할 수 있는 흥미로운 가상 사례 3가지를 정리해 보았습니다. LLM의 강력한 자연어 처리 및 생성 능력과 도시 데이터 분석의 정량적 접근 방식이 만나면 정말 혁신적인 시너지를 낼 수 있을 거라 생각합니다.]]></summary></entry><entry><title type="html">매일 아침 환율과 뉴스를 요약해주는 AI 에이전트 만들기</title><link href="https://jhspatial.github.io/it-research/My-AiAgent/" rel="alternate" type="text/html" title="매일 아침 환율과 뉴스를 요약해주는 AI 에이전트 만들기" /><published>2026-01-26T00:00:00+00:00</published><updated>2026-01-26T00:00:00+00:00</updated><id>https://jhspatial.github.io/it-research/My-AiAgent</id><content type="html" xml:base="https://jhspatial.github.io/it-research/My-AiAgent/"><![CDATA[<p><strong>매일 아침 환율, 증시, 뉴스 데이터를 요약해주는 AI Agent를 만들어보았습니다.</strong></p>
+<h3 id="️-주요-연구-요약">🏙️ 주요 연구 요약</h3>
+
+<p>오늘 살펴본 논문들은 크게 세 가지 흐름으로 요약할 수 있습니다.</p>
+
+<ol>
+  <li><strong>스마트시티의 핵심 인프라 및 분석 기술 제안:</strong> 첫 번째 논문은 스마트시티가 생성하는 방대한 빅데이터를 효과적으로 처리하고 가치를 창출하기 위한 <strong>딥러닝 기반의 분석 프레임워크</strong>를 제시합니다. 이는 스마트시티의 ‘두뇌’ 역할을 하는 기술적 기반을 다루고 있죠. 또한, 두 번째 논문은 다양한 도시 서비스 간의 데이터 연동과 공유를 위한 <strong>데이터 허브의 중요성</strong>과 이를 위한 <strong>시험 검증 방안</strong>에 대한 요구사항을 분석하여, 스마트시티의 ‘혈관’에 해당하는 데이터 유통의 신뢰성 확보를 강조하고 있습니다.</li>
+  <li><strong>스마트시티 연구 동향 분석:</strong> 세 번째와 네 번째 논문은 <strong>토픽 모델링</strong>이라는 자연어 처리 기술을 활용하여 스마트시티 연구가 어떤 방향으로 흘러가고 있는지, 어떤 주제들이 주요하게 다뤄지고 있는지를 객관적으로 분석하고 있습니다. 특히 ‘구조적 토픽 모델링’은 단순히 키워드를 넘어선 심층적인 연구 흐름을 파악하는 데 기여합니다. 이는 마치 우리가 스마트시티라는 복잡한 지도를 그릴 때, 현재 어디에 와 있고 어디로 가야 할지를 알려주는 나침반과 같습니다.</li>
+  <li><strong>실제 도시 정책 및 거버넌스 적용 사례:</strong> 마지막 논문은 부산시의 사례를 통해 <strong>스마트 거버넌스</strong>가 교통 정책 수립 과정에 어떻게 기여하며, 기술과 정책이 실제 도시 문제 해결에 어떻게 연동되는지를 보여줍니다. 이는 기술이 단순히 기술로만 머무는 것이 아니라, 실제 시민 생활과 정책 결정에 어떤 영향을 미치는지를 탐구하는 중요한 지점입니다.</li>
+</ol>
+
+<p>이 논문들을 통해 스마트시티는 단순히 최첨단 기술을 도입하는 것을 넘어, <strong>데이터를 기반으로 도시를 이해하고(연구 동향 분석), 데이터를 효율적으로 공유하며(데이터 허브), 이 데이터를 딥러닝으로 분석하여(딥러닝 프레임워크), 최종적으로 시민 삶에 긍정적인 영향을 미치는 정책을 수립하는(스마트 거버넌스) 일련의 통합적인 과정</strong>임을 알 수 있었습니다.</p>
+
+<hr />
+
+<h3 id="-it데이터-관점의-핵심-기술-분석">💻 IT/데이터 관점의 핵심 기술 분석</h3>
+
+<p>IT 전공자로서 오늘 다뤄진 논문들에서 특히 인상 깊었던 기술적 관점들을 분석해 봅니다.</p>
+
+<ol>
+  <li><strong>빅데이터와 딥러닝 기반 분석 프레임워크:</strong>
+    <ul>
+      <li><strong>핵심:</strong> 스마트시티는 교통, 환경, 에너지, 안전 등 다양한 분야에서 실시간으로 방대한 양의 이질적인 데이터를 쏟아냅니다. ‘딥러닝 시티’ 논문은 이러한 빅데이터를 처리하고 예측 및 최적화하는 데 딥러닝이 필수적임을 보여줍니다.</li>
+      <li><strong>IT 시사점:</strong> 단순히 모델을 개발하는 것을 넘어, <strong>데이터 수집-저장-전처리-분석-시각화-활용</strong>에 이르는 전 과정에서 확장성과 유연성을 갖춘 <strong>아키텍처 설계</strong>가 중요합니다. 예를 들어, 스트리밍 데이터를 위한 Kafka, 대용량 저장을 위한 Hadoop/Spark, 분산 딥러닝을 위한 TensorFlow/PyTorch on Kubernetes 등의 기술 스택이 고려될 것입니다. 실시간 예측 모델의 성능 최적화와 경량화도 핵심 과제입니다.</li>
+    </ul>
+  </li>
+  <li><strong>데이터 허브와 데이터 공유 플랫폼:</strong>
+    <ul>
+      <li><strong>핵심:</strong> 스마트시티의 데이터는 특정 기관이나 서비스에 고립되어선 안 됩니다. ‘데이터 허브’ 논문은 다양한 주체 간의 원활한 데이터 공유와 활용을 위한 플랫폼의 중요성을 강조합니다.</li>
+      <li><strong>IT 시사점:</strong> 데이터 허브는 단순히 데이터를 모으는 것을 넘어, <strong>데이터 표준화, 메타데이터 관리, API 기반 연동, 접근 제어 및 보안, 데이터 거버넌스</strong> 등 복잡한 기술적/관리적 요소들을 포함합니다. 상호운용성(Interoperability) 확보는 가장 어려운 부분 중 하나이며, GraphQL, OpenAPI 등 최신 API 기술과 분산 데이터베이스, 블록체인 기반의 데이터 무결성 검증 등도 적용 가능성을 모색해볼 수 있습니다.</li>
+    </ul>
+  </li>
+  <li><strong>토픽 모델링 (자연어 처리):</strong>
+    <ul>
+      <li><strong>핵심:</strong> ‘스마트시티 연구동향 분석’ 논문들은 LDA(Latent Dirichlet Allocation)나 STM(Structural Topic Model)과 같은 토픽 모델링 기법을 활용하여 방대한 텍스트 데이터(논문 초록, 보고서 등)에서 숨겨진 의미와 주제를 자동으로 추출합니다.</li>
+      <li><strong>IT 시사점:</strong> 이는 비정형 텍스트 데이터를 분석하여 인사이트를 도출하는 <strong>자연어 처리(NLP)</strong> 분야의 중요한 응용입니다. 특히 STM은 메타데이터(예: 발행 연도, 저자 소속)를 활용하여 토픽의 변화 추이나 특정 그룹의 관심을 분석할 수 있어 더욱 정교한 분석을 가능하게 합니다. 이러한 기술은 연구 동향 분석을 넘어, 시민 의견 수렴, 정책 문서 분석 등 다양한 도시 문제 해결에도 확장될 수 있습니다.</li>
+    </ul>
+  </li>
+  <li><strong>스마트 거버넌스 및 정책 분석:</strong>
+    <ul>
+      <li><strong>핵심:</strong> ‘부산시 교통정책 담론분석’은 기술이 정책 수립 과정에 어떻게 접목되는지를 보여줍니다. 데이터 기반 의사결정과 시민 참여를 유도하는 디지털 플랫폼은 스마트 거버넌스의 핵심입니다.</li>
+      <li><strong>IT 시사점:</strong> 정책 결정을 위한 <strong>데이터 시각화 대시보드 개발, 공론장 데이터 수집 및 분석(소셜 미디어, 온라인 커뮤니티), 시뮬레이션 모델링</strong> 등이 IT의 역할입니다. 정책 효과를 측정하고 피드백을 수집하는 과정에도 IoT 센서 데이터와 연계된 분석 시스템이 활용될 수 있습니다.</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h3 id="-한계점-및-향후-연구-방향-연구생의-시각">🚀 한계점 및 향후 연구 방향 (연구생의 시각)</h3>
+
+<p>오늘 살펴본 논문들은 스마트시티의 다양한 측면을 보여주지만, 학부 연구생의 시각에서 몇 가지 한계점과 흥미로운 향후 연구 방향을 생각해 볼 수 있었습니다.</p>
+
+<p><strong>현재 연구의 한계점:</strong></p>
+
+<ol>
+  <li><strong>통합적 아키텍처의 부족:</strong> 각 논문이 특정 기술(딥러닝, 데이터 허브, 토픽 모델링)이나 특정 도메인(교통 정책)에 집중하고 있어, 이 모든 요소들이 어떻게 유기적으로 연결되어 ‘스마트시티’라는 거대한 시스템을 구성하는지에 대한 <strong>종합적인 아키텍처 제안</strong>은 아직 부족해 보입니다. 이론적 프레임워크는 많지만, 실제 구현 단계에서의 기술적 연동은 큰 난관일 것입니다.</li>
+  <li><strong>데이터의 현실적 문제:</strong> ‘빅데이터’를 강조하지만, 실제 도시 데이터는 <strong>이질성, 누락, 오염, 불균형</strong> 등의 문제점을 안고 있습니다. 이를 어떻게 효과적으로 정제하고 표준화하여 분석에 활용할 것인지에 대한 구체적인 방법론 제시가 더 필요하다고 생각합니다. 또한, <strong>데이터 프라이버시, 보안, 윤리적 활용</strong>에 대한 논의도 기술적 제안만큼이나 중요합니다.</li>
+  <li><strong>성과 측정 및 검증의 어려움:</strong> 스마트시티 기술 도입 후, 실제로 도시 문제 해결에 얼마나 기여했는지, 시민들의 삶의 질이 얼마나 향상되었는지에 대한 <strong>객관적이고 정량적인 성과 측정 및 검증</strong>이 어렵습니다. 데이터 허브의 ‘시험 검증 방안’과 같은 논의는 중요하지만, 실질적인 서비스 및 정책 단위에서의 효과 측정 메트릭 개발이 필요합니다.</li>
+</ol>
+
+<p><strong>향후 연구 방향 (연구생의 시각):</strong></p>
+
+<ol>
+  <li><strong>엣지 컴퓨팅 기반 실시간 데이터 처리:</strong> 중앙 서버로 모든 데이터를 전송하기에는 대역폭과 지연 시간의 한계가 있습니다. <strong>엣지 컴퓨팅(Edge Computing)</strong> 기술을 활용하여 도시 곳곳의 IoT 디바이스에서 데이터를 1차 처리하고 필요한 정보만 클라우드로 전송하는 분산 아키텍처 연구는 실시간성과 효율성을 크게 높일 수 있을 것입니다.</li>
+  <li><strong>설명 가능한 인공지능 (XAI) 도입:</strong> 딥러닝 모델이 도시 교통 흐름을 예측하거나 에너지 소비 패턴을 최적화할 때, 그 결정의 근거를 이해하는 것은 중요합니다. <strong>설명 가능한 AI(Explainable AI, XAI)</strong> 기술을 통해 모델의 의사결정 과정을 투명하게 공개하고, 예측 결과에 대한 신뢰도를 높이는 연구를 해보고 싶습니다. 이는 시민과 정책 입안자들이 AI를 더욱 신뢰하고 활용하는 데 기여할 것입니다.</li>
+  <li><strong>디지털 트윈 (Digital Twin) 기반 시뮬레이션 및 정책 검증:</strong> 실제 도시의 모든 데이터와 시스템을 가상 공간에 구현하는 <strong>디지털 트윈</strong>은 미래 스마트시티의 핵심 기술이 될 것입니다. 이를 통해 새로운 도시 정책이나 서비스 도입 전에 가상 환경에서 다양한 시나리오를 시뮬레이션하고, 그 효과를 예측하여 시행착오를 줄이는 연구에 도전해보고 싶습니다.</li>
+  <li><strong>시민 참여형 데이터 거버넌스 모델 개발:</strong> 기술 중심의 스마트시티를 넘어, 시민들이 데이터 생성, 활용, 공유 과정에 직접 참여하고 의견을 제시할 수 있는 <strong>블록체인 기반의 데이터 주권 및 보상 모델</strong>이나, <strong>참여형 데이터 수집 앱 개발</strong> 등도 흥미로운 연구 주제가 될 것입니다.</li>
+</ol>
+
+<hr />
+
+<p>오늘의 연구 노트를 작성하면서, 스마트시티라는 거대한 도전을 해결하기 위해서는 단순히 IT 기술뿐만 아니라 도시 계획, 사회학, 정책학 등 다양한 분야와의 <strong>융합 연구</strong>가 필수적이라는 것을 다시 한번 깨달았습니다. 저도 IT 전공자로서 이러한 복합적인 문제 해결에 기여할 수 있는 방법을 계속해서 모색해 나가겠습니다!</p>
+
+<p>다음에는 더 흥미로운 도시 데이터 과학 주제로 찾아오겠습니다. 읽어주셔서 감사합니다!</p>]]></content><author><name>Kim Junho</name><email>junho201007@soongsil.ac.kr</email></author><summary type="html"><![CDATA[안녕하세요, 도시 데이터 과학을 탐구하는 학부 연구생 블로거입니다!]]></summary></entry><entry><title type="html">매일 아침 환율과 뉴스를 요약해주는 AI 에이전트 만들기</title><link href="https://jhspatial.github.io/it-research/My-AiAgent/" rel="alternate" type="text/html" title="매일 아침 환율과 뉴스를 요약해주는 AI 에이전트 만들기" /><published>2026-01-26T00:00:00+00:00</published><updated>2026-01-26T00:00:00+00:00</updated><id>https://jhspatial.github.io/it-research/My-AiAgent</id><content type="html" xml:base="https://jhspatial.github.io/it-research/My-AiAgent/"><![CDATA[<p><strong>매일 아침 환율, 증시, 뉴스 데이터를 요약해주는 AI Agent를 만들어보았습니다.</strong></p>
 
 <hr />
 
@@ -429,120 +478,104 @@ categories: [daily-news]
 
 <p>그러나 미국 증시의 견조한 상승세, 특히 기술주의 강세는 글로벌 투자 심리가 여전히 AI와 기술 혁신에 대한 기대를 크게 걸고 있음을 강력히 시사합니다. 이는 한국 IT 업계, 특히 AI 반도체 및 관련 솔루션 기업들에게는 지속적인 성장 동력을 제공할 것입니다. 삼성전자와 SK하이닉스는 AI 서버 구축에 필수적인 고성능 메모리 반도체(HBM) 수요 증가에 적극적으로 대응하며 글로벌 시장에서의 리더십을 더욱 공고히 해야 합니다. 동시에 국내 AI 스타트업들은 혁신적인 기술과 서비스로 글로벌 시장에 진출하여 새로운 성장 동력을 확보할 수 있습니다. AI 인재 확보 및 AI 윤리 문제에 대한 선제적 대응 또한 장기적인 기업 경쟁력과 지속 가능성을 위해 필수적입니다.</p>
 
-<p>결론적으로, 한국 경제는 원화 약세의 구조적 압력에 대한 면밀한 관리와 함께, AI 기술 혁신이라는 강력한 흐름을 기회로 삼아 산업 경쟁력을 강화해야 할 시점입니다. 정부와 기업은 고환율 리스크 관리 및 AI 산업 생태계 강화, 그리고 관련 규제 및 윤리적 프레임워크 구축에 협력하여 이러한 변화에 선제적으로 대응해야 할 것입니다.</p>]]></content><author><name>Kim Junho</name><email>junho201007@soongsil.ac.kr</email></author><category term="daily-news" /><summary type="html"><![CDATA[📊 오늘의 시장 지표]]></summary></entry><entry><title type="html">[Research] 2026/01/24 도시·환경 IT 연구 노트</title><link href="https://jhspatial.github.io/research/urban-research/" rel="alternate" type="text/html" title="[Research] 2026/01/24 도시·환경 IT 연구 노트" /><published>2026-01-24T00:00:00+00:00</published><updated>2026-01-24T00:00:00+00:00</updated><id>https://jhspatial.github.io/research/urban-research</id><content type="html" xml:base="https://jhspatial.github.io/research/urban-research/"><![CDATA[<h3 id="-오늘의-연구-논문-개요">📊 오늘의 연구 논문 개요</h3>
+<p>결론적으로, 한국 경제는 원화 약세의 구조적 압력에 대한 면밀한 관리와 함께, AI 기술 혁신이라는 강력한 흐름을 기회로 삼아 산업 경쟁력을 강화해야 할 시점입니다. 정부와 기업은 고환율 리스크 관리 및 AI 산업 생태계 강화, 그리고 관련 규제 및 윤리적 프레임워크 구축에 협력하여 이러한 변화에 선제적으로 대응해야 할 것입니다.</p>]]></content><author><name>Kim Junho</name><email>junho201007@soongsil.ac.kr</email></author><category term="daily-news" /><summary type="html"><![CDATA[📊 오늘의 시장 지표]]></summary></entry><entry><title type="html">Urban Research</title><link href="https://jhspatial.github.io/urban-research/" rel="alternate" type="text/html" title="Urban Research" /><published>2026-01-24T00:00:00+00:00</published><updated>2026-01-24T00:00:00+00:00</updated><id>https://jhspatial.github.io/urban-research</id><content type="html" xml:base="https://jhspatial.github.io/urban-research/"><![CDATA[<p>import os
+import requests
+import google.generativeai as genai
+from datetime import datetime, timedelta, timezone</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>구분</th>
-      <th>내용</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>분석 논문 수</td>
-      <td><strong>2편</strong></td>
-    </tr>
-    <tr>
-      <td>주요 키워드</td>
-      <td>스마트시티, 도시환경, 데이터, 교통, 대기질, 머신러닝, GIS, 센서</td>
-    </tr>
-    <tr>
-      <td>데이터 유형</td>
-      <td><strong>정형 / 반정형</strong> (센서 데이터, GIS 공간 데이터, 교통량 데이터 등)</td>
-    </tr>
-  </tbody>
-</table>
+<h1 id="1-api-설정-github-secrets에-naver_client_id-naver_client_secret-등록-필요">1. API 설정 (GitHub Secrets에 NAVER_CLIENT_ID, NAVER_CLIENT_SECRET 등록 필요)</h1>
+<p>GEMINI_API_KEY = os.getenv(“GEMINI_API_KEY”)
+NAVER_CLIENT_ID = os.getenv(“NAVER_CLIENT_ID”)
+NAVER_CLIENT_SECRET = os.getenv(“NAVER_CLIENT_SECRET”)</p>
 
-<hr />
+<p>genai.configure(api_key=GEMINI_API_KEY)
+model = genai.GenerativeModel(‘gemini-2.5-flash’)</p>
 
-<h3 id="️-part-1-연구-요약">🏙️ Part 1. 연구 요약</h3>
+<p>def get_naver_papers():
+    “"”네이버 전문자료(학술논문 등) 검색”””
+    url = “https://openapi.naver.com/v1/search/doc.json”
+    headers = {
+        “X-Naver-Client-Id”: NAVER_CLIENT_ID,
+        “X-Naver-Client-Secret”: NAVER_CLIENT_SECRET
+    }
+    # 스마트시티, 교통 데이터, 지능형 로보틱스 관련 키워드 검색
+    params = {
+        “query”: “스마트시티 교통 데이터 분석”,
+        “display”: 5,
+        “start”: 1,
+        “sort”: “sim”
+    }</p>
 
-<p>두 논문은 <strong>스마트시티 환경</strong>에서 발생하는 주요 <strong>도시 문제(교통 혼잡, 대기질 악화)</strong>를 <strong>데이터 기반</strong>으로 해결하고자 하는 공통된 목적을 가지고 있습니다. 연구들은 실제 도시 데이터를 활용하여 문제 현상을 정의하고, 이를 분석하여 예측 및 모니터링 시스템을 구축하는 데 초점을 맞추고 있습니다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>try:
+    response = requests.get(url, headers=headers, params=params)
+    if response.status_code == 200:
+        items = response.json().get('items', [])
+        paper_list = []
+        for item in items:
+            # HTML 태그 제거 및 텍스트 정제
+            title = item['title'].replace("&lt;b&gt;", "").replace("&lt;/b&gt;", "")
+            desc = item['description'].replace("&lt;b&gt;", "").replace("&lt;/b&gt;", "")
+            paper_list.append({
+                "title": title,
+                "link": item['link'],
+                "description": desc
+            })
+        return paper_list
+    return []
+except:
+    return []
+</code></pre></div></div>
 
-<ul>
-  <li><strong>교통 혼잡 문제</strong>: 서울시 교차로에서 발생하는 <strong>실시간 교통량 데이터</strong>를 통해 혼잡도를 정량적으로 정의하고, 이를 <strong>머신러닝 모델</strong>의 입력으로 사용하여 미래 교통량을 예측함으로써 도시 교통 문제에 대한 <strong>예측적 대응 방안</strong>을 모색합니다. 데이터는 특정 시간과 위치에 따른 교통량이라는 <strong>정형 데이터</strong> 형태로 문제를 정의합니다.</li>
-  <li><strong>대기질 악화 문제</strong>: 도시 내 미세먼지 문제 해결을 위해 <strong>센서에서 수집된 미세먼지 데이터</strong>와 해당 센서의 <strong>GIS 위치 정보</strong>를 결합하여 대기질 상태를 공간적으로 정의하고, 이를 <strong>모니터링 시스템</strong>으로 시각화하여 문제의 현재 상태를 파악합니다. 대기질 데이터는 센서에서 발생하는 시계열 <strong>정형 데이터</strong>이며, GIS는 위치 기반의 <strong>반정형 공간 데이터</strong>로 문제를 정의합니다.</li>
-</ul>
+<p>def run_research_agent():
+    papers = get_naver_papers()</p>
 
-<p>두 연구 모두 <strong>도시 환경의 동적인 변화</strong>를 데이터로 포착하고, 이를 통해 도시 관리의 효율성을 높이려는 노력을 보여줍니다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 데이터가 있을 경우 Gemini에게 상세 분석 요청
+if papers:
+    prompt = f"""
+    너는 '도시 데이터 사이언스'를 전공하는 학부 연구생이야. 
+    아래 수집된 최신 전문자료(논문/보고서) 리스트를 보고 IT 전공자 관점에서 연구 노트를 작성해줘.
 
-<hr />
+    [수집된 데이터]
+    {papers}
 
-<h3 id="-part-2-사용-데이터--기술">💻 Part 2. 사용 데이터 &amp; 기술</h3>
+    [출력 규칙 - 반드시 준수]
+    1. 형식: 마크다운 헤더(###)와 이모지(📊, 🏙️, 💻, 🚀) 활용
+    2. 내용: 
+       - 각 논문의 **제목**과 **출처 링크**를 명시할 것
+       - IT/데이터 관점(데이터 수집 기법, 분석 모델 등)에서 분석할 것
+       - 데이터 관점이 아니어도 이쪽 도메인 분야의 지식을 더 쌓으려면 어떤 걸 공부하면 좋겠다하는 걸 알려줘
+    3. 서론/결론 없이 본문만 출력
+    """
+else:
+    # 데이터가 없을 때의 대비책
+    prompt = "최근 스마트시티 교통 데이터 사이언스 및 지능형 로보틱스 분야의 IT 기술 트렌드에 대해 학부 연구생 관점에서 연구 노트를 작성해줘."
 
-<p>분석 대상 논문들은 스마트시티 구축의 핵심 요소인 <strong>데이터 수집, 분석, 활용</strong>을 위한 다양한 IT 기술 스택을 사용하고 있습니다.</p>
+response = model.generate_content(prompt)
 
-<ul>
-  <li><strong>사용된 데이터 종류:</strong>
-    <ul>
-      <li><strong>[정형 데이터]</strong>
-        <ul>
-          <li><strong>센서 데이터</strong>: 미세먼지 농도, 교통량 등 특정 위치에서 주기적으로 수집되는 시계열 데이터. (IoT 디바이스 및 도시 인프라 센서)</li>
-          <li><strong>공공데이터</strong>: 서울시 교차로 데이터(교통량)와 같이 지자체나 공공기관에서 제공하는 행정 데이터.</li>
-        </ul>
-      </li>
-      <li><strong>[반정형 데이터]</strong>
-        <ul>
-          <li><strong>GIS(Geographic Information System) 데이터</strong>: 지리적 위치 정보, 공간 객체 정보(도로망, 건물, 센서 위치 등)를 포함하는 공간 데이터. 대기질 센서 데이터와 결합하여 공간적 분석에 활용됩니다.</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li><strong>분석 기법:</strong>
-    <ul>
-      <li><strong>머신러닝(Machine Learning)</strong>: 교통량 예측 모델 구축에 활용되며, 과거 데이터를 학습하여 미래 패턴을 예측하는 데 중점을 둡니다. 회귀 분석, 시계열 예측 모델(LSTM, ARIMA 등) 등이 사용될 수 있습니다.</li>
-      <li><strong>통계 분석</strong>: 데이터의 특성 파악, 패턴 식별, 모델 검증 등 기초적인 데이터 분석에 활용됩니다.</li>
-      <li><strong>공간 분석(Spatial Analysis)</strong>: GIS 데이터를 활용하여 대기질 센서 데이터의 공간적 분포 및 관계를 분석하고 시각화하는 데 사용됩니다. 핫스팟 분석, 공간 보간법 등이 포함될 수 있습니다.</li>
-    </ul>
-  </li>
-  <li><strong>IT 기술 스택:</strong>
-    <ul>
-      <li><strong>데이터 수집/처리</strong>: IoT 플랫폼(센서 데이터 연동), API(공공데이터 연동), ETL(Extract, Transform, Load) 파이프라인.</li>
-      <li><strong>데이터 저장</strong>: 관계형 데이터베이스(RDBMS) 또는 시계열 데이터베이스(TSDB) for sensor data, 공간 데이터베이스(PostGIS 등) for GIS data.</li>
-      <li><strong>데이터 분석/모델링</strong>: Python (Pandas, NumPy, Scikit-learn), R, TensorFlow/PyTorch (딥러닝 모델 사용 시).</li>
-      <li><strong>시각화/모니터링</strong>: GIS 소프트웨어(QGIS, ArcGIS), 웹 기반 지도 API (Leaflet, Mapbox), 대시보드 구축 툴 (Grafana, Tableau).</li>
-    </ul>
-  </li>
-</ul>
+# 날짜 설정
+kst = timezone(timedelta(hours=9))
+now = datetime.now(kst)
+today_file = now.strftime("%Y-%m-%d")
+today_title = now.strftime("%Y/%m/%d")
 
-<hr />
+os.makedirs("_posts", exist_ok=True)
+file_name = f"_posts/{today_file}-urban-research.md"
 
-<h3 id="-part-3-it-관점-인사이트">🚀 Part 3. IT 관점 인사이트</h3>
+# 블로그 Front Matter 설정 (기존 형식 유지)
+with open(file_name, "w", encoding="utf-8") as f:
+    f.write("---\n")
+    f.write("layout: single\n")
+    f.write(f"title: \"[Research] {today_title} 도시·환경 IT 연구 노트\"\n")
+    f.write(f"date: {today_file}\n")
+    f.write("categories: [research]\n") # 요청하신 카테고리 유지
+    f.write("---\n\n")
+    f.write(response.text)
 
-<p>IT 전공자로서 이 연구들에서 얻을 수 있는 시사점은 다음과 같습니다.</p>
+print(f"발행 완료: {file_name}")
+</code></pre></div></div>
 
-<ol>
-  <li><strong>💡 실시간 데이터 파이프라인 및 IoT 인프라의 중요성</strong>:
-    <ul>
-      <li><strong>인사이트</strong>: 도시 교통 혼잡도 예측이나 대기질 모니터링은 <strong>실시간(Real-time)</strong> 또는 <strong>준실시간(Near Real-time)</strong> 데이터 처리 역량을 요구합니다. 센서에서 끊임없이 발생하는 대규모 스트리밍 데이터를 효율적으로 수집, 전송, 처리하기 위한 견고한 IoT 인프라와 데이터 파이프라인 구축이 필수적입니다.</li>
-      <li><strong>확장 가능성</strong>: 스마트시티의 모든 서비스(재난 예측, 에너지 관리, 자율주행 등)는 실시간 데이터에 의존하므로, Kafka, Spark Streaming, MQTT 같은 기술을 활용한 <strong>고성능 스트리밍 아키텍처</strong>는 다른 도시 서비스로의 확장 기반이 됩니다. <strong>엣지 컴퓨팅</strong>을 통해 센서 가까이에서 데이터를 1차 처리하여 네트워크 부하를 줄이고 응답 속도를 높일 수도 있습니다.</li>
-      <li><strong>개선 포인트</strong>: 센서 네트워크의 안정성 확보(통신 오류, 전력 문제), 데이터 전송 지연 최소화, 데이터 정합성 유지 기술 강화가 필요합니다.</li>
-    </ul>
-  </li>
-  <li><strong>💡 공간 데이터 인프라 및 시각화 플랫폼 고도화</strong>:
-    <ul>
-      <li><strong>인사이트</strong>: GIS 데이터는 도시 데이터 분석에서 <strong>‘어디서(Where)’</strong>라는 맥락을 제공하며, 이는 도시 문제의 본질을 이해하고 해결책을 제시하는 데 결정적인 역할을 합니다. 효과적인 공간 데이터 저장, 관리, 분석 및 시각화 시스템 구축은 스마트시티 플랫폼의 핵심 기능이 될 수 있습니다.</li>
-      <li><strong>확장 가능성</strong>: 대기질 모니터링에서 나아가, 도시 범죄 예측, 시설물 관리, 최적 경로 안내 등 <strong>위치 기반 서비스(LBS)</strong>를 확장하는 데 강력한 GIS 엔진과 <strong>대화형(Interactive) 시각화 대시보드</strong>가 활용될 수 있습니다. 3D 모델링, 증강현실(AR)을 활용한 도시 데이터 시각화도 고려해볼 만합니다.</li>
-      <li><strong>기술적 한계</strong>: 대용량 공간 데이터 처리 성능, 다양한 공간 데이터 형식 간의 호환성 문제, 실시간 공간 쿼리 최적화 등이 기술적인 도전 과제입니다.</li>
-    </ul>
-  </li>
-  <li><strong>💡 예측 모델의 안정성, 확장성 및 해석 가능성</strong>:
-    <ul>
-      <li><strong>인사이트</strong>: 머신러닝 기반의 교통 혼잡도 예측 모델은 도시 운영의 효율성을 크게 향상시킬 수 있습니다. 그러나 도시 환경은 끊임없이 변화하므로, 모델이 항상 최적의 성능을 유지하도록 <strong>지속적인 학습(Continuous Learning)</strong> 및 <strong>자동 재학습(Automated Retraining)</strong> 시스템이 중요합니다.</li>
-      <li><strong>확장 가능성</strong>: 교통 외에 전력 소비 예측, 물 수요 예측, 공공시설 이용 예측 등 다양한 도시 자원 관리에 <strong>시계열 예측(Time Series Forecasting)</strong> 및 <strong>강화 학습(Reinforcement Learning)</strong> 모델을 적용하여 최적화된 자원 배분 시스템을 구축할 수 있습니다.</li>
-      <li><strong>기술적 한계/개선 포인트</strong>:
-        <ul>
-          <li><strong>데이터 편향 및 일반화 문제</strong>: 특정 지역 데이터로 학습된 모델이 다른 지역에 적용될 때 성능 저하가 발생할 수 있습니다. 다양한 도시 환경 데이터를 통합 학습하여 <strong>일반화 성능</strong>을 높이는 연구가 필요합니다.</li>
-          <li><strong>모델 해석 가능성(Explainable AI, XAI)</strong>: 도시 정책 결정에 중요한 영향을 미치는 예측 모델의 경우, 왜 특정 결과가 도출되었는지 설명할 수 있는 <strong>설명 가능한 AI 기법</strong> 도입이 중요합니다. 단순히 예측 정확도를 넘어, 모델의 의사결정 과정을 이해하고 신뢰할 수 있도록 해야 합니다.</li>
-          <li><strong>리소스 최적화</strong>: 대규모 데이터를 처리하고 복잡한 모델을 학습시키기 위한 <strong>클라우드 기반의 분산 컴퓨팅 환경</strong> 최적화 및 비용 효율적인 운영 방안이 중요합니다.</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ol>
-
-<p>이러한 인사이트는 개별 논문의 연구를 넘어, <strong>통합된 스마트시티 운영 시스템</strong>을 구축하기 위한 IT 기술 스택과 아키텍처 설계에 중요한 지침을 제공합니다. 데이터의 수집부터 분석, 예측, 그리고 최종적인 정책 결정 지원에 이르기까지 전 과정에서 IT 기술의 역할과 개선 방향을 모색해야 합니다.</p>]]></content><author><name>Kim Junho</name><email>junho201007@soongsil.ac.kr</email></author><category term="research" /><summary type="html"><![CDATA[📊 오늘의 연구 논문 개요]]></summary></entry><entry><title type="html">2026/01/23 증시 지표 &amp;amp; 빅테크 뉴스 브리핑</title><link href="https://jhspatial.github.io/daily-news/market-tech-briefing/" rel="alternate" type="text/html" title="2026/01/23 증시 지표 &amp;amp; 빅테크 뉴스 브리핑" /><published>2026-01-23T00:00:00+00:00</published><updated>2026-01-23T00:00:00+00:00</updated><id>https://jhspatial.github.io/daily-news/market-tech-briefing</id><content type="html" xml:base="https://jhspatial.github.io/daily-news/market-tech-briefing/"><![CDATA[<h3 id="-오늘의-시장-지표">📊 오늘의 시장 지표</h3>
+<p>if <strong>name</strong> == “<strong>main</strong>”:
+    run_research_agent()</p>]]></content><author><name>Kim Junho</name><email>junho201007@soongsil.ac.kr</email></author><summary type="html"><![CDATA[import os import requests import google.generativeai as genai from datetime import datetime, timedelta, timezone]]></summary></entry><entry><title type="html">2026/01/23 증시 지표 &amp;amp; 빅테크 뉴스 브리핑</title><link href="https://jhspatial.github.io/daily-news/market-tech-briefing/" rel="alternate" type="text/html" title="2026/01/23 증시 지표 &amp;amp; 빅테크 뉴스 브리핑" /><published>2026-01-23T00:00:00+00:00</published><updated>2026-01-23T00:00:00+00:00</updated><id>https://jhspatial.github.io/daily-news/market-tech-briefing</id><content type="html" xml:base="https://jhspatial.github.io/daily-news/market-tech-briefing/"><![CDATA[<h3 id="-오늘의-시장-지표">📊 오늘의 시장 지표</h3>
 
 <table>
   <thead>
