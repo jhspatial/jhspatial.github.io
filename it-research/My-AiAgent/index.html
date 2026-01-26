@@ -1,0 +1,717 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>매일 아침 환율과 뉴스를 요약해주는 AI 에이전트 만들기 - Kim Junho / Blog</title>
+
+
+
+<meta name="description" content="매일 아침 환율, 증시, 뉴스 데이터를 요약해주는 AI Agent를 만들어보았습니다.">
+
+
+
+
+
+  <meta property="article:published_time" content="2026-01-26T00:00:00+00:00">
+
+
+
+  <link rel="canonical" href="https://jhspatial.github.io/it-research/My-AiAgent/">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Kim Junho",
+      "url" : "https://jhspatial.github.io",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+<!-- Open Graph protocol data (https://ogp.me/), used by social media -->
+<meta property="og:locale" content="en-US">
+<meta property="og:site_name" content="Kim Junho / Blog"> 
+<meta property="og:title" content="매일 아침 환율과 뉴스를 요약해주는 AI 에이전트 만들기">
+
+  <meta property="og:type" content="article">
+
+
+  <meta property="og:description" name="description" content="매일 아침 환율, 증시, 뉴스 데이터를 요약해주는 AI Agent를 만들어보았습니다.">
+
+
+  <meta property="og:url" content="https://jhspatial.github.io/it-research/My-AiAgent/">
+
+
+
+
+
+<!-- end Open Graph protocol -->
+
+<link href="https://jhspatial.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Kim Junho / Blog Feed">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="https://jhspatial.github.io/assets/css/main.css">
+
+    
+
+<!-- start custom head snippets -->
+
+<!-- Support for Academicons -->
+<link rel="stylesheet" href="https://jhspatial.github.io/assets/css/academicons.css"/>
+
+<!-- favicon from https://commons.wikimedia.org/wiki/File:OOjs_UI_icon_academic-progressive.svg -->
+<link rel="apple-touch-icon" sizes="180x180" href="https://jhspatial.github.io/images/apple-touch-icon-180x180.png"/>
+<link rel="icon" type="image/svg+xml" href="https://jhspatial.github.io/images/favicon.svg"/>
+<link rel="icon" type="image/png" href="https://jhspatial.github.io/images/favicon-32x32.png" sizes="32x32"/>
+<link rel="icon" type="image/png" href="https://jhspatial.github.io/images/favicon-192x192.png" sizes="192x192"/>
+<link rel="manifest" href="https://jhspatial.github.io/images/manifest.json"/>
+<link rel="icon" href="/images/favicon.ico"/>
+<meta name="theme-color" content="#ffffff"/>
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><span class="navicon"></span></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg persist ">
+            <a href="https://jhspatial.github.io/">Kim Junho / Blog</a>
+          </li>
+          
+            
+            <li class="masthead__menu-item ">
+              <a href="https://jhspatial.github.io/publications/">Publications</a>
+            </li>
+          
+            
+            <li class="masthead__menu-item ">
+              <a href="https://jhspatial.github.io/blog/">Blog</a>
+            </li>
+          
+            
+            <li class="masthead__menu-item ">
+              <a href="https://jhspatial.github.io/cv/">CV</a>
+            </li>
+          
+          <li id="theme-toggle" class="masthead__menu-item persist tail">
+            <a role="button" aria-labelledby="theme-icon"><i id="theme-icon" class="fa-solid fa-sun" aria-hidden="true" title="toggle theme"></i></a>
+          </li>
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="https://jhspatial.github.io/images/sky.jpeg" class="author__avatar" alt="Kim Junho"  fetchpriority="high" />
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Kim Junho</h3>
+    
+    <p class="author__bio">Machine learning</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      <!-- Font Awesome icons / Biographic information  -->
+      
+        <li class="author__desktop"><i class="fas fa-fw fa-location-dot icon-pad-right" aria-hidden="true"></i>Seoul</li>
+      
+      
+        <li class="author__desktop"><i class="fas fa-fw fa-building-columns icon-pad-right" aria-hidden="true"></i>Soongsil University</li>
+      
+      
+      
+        <li><a href="mailto:junho201007@soongsil.ac.kr"><i class="fas fa-fw fa-envelope icon-pad-right" aria-hidden="true"></i>Email</a></li>
+      
+
+      <!-- Font Awesome and Academicons icons / Academic websites -->
+      
+            
+      
+            
+      
+      
+                              
+      
+      
+      
+      
+      
+
+      <!-- Font Awesome icons / Repositories and software development -->
+      
+            
+            
+      
+        <li><a href="https://github.com/jhspatial"><i class="fab fa-fw fa-github icon-pad-right" aria-hidden="true"></i>GitHub</a></li>
+      
+      
+        <li><a href="https://kaggle.com/issacsnow"><i class="fab fa-fw fa-kaggle icon-pad-right" aria-hidden="true"></i>Kaggle</a></li>
+            
+            
+
+      <!-- Font Awesome icons / Social media -->
+              
+      
+      
+            
+      
+                  
+                  
+      
+            
+            
+            
+      
+            
+                  
+            
+      
+            
+            
+      
+              
+      
+                      
+      
+      
+            
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="매일 아침 환율과 뉴스를 요약해주는 AI 에이전트 만들기">
+    <meta itemprop="description" content="매일 아침 환율, 증시, 뉴스 데이터를 요약해주는 AI Agent를 만들어보았습니다.">
+    <meta itemprop="datePublished" content="January 26, 2026">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">매일 아침 환율과 뉴스를 요약해주는 AI 에이전트 만들기
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> 
+
+
+  
+	  3 minute read
+	
+</p>
+          
+        
+        
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Published:</strong> <time datetime="2026-01-26T00:00:00+00:00">January 26, 2026</time></p>
+            
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p><strong>매일 아침 환율, 증시, 뉴스 데이터를 요약해주는 AI Agent를 만들어보았습니다.</strong></p>
+
+<hr />
+
+<h2 id="1-프로젝트-개요-왜-이-에이전트를-만들었는가">1. 프로젝트 개요: 왜 이 에이전트를 만들었는가?</h2>
+
+<h3 id="11-배경-정보의-홍수-속에서-길을-잃다">1.1 배경: “정보의 홍수 속에서 길을 잃다”</h3>
+
+<p>최근 자산 관리의 중요성을 느끼며 본격적으로 투자를 공부하기 시작했습니다. 처음이라 아는 것이 많지 않아, 상대적으로 안전하고 시장의 흐름을 따라갈 수 있는 <strong>“지수 투자(S&amp;P 500, 나스닥)”</strong>로 첫걸음을 뗐습니다.</p>
+
+<p>하지만 단순히 매수만 한다고 끝이 아니었습니다. 내가 투자한 지수들이 왜 오르고 내리는지, 그와 관련된 환율은 어떻게 변하고 있는지 매일 확인하는 것이 생각보다 큰 숙제였습니다. 매일 아침 여러 사이트를 돌아다니며 정보를 수집하는 번거로움을 해결하고 싶었고, 이 과정을 <strong>AI 에이전트</strong>에게 맡겨보기로 했습니다.</p>
+
+<h3 id="12-목표-자동으로-쓰고-분석하는-똑똑한-에이전트">1.2 목표: “자동으로 쓰고, 분석하는 똑똑한 에이전트”</h3>
+
+<p>이번 프로젝트의 목표는 명확합니다. <strong>개인 홈페이지에 주기적으로 특정 키워드(환율, 빅테크)에 대한 뉴스를 검색하고, 이를 AI가 분석하여 요약 리포트를 자동으로 작성해주는 에이전트</strong>를 만드는 것입니다.</p>
+
+<p>이를 위해 크게 세 가지 구성 요소를 설정했습니다.</p>
+<ul>
+  <li><strong>Perception (인식):</strong> 실시간 데이터 수집 (Naver API, NewsAPI, yfinance)</li>
+  <li><strong>Reasoning (추론):</strong> 똑똑한 두뇌 (Gemini 2.5 Flash)</li>
+  <li><strong>Action (실행):</strong> 자동 배포 (GitHub Actions)</li>
+</ul>
+
+<hr />
+
+<h2 id="2-에이전트-설계-어떻게-동작하는가">2. 에이전트 설계: 어떻게 동작하는가?</h2>
+
+<p>발표 자료에서도 보셨듯이, 에이전트는 제 깃허브 블로그(<code class="language-plaintext highlighter-rouge">jhspatial.github.io</code>) 인프라 내에서 유기적으로 움직입니다.</p>
+
+<h3 id="21--22-데이터-수집과-추론-scriptsagentpy">2.1 &amp; 2.2 데이터 수집과 추론 (scripts/agent.py)</h3>
+
+<p>에이전트의 심장부인 <code class="language-plaintext highlighter-rouge">agent.py</code>는 매일 아침 다음의 복잡한 과정을 스스로 수행합니다.</p>
+
+<p><strong>1. 다양한 소스에서 데이터 수집</strong></p>
+<ul>
+  <li><strong>yfinance:</strong> 파이썬 라이브러리를 통해 원/달러, 원/엔 환율과 S&amp;P 500, 나스닥 지수의 현재가 및 전일 대비 변동폭을 가져옵니다.</li>
+  <li><strong>Naver API:</strong> 국내 뉴스를 뒤져 환율 변동의 구체적인 원인을 파악합니다.</li>
+  <li><strong>NewsAPI:</strong> 미국 빅테크 기업들(Apple, NVIDIA 등)과 매크로 경제 소식을 수집하여 AI에게 전달합니다.</li>
+</ul>
+
+<p><strong>2. 에이전트의 기억(Memory) 활용</strong>
+단순히 데이터만 나열하면 재미없죠. 제 에이전트는 어제 본인이 쓴 글을 스스로 읽어옵니다. 이를 통해 “어제는 이랬는데 오늘은 이렇게 변했구나” 하는 흐름을 파악하고, 불필요한 내용의 반복을 피합니다.</p>
+
+<p><strong>3. Gemini 2.5 Flash를 통한 전략적 분석</strong>
+수집된 모든 데이터는 Gemini 모델로 전달됩니다. 저는 이 에이전트에게 <strong>“글로벌 금융 및 IT 전략가”</strong>라는 역할을 주었습니다. 에이전트는 지표를 정리할 뿐만 아니라, 미국 증시의 변화가 한국의 삼성전자나 SK하이닉스 같은 IT 기업에 어떤 영향을 줄지 인사이트까지 도출합니다.</p>
+
+<h3 id="23-자율-배포-시스템-github-actions">2.3 자율 배포 시스템 (GitHub Actions)</h3>
+
+<p>아무리 분석을 잘해도 제가 직접 블로그에 올려야 한다면 ‘자율 에이전트’라고 할 수 없겠죠. <strong>GitHub Actions</strong>를 활용해 완전 자동화를 구현했습니다.</p>
+
+<ul>
+  <li><strong>자동 스케줄링:</strong> 매일 아침 9시(한국 시간)가 되면 깃허브의 가상 서버가 깨어나 에이전트를 실행합니다.</li>
+  <li><strong>보안:</strong> 중요한 API 키들은 GitHub Secrets에 숨겨두어 보안성을 높였습니다.</li>
+  <li><strong>자동 발행:</strong> AI가 작성을 마치면 <code class="language-plaintext highlighter-rouge">github-actions[bot]</code>이 제 블로그 저장소에 새 글을 커밋하고 푸시합니다. 저는 아침에 일어나서 올라온 글을 읽기만 하면 됩니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="3-결과-및-성과-매일-아침-배달되는-리포트">3. 결과 및 성과: 매일 아침 배달되는 리포트</h2>
+
+<p>결과물은 대성공입니다! 실제 블로그 화면을 보시면, 2026년 1월 22일자 리포트가 깔끔하게 발행된 것을 확인할 수 있습니다.</p>
+
+<p><strong>[리포트의 주요 구성]</strong></p>
+<ol>
+  <li><strong>마켓 대시보드:</strong> 환율과 증시 지표를 표(Table) 형식으로 정리하여 가독성을 높였습니다. 하락 시에는 ▽, 상승 시에는 ▲ 이콘을 사용하여 직관적으로 변화를 알 수 있습니다.</li>
+  <li><strong>환율 &amp; 증시 분석:</strong> “이 대통령 회견으로 환율이 내리고 코스피가 올랐다”는 식의 구체적인 뉴스 기사를 인용하며 시장의 흐름을 짚어줍니다.</li>
+  <li><strong>빅테크 이슈 및 인사이트:</strong> 글로벌 뉴스를 요약하고 이것이 우리 시장에 주는 시사점을 전문적인 말투로 정리해줍니다.</li>
+</ol>
+
+<hr />
+
+<h2 id="마치며">마치며</h2>
+
+<p>이번 프로젝트를 통해 AI 에이전트가 단순히 질문에 답하는 수준을 넘어, 스스로 데이터를 찾고(Perception), 계획을 세워 분석하며(Reasoning), 결과물을 세상에 내놓는(Action) 일련의 과정을 직접 경험할 수 있었습니다.</p>
+
+<p>앞으로 이 에이전트가 저의 든든한 투자 파트너가 되어줄 것이라 믿습니다. 다음에는 더 고도화된 멀티 에이전트 시스템을 도입해 볼 계획입니다.</p>
+
+<p>긴 글 읽어주셔서 감사합니다!<img src="/images/2026-01-26-My-AiAgent/Screenshot2222-9413595.png" alt="Screenshot2222" /></p>
+
+<hr />
+
+<p>[발표자료]</p>
+
+<iframe src="/files/newsAIAgent.pdf" width="100%" height="600px">
+이 브라우저는 PDF를 지원하지 않습니다. PDF 파일은 [여기서 다운로드](/files/newsAIAgent.pdf)하세요.
+</iframe>
+
+
+        
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="https://jhspatial.github.io/tags/#it" class="page__taxonomy-item" rel="tag">IT</a><span class="sep">, </span>
+    
+      
+      
+      <a href="https://jhspatial.github.io/tags/#pdf" class="page__taxonomy-item" rel="tag">pdf</a><span class="sep">, </span>
+    
+      
+      
+      <a href="https://jhspatial.github.io/tags/#research" class="page__taxonomy-item" rel="tag">research</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="https://jhspatial.github.io/categories/#it-research" class="page__taxonomy-item" rel="tag">it-research</a>
+    
+    </span>
+  </p>
+
+
+      </footer>
+
+      
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="https://jhspatial.github.io/daily-news/market-tech-briefing/" class="pagination--pager" title="2026/01/25 증시 지표 &amp; 빅테크 뉴스 브리핑
+">Previous</a>
+    
+    
+      <a href="https://jhspatial.github.io/daily-news/market-tech-briefing/" class="pagination--pager" title="2026/01/26 증시 지표 &amp; 빅테크 뉴스 브리핑
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://jhspatial.github.io/daily-news/market-tech-briefing/" rel="permalink">2026/01/26 증시 지표 &amp; 빅테크 뉴스 브리핑
+</a>
+      
+    </h2>
+    
+    
+      <p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> 
+
+
+  
+	  6 minute read
+	
+</p>
+    
+
+        
+         <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Published:</strong> <time datetime="2026-01-26T00:00:00+00:00">January 26, 2026</time></p>
+        
+
+    
+    <p class="archive__item-excerpt" itemprop="description"><h3 id="-오늘의-시장-지표">📊 오늘의 시장 지표</h3>
+
+</p>
+    
+    
+    
+
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://jhspatial.github.io/daily-news/market-tech-briefing/" rel="permalink">2026/01/25 증시 지표 &amp; 빅테크 뉴스 브리핑
+</a>
+      
+    </h2>
+    
+    
+      <p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+    
+
+        
+         <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Published:</strong> <time datetime="2026-01-25T00:00:00+00:00">January 25, 2026</time></p>
+        
+
+    
+    <p class="archive__item-excerpt" itemprop="description"><hr />
+
+<p>layout: single
+title: “2026/01/25 증시 지표 &amp; 빅테크 뉴스 브리핑”
+date: 2026-01-25
+categories: [daily-news]
+—</p>
+
+</p>
+    
+    
+    
+
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://jhspatial.github.io/research/urban-research/" rel="permalink">[Research] 2026/01/24 도시·환경 IT 연구 노트
+</a>
+      
+    </h2>
+    
+    
+      <p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+    
+
+        
+         <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Published:</strong> <time datetime="2026-01-24T00:00:00+00:00">January 24, 2026</time></p>
+        
+
+    
+    <p class="archive__item-excerpt" itemprop="description"><h3 id="-오늘의-연구-논문-개요">📊 오늘의 연구 논문 개요</h3>
+
+</p>
+    
+    
+    
+
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://jhspatial.github.io/daily-news/market-tech-briefing/" rel="permalink">2026/01/24 증시 지표 &amp; 빅테크 뉴스 브리핑
+</a>
+      
+    </h2>
+    
+    
+      <p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> 
+
+
+  
+	  6 minute read
+	
+</p>
+    
+
+        
+         <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Published:</strong> <time datetime="2026-01-24T00:00:00+00:00">January 24, 2026</time></p>
+        
+
+    
+    <p class="archive__item-excerpt" itemprop="description"><h3 id="-오늘의-시장-지표">📊 오늘의 시장 지표</h3>
+
+</p>
+    
+    
+    
+
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<a href="/sitemap/">Sitemap</a>
+
+<!-- Support for MatJax -->
+<script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+
+<!-- Support for Mermaid -->
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({startOnLoad:true, theme:'default'});
+    await mermaid.run({querySelector:'code.language-mermaid'});
+</script>
+
+<!-- end custom footer snippets -->
+
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="https://github.com/jhspatial"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    
+    <li><a href="https://jhspatial.github.io/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">
+  &copy; 2026 Kim Junho, Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.<br />
+  Site last updated 2026-01-26
+</div>
+
+      </footer>
+    </div>
+
+    <script type="module" src="https://jhspatial.github.io/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>
+

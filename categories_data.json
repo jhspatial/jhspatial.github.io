@@ -1,0 +1,130 @@
+{
+  "categories": [
+    
+    
+      
+      
+      {
+        "name": "daily-news",
+        "display_name": "daily-news",
+        "url": "/categories/daily-news/",
+        "posts": [
+          
+            {
+              "title": "2026/01/26 증시 지표 &amp; 빅테크 뉴스 브리핑",
+              "url": "/daily-news/market-tech-briefing/"
+            },
+          
+            {
+              "title": "2026/01/25 증시 지표 &amp; 빅테크 뉴스 브리핑",
+              "url": "/daily-news/market-tech-briefing/"
+            },
+          
+            {
+              "title": "2026/01/24 증시 지표 &amp; 빅테크 뉴스 브리핑",
+              "url": "/daily-news/market-tech-briefing/"
+            },
+          
+            {
+              "title": "2026/01/23 증시 지표 &amp; 빅테크 뉴스 브리핑",
+              "url": "/daily-news/market-tech-briefing/"
+            },
+          
+            {
+              "title": "2026/01/22 증시 지표 &amp; 빅테크 뉴스 브리핑",
+              "url": "/daily-news/market-tech-briefing/"
+            },
+          
+            {
+              "title": "2026/01/21 증시 지표 &amp; 빅테크 뉴스 브리핑",
+              "url": "/daily-news/market-tech-briefing/"
+            },
+          
+            {
+              "title": "2026/01/19 증시 지표 &amp; 빅테크 뉴스 브리핑",
+              "url": "/daily-news/market-tech-briefing/"
+            },
+          
+            {
+              "title": "2026/01/19 경제 환율 &amp; IT 뉴스",
+              "url": "/daily-news/daily-briefing/"
+            },
+          
+            {
+              "title": "2026/01/19 AI NEWS",
+              "url": "/daily-news/daily-ai-news/"
+            },
+          
+            {
+              "title": "2026/01/18 AI NEWS",
+              "url": "/daily-news/daily-ai-news/"
+            },
+          
+            {
+              "title": "2026/01/17 AI NEWS",
+              "url": "/daily-news/daily-ai-news/"
+            }
+          
+        ]
+      },
+    
+      
+      
+      {
+        "name": "it-research",
+        "display_name": "it-research",
+        "url": "/categories/it-research/",
+        "posts": [
+          
+            {
+              "title": "매일 아침 환율과 뉴스를 요약해주는 AI 에이전트 만들기",
+              "url": "/it-research/My-AiAgent/"
+            },
+          
+            {
+              "title": "AI Agent에 관해서",
+              "url": "/it-research/About-AiAgent/"
+            }
+          
+        ]
+      },
+    
+      
+      
+      {
+        "name": "ml-study",
+        "display_name": "ml-study",
+        "url": "/categories/ml-study/",
+        "posts": [
+          
+            {
+              "title": "혼자 공부하는 머신러닝 &amp; 딥러닝 03-02",
+              "url": "/ml-study/SelfStudyMechineLearning-03-2/"
+            },
+          
+            {
+              "title": "혼자 공부하는 머신러닝 &amp; 딥러닝 01-3",
+              "url": "/ml-study/SelfStudyMechineLearning_01-3/"
+            }
+          
+        ]
+      },
+    
+      
+      
+      {
+        "name": "research",
+        "display_name": "research",
+        "url": "/categories/research/",
+        "posts": [
+          
+            {
+              "title": "[Research] 2026/01/24 도시·환경 IT 연구 노트",
+              "url": "/research/urban-research/"
+            }
+          
+        ]
+      }
+    
+  ]
+}
