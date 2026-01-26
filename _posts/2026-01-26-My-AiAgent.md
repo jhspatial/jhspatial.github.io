@@ -75,9 +75,7 @@ tags: [IT, research, pdf]        # 검색용 태그
 
 긴 글 읽어주셔서 감사합니다!
 
-![스크린샷 2026-01-06 오후 3.18.38](/Users/kimjunho/githubb/jhspatial.github.blog/jhspatial.github.io/images/2026-01-26-My-AiAgent/스크린샷 2026-01-06 오후 3.18.38.png)
-
-![Screenshot 2026-01-22 at 11.56.19 AM](/Users/kimjunho/githubb/jhspatial.github.blog/jhspatial.github.io/images/2026-01-26-My-AiAgent/Screenshot 2026-01-22 at 11.56.19 AM.png)
+![newcapture](/Users/kimjunho/githubb/jhspatial.github.blog/jhspatial.github.io/images/2026-01-26-My-AiAgent/newcapture.png)
 
 ---
 
