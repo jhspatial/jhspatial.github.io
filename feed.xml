@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://jhspatial.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jhspatial.github.io/" rel="alternate" type="text/html" /><updated>2026-01-27T03:43:57+00:00</updated><id>https://jhspatial.github.io/feed.xml</id><title type="html">Kim Junho / Blog</title><subtitle>Junho&apos;s academic portfolio</subtitle><author><name>Kim Junho</name><email>junho201007@soongsil.ac.kr</email></author><entry><title type="html">2026/01/27 증시 지표 &amp;amp; 빅테크 뉴스 브리핑</title><link href="https://jhspatial.github.io/daily-news/market-tech-briefing/" rel="alternate" type="text/html" title="2026/01/27 증시 지표 &amp;amp; 빅테크 뉴스 브리핑" /><published>2026-01-27T00:00:00+00:00</published><updated>2026-01-27T00:00:00+00:00</updated><id>https://jhspatial.github.io/daily-news/market-tech-briefing</id><content type="html" xml:base="https://jhspatial.github.io/daily-news/market-tech-briefing/"><![CDATA[<h3 id="-오늘의-시장-지표">📊 오늘의 시장 지표</h3>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://jhspatial.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jhspatial.github.io/" rel="alternate" type="text/html" /><updated>2026-01-27T04:36:27+00:00</updated><id>https://jhspatial.github.io/feed.xml</id><title type="html">Kim Junho / Blog</title><subtitle>Junho&apos;s academic portfolio</subtitle><author><name>Kim Junho</name><email>junho201007@soongsil.ac.kr</email></author><entry><title type="html">2026/01/27 증시 지표 &amp;amp; 빅테크 뉴스 브리핑</title><link href="https://jhspatial.github.io/daily-news/market-tech-briefing/" rel="alternate" type="text/html" title="2026/01/27 증시 지표 &amp;amp; 빅테크 뉴스 브리핑" /><published>2026-01-27T00:00:00+00:00</published><updated>2026-01-27T00:00:00+00:00</updated><id>https://jhspatial.github.io/daily-news/market-tech-briefing</id><content type="html" xml:base="https://jhspatial.github.io/daily-news/market-tech-briefing/"><![CDATA[<h3 id="-오늘의-시장-지표">📊 오늘의 시장 지표</h3>
 
 <table>
   <thead>
@@ -235,7 +235,7 @@
 
 <p><strong>1. 다양한 소스에서 데이터 수집</strong></p>
 
-<p><img src="/images/2026-01-26-My-AiAgent/Screenshot 2026-01-27 at 12.32.28 PM.png" alt="Screenshot 2026-01-27 at 12.32.28 PM" /></p>
+<p><img src="/images/2026-01-26-My-AiAgent/Screenshot 2026-01-27 at 12.32.28 PM.png" alt="Screenshot 2026-01-27 at 12.32.28 PM" style="zoom:50%;" /></p>
 
 <ul>
   <li><strong>yfinance:</strong> 파이썬 라이브러리를 통해 원/달러, 원/엔 환율과 S&amp;P 500, 나스닥 지수의 현재가 및 전일 대비 변동폭을 가져옵니다.</li>
@@ -267,21 +267,32 @@
 
 <p>매일 아침 9시(한국 시간)가 되면 깃허브의 가상 서버(우분투)가 깨어나 에이전트를 실행합니다.</p>
 
-<p><img src="/images/2026-01-26-My-AiAgent/Screenshot 2026-01-27 at 12.38.35 PM.png" alt="Screenshot 2026-01-27 at 12.38.35 PM" style="zoom:50%;" /></p>
+<p><img src="/images/2026-01-26-My-AiAgent/Screenshot 2026-01-27 at 12.38.35 PM.png" alt="Screenshot 2026-01-27 at 12.38.35 PM" style="zoom:40%;" /></p>
 
 <p><strong>2. 무슨 일을 하는가?</strong></p>
 
+<p><img src="/../../../Desktop/Screenshot 2026-01-27 at 12.40.42 PM.png" alt="Screenshot 2026-01-27 at 12.40.42 PM" style="zoom:40%;" /></p>
+
 <ul>
+  <li>
+    <p><strong>환경설정</strong> : 파이썬과 뉴스 수집에 필요한 라이브러리를 설치합니다.</p>
+  </li>
   <li><strong>보안:</strong> 중요한 API 키들은 GitHub Secrets에 숨겨두어 보안성을 높였습니다.</li>
-  <li><img src="/../../../Desktop/Screenshot 2026-01-27 at 12.40.42 PM.png" alt="Screenshot 2026-01-27 at 12.40.42 PM" style="zoom:50%;" /></li>
-  <li><strong>자동 발행:</strong> AI가 작성을 마치면 <code class="language-plaintext highlighter-rouge">github-actions[bot]</code>이 제 블로그 저장소에 새 글을 커밋하고 푸시합니다. 저는 아침에 일어나서 올라온 글을 읽기만 하면 됩니다.</li>
+  <li>아까 살펴본 agent.py를 실행합니다!</li>
+</ul>
+
+<p><strong>3. 무슨 일을 하는가?</strong></p>
+
+<ul>
+  <li>github에서 자동으로 commit and push 해주는 코드입니다!</li>
+  <li><img src="/images/2026-01-26-My-AiAgent/Screenshot 2026-01-27 at 12.44.48 PM.png" alt="Screenshot 2026-01-27 at 12.44.48 PM" style="zoom:40%;" /></li>
 </ul>
 
 <hr />
 
 <h2 id="3-결과-및-성과-매일-아침-배달되는-리포트">3. 결과 및 성과: 매일 아침 배달되는 리포트</h2>
 
-<p>결과물은 대성공입니다! 실제 블로그 화면을 보시면, 2026년 1월 22일자 리포트가 깔끔하게 발행된 것을 확인할 수 있습니다.</p>
+<p><img src="/images/2026-01-26-My-AiAgent/Screenshot2222-9413595.png" alt="Screenshot2222" /></p>
 
 <p><strong>[리포트의 주요 구성]</strong></p>
 <ol>
@@ -298,7 +309,7 @@
 
 <p>앞으로 이 에이전트가 저의 든든한 투자 파트너가 되어줄 것이라 믿습니다. 다음에는 더 고도화된 멀티 에이전트 시스템을 도입해 볼 계획입니다.</p>
 
-<p>긴 글 읽어주셔서 감사합니다!<img src="/images/2026-01-26-My-AiAgent/Screenshot2222-9413595.png" alt="Screenshot2222" /></p>
+<p>긴 글 읽어주셔서 감사합니다!</p>
 
 <hr />
 
