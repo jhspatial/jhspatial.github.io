@@ -2,8 +2,6 @@
 title: "IT Research"
 layout: archive
 permalink: /it-research/
+taxonomy: it-research
+author_profile: true
 ---
-
-{% for post in site.categories.it-research %}
-  {% include archive-single.html %}
-{% endfor %}
