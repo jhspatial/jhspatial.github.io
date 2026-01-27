@@ -48,7 +48,7 @@ Naver API, NewsAPI, yfinance로 데이터를 수집하고, gemini를 추론엔�
 
 **1. 다양한 소스에서 데이터 수집**
 
-![Screenshot 2026-01-27 at 12.32.28 PM](/images/2026-01-26-My-AiAgent/Screenshot 2026-01-27 at 12.32.28 PM.png)
+<img src="/images/2026-01-26-My-AiAgent/Screenshot 2026-01-27 at 12.32.28 PM.png" alt="Screenshot 2026-01-27 at 12.32.28 PM" style="zoom:50%;" />
 
 * **yfinance:** 파이썬 라이브러리를 통해 원/달러, 원/엔 환율과 S&P 500, 나스닥 지수의 현재가 및 전일 대비 변동폭을 가져옵니다.
 * **Naver API:** 국내 뉴스를 뒤져 환율 변동의 구체적인 원인을 파악합니다.
@@ -76,25 +76,37 @@ gemini가 요약해준 정보를 가지고 md파일을 발행합니다.
 
 코드를 한 번 살펴보겠습니다.
 
+
+
 **1. 언제, 어떤 환경에서 실행될지?** 
 
 매일 아침 9시(한국 시간)가 되면 깃허브의 가상 서버(우분투)가 깨어나 에이전트를 실행합니다.
 
-<img src="/images/2026-01-26-My-AiAgent/Screenshot 2026-01-27 at 12.38.35 PM.png" alt="Screenshot 2026-01-27 at 12.38.35 PM" style="zoom:50%;" />
+<img src="/images/2026-01-26-My-AiAgent/Screenshot 2026-01-27 at 12.38.35 PM.png" alt="Screenshot 2026-01-27 at 12.38.35 PM" style="zoom:40%;" />
+
+
 
 **2. 무슨 일을 하는가?** 
 
+<img src="/../../../Desktop/Screenshot 2026-01-27 at 12.40.42 PM.png" alt="Screenshot 2026-01-27 at 12.40.42 PM" style="zoom:40%;" />
 
+- **환경설정** : 파이썬과 뉴스 수집에 필요한 라이브러리를 설치합니다.
 
 * **보안:** 중요한 API 키들은 GitHub Secrets에 숨겨두어 보안성을 높였습니다.
-* <img src="/../../../Desktop/Screenshot 2026-01-27 at 12.40.42 PM.png" alt="Screenshot 2026-01-27 at 12.40.42 PM" style="zoom:50%;" />
-* **자동 발행:** AI가 작성을 마치면 `github-actions[bot]`이 제 블로그 저장소에 새 글을 커밋하고 푸시합니다. 저는 아침에 일어나서 올라온 글을 읽기만 하면 됩니다.
+* 아까 살펴본 agent.py를 실행합니다!
+
+
+
+**3. 무슨 일을 하는가?** 
+
+* github에서 자동으로 commit and push 해주는 코드입니다!
+* <img src="/images/2026-01-26-My-AiAgent/Screenshot 2026-01-27 at 12.44.48 PM.png" alt="Screenshot 2026-01-27 at 12.44.48 PM" style="zoom:40%;" />
 
 ---
 
 ## 3. 결과 및 성과: 매일 아침 배달되는 리포트
 
-결과물은 대성공입니다! 실제 블로그 화면을 보시면, 2026년 1월 22일자 리포트가 깔끔하게 발행된 것을 확인할 수 있습니다.
+![Screenshot2222](/images/2026-01-26-My-AiAgent/Screenshot2222-9413595.png)
 
 **[리포트의 주요 구성]**
 1. **마켓 대시보드:** 환율과 증시 지표를 표(Table) 형식으로 정리하여 가독성을 높였습니다. 하락 시에는 ▽, 상승 시에는 ▲ 이콘을 사용하여 직관적으로 변화를 알 수 있습니다.
@@ -109,7 +121,7 @@ gemini가 요약해준 정보를 가지고 md파일을 발행합니다.
 
 앞으로 이 에이전트가 저의 든든한 투자 파트너가 되어줄 것이라 믿습니다. 다음에는 더 고도화된 멀티 에이전트 시스템을 도입해 볼 계획입니다.
 
-긴 글 읽어주셔서 감사합니다!![Screenshot2222](/images/2026-01-26-My-AiAgent/Screenshot2222-9413595.png)
+긴 글 읽어주셔서 감사합니다!
 
 ---
 
