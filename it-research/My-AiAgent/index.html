@@ -296,15 +296,17 @@
 
 <h2 id="1-프로젝트-개요-왜-이-에이전트를-만들었는가">1. 프로젝트 개요: 왜 이 에이전트를 만들었는가?</h2>
 
-<h3 id="11-배경-정보의-홍수-속에서-길을-잃다">1.1 배경: “정보의 홍수 속에서 길을 잃다”</h3>
+<h3 id="11-배경">1.1 배경</h3>
 
 <p>최근 자산 관리의 중요성을 느끼며 본격적으로 투자를 공부하기 시작했습니다. 처음이라 아는 것이 많지 않아, 상대적으로 안전하고 시장의 흐름을 따라갈 수 있는 <strong>“지수 투자(S&amp;P 500, 나스닥)”</strong>로 첫걸음을 뗐습니다.</p>
 
 <p>하지만 단순히 매수만 한다고 끝이 아니었습니다. 내가 투자한 지수들이 왜 오르고 내리는지, 그와 관련된 환율은 어떻게 변하고 있는지 매일 확인하는 것이 생각보다 큰 숙제였습니다. 매일 아침 여러 사이트를 돌아다니며 정보를 수집하는 번거로움을 해결하고 싶었고, 이 과정을 <strong>AI 에이전트</strong>에게 맡겨보기로 했습니다.</p>
 
-<h3 id="12-목표-자동으로-쓰고-분석하는-똑똑한-에이전트">1.2 목표: “자동으로 쓰고, 분석하는 똑똑한 에이전트”</h3>
+<h3 id="12-목표">1.2 목표</h3>
 
 <p>이번 프로젝트의 목표는 명확합니다. <strong>개인 홈페이지에 주기적으로 특정 키워드(환율, 빅테크)에 대한 뉴스를 검색하고, 이를 AI가 분석하여 요약 리포트를 자동으로 작성해주는 에이전트</strong>를 만드는 것입니다.</p>
+
+<p><img src="/images/2026-01-26-My-AiAgent/Screenshot 2026-01-27 at 12.28.51 PM.png" alt="Screenshot 2026-01-27 at 12.28.51 PM" /></p>
 
 <p>이를 위해 크게 세 가지 구성 요소를 설정했습니다.</p>
 <ul>
@@ -313,36 +315,63 @@
   <li><strong>Action (실행):</strong> 자동 배포 (GitHub Actions)</li>
 </ul>
 
+<p>Naver API, NewsAPI, yfinance로 데이터를 수집하고, gemini를 추론엔진으로 사용하여 분석했습니다. 그리고 GitHub Actions를 이용해 자동배포를 설계하였습니다.</p>
+
 <hr />
 
 <h2 id="2-에이전트-설계-어떻게-동작하는가">2. 에이전트 설계: 어떻게 동작하는가?</h2>
 
-<p>발표 자료에서도 보셨듯이, 에이전트는 제 깃허브 블로그(<code class="language-plaintext highlighter-rouge">jhspatial.github.io</code>) 인프라 내에서 유기적으로 움직입니다.</p>
+<p>에이전트는 제 깃허브 블로그(<code class="language-plaintext highlighter-rouge">jhspatial.github.io</code>) 인프라 내에서 유기적으로 움직입니다.</p>
+
+<p><img src="/images/2026-01-26-My-AiAgent/Screenshot 2026-01-27 at 12.30.03 PM.png" alt="Screenshot 2026-01-27 at 12.30.03 PM" /></p>
+
+<p>여기 사진에서 보시는 것처럼 github/workflows/daily_news.yml 파일을 수정하여 자동배포를 하는 코드를 설계했고 scripts/agent.py 파일을 만들어 agent를 설계했습니다.</p>
 
 <h3 id="21--22-데이터-수집과-추론-scriptsagentpy">2.1 &amp; 2.2 데이터 수집과 추론 (scripts/agent.py)</h3>
 
 <p>에이전트의 심장부인 <code class="language-plaintext highlighter-rouge">agent.py</code>는 매일 아침 다음의 복잡한 과정을 스스로 수행합니다.</p>
 
 <p><strong>1. 다양한 소스에서 데이터 수집</strong></p>
+
+<p><img src="/images/2026-01-26-My-AiAgent/Screenshot 2026-01-27 at 12.32.28 PM.png" alt="Screenshot 2026-01-27 at 12.32.28 PM" /></p>
+
 <ul>
   <li><strong>yfinance:</strong> 파이썬 라이브러리를 통해 원/달러, 원/엔 환율과 S&amp;P 500, 나스닥 지수의 현재가 및 전일 대비 변동폭을 가져옵니다.</li>
   <li><strong>Naver API:</strong> 국내 뉴스를 뒤져 환율 변동의 구체적인 원인을 파악합니다.</li>
   <li><strong>NewsAPI:</strong> 미국 빅테크 기업들(Apple, NVIDIA 등)과 매크로 경제 소식을 수집하여 AI에게 전달합니다.</li>
 </ul>
 
-<p><strong>2. 에이전트의 기억(Memory) 활용</strong>
+<p><strong>2. 에이전트의 기억(Memory) 활용</strong></p>
+
+<p><img src="/images/2026-01-26-My-AiAgent/Screenshot 2026-01-27 at 12.33.09 PM.png" alt="Screenshot 2026-01-27 at 12.33.09 PM" />
 단순히 데이터만 나열하면 재미없죠. 제 에이전트는 어제 본인이 쓴 글을 스스로 읽어옵니다. 이를 통해 “어제는 이랬는데 오늘은 이렇게 변했구나” 하는 흐름을 파악하고, 불필요한 내용의 반복을 피합니다.</p>
 
-<p><strong>3. Gemini 2.5 Flash를 통한 전략적 분석</strong>
-수집된 모든 데이터는 Gemini 모델로 전달됩니다. 저는 이 에이전트에게 <strong>“글로벌 금융 및 IT 전략가”</strong>라는 역할을 주었습니다. 에이전트는 지표를 정리할 뿐만 아니라, 미국 증시의 변화가 한국의 삼성전자나 SK하이닉스 같은 IT 기업에 어떤 영향을 줄지 인사이트까지 도출합니다.</p>
+<p><strong>3. Gemini 2.5 Flash를 통한 요약</strong>
+<img src="/images/2026-01-26-My-AiAgent/Screenshot 2026-01-27 at 12.33.36 PM.png" alt="Screenshot 2026-01-27 at 12.33.36 PM" style="zoom:50%;" />수집된 모든 데이터는 Gemini 모델로 전달됩니다. 저는 이 에이전트에게 <strong>“글로벌 금융 및 IT 전략가”</strong>라는 역할을 주었습니다. 에이전트는 지표를 정리할 뿐만 아니라, 미국 증시의 변화가 한국의 삼성전자나 SK하이닉스 같은 IT 기업에 어떤 영향을 줄지 인사이트까지 도출합니다.</p>
+
+<p><strong>4. 파일 발행</strong></p>
+
+<p><img src="/images/2026-01-26-My-AiAgent/Screenshot 2026-01-27 at 12.37.00 PM.png" alt="Screenshot 2026-01-27 at 12.37.00 PM" /></p>
+
+<p>gemini가 요약해준 정보를 가지고 md파일을 발행합니다.</p>
 
 <h3 id="23-자율-배포-시스템-github-actions">2.3 자율 배포 시스템 (GitHub Actions)</h3>
 
 <p>아무리 분석을 잘해도 제가 직접 블로그에 올려야 한다면 ‘자율 에이전트’라고 할 수 없겠죠. <strong>GitHub Actions</strong>를 활용해 완전 자동화를 구현했습니다.</p>
 
+<p>코드를 한 번 살펴보겠습니다.</p>
+
+<p><strong>1. 언제, 어떤 환경에서 실행될지?</strong></p>
+
+<p>매일 아침 9시(한국 시간)가 되면 깃허브의 가상 서버(우분투)가 깨어나 에이전트를 실행합니다.</p>
+
+<p><img src="/images/2026-01-26-My-AiAgent/Screenshot 2026-01-27 at 12.38.35 PM.png" alt="Screenshot 2026-01-27 at 12.38.35 PM" style="zoom:50%;" /></p>
+
+<p><strong>2. 무슨 일을 하는가?</strong></p>
+
 <ul>
-  <li><strong>자동 스케줄링:</strong> 매일 아침 9시(한국 시간)가 되면 깃허브의 가상 서버가 깨어나 에이전트를 실행합니다.</li>
   <li><strong>보안:</strong> 중요한 API 키들은 GitHub Secrets에 숨겨두어 보안성을 높였습니다.</li>
+  <li><img src="/../../../Desktop/Screenshot 2026-01-27 at 12.40.42 PM.png" alt="Screenshot 2026-01-27 at 12.40.42 PM" style="zoom:50%;" /></li>
   <li><strong>자동 발행:</strong> AI가 작성을 마치면 <code class="language-plaintext highlighter-rouge">github-actions[bot]</code>이 제 블로그 저장소에 새 글을 커밋하고 푸시합니다. 저는 아침에 일어나서 올라온 글을 읽기만 하면 됩니다.</li>
 </ul>
 
@@ -495,7 +524,7 @@
 
 
   
-	  4 minute read
+	  9 minute read
 	
 </p>
     
@@ -505,7 +534,7 @@
         
 
     
-    <p class="archive__item-excerpt" itemprop="description"><h3 id="-도시-데이터-사이언스-학부-연구생의-연구-노트-️">📊 도시 데이터 사이언스 학부 연구생의 연구 노트 🏙️</h3>
+    <p class="archive__item-excerpt" itemprop="description"><p>안녕! 도시와 환경에 관심이 많은 IT 전공 학생이라니, 정말 멋진 조합이다! IT 기술이 우리 삶의 터전인 도시와 환경을 얼마나 똑똑하게 바꿀 수 있는지 알아보는 건 정말 흥미로운 여정이 될 거야.</p>
 
 </p>
     
