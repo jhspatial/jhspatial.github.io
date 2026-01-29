@@ -3,7 +3,7 @@ import requests
 import glob
 import yfinance as yf
 from datetime import datetime, timedelta, timezone
-import google.generativeai as genai
+import google.genai as genai
 
 # API 키 설정
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
@@ -61,7 +61,7 @@ def get_naver_exchange_news():
         "X-Naver-Client-Secret": NAVER_CLIENT_SECRET
     }
     for query in queries:
-        url = f"https://openapi.naver.com/v1/search/news.json?query={query}&display=5&sort=sim"
+        url = f"https://openapi.naver.com/v1/search/news.json?query={query}&display=20&sort=date"
         try:
             res = requests.get(url, headers=headers)
             items = res.json().get('items', [])
@@ -98,7 +98,8 @@ def get_memory(target_category="daily-news", num_files=5):
 
         sorted_files = sorted(list_of_files, reverse=True)
         
-        category_pattern = re.compile(r"categories:\s*\[?[^\]\n]*" + re.escape(target_category) + r"[^\]\n]*\]?")
+        # 'categories:' 필드에서 정확한 단어(word boundary)를 찾는 정규식
+        category_pattern = re.compile(r"categories:\s*\[?[^\]\n]*\b" + re.escape(target_category) + r"\b[^\]\n]*\]?")
         found_posts_content = []
 
         for file_path in sorted_files:

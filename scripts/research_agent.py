@@ -1,6 +1,6 @@
 import os
 import requests
-import google.generativeai as genai
+import google.genai as genai
 from datetime import datetime, timedelta, timezone
 import glob
 import re
@@ -66,9 +66,9 @@ def get_naver_papers():
     # 스마트시티, 교통 데이터, 지능형 로보틱스 관련 키워드 검색
     params = {
         "query": raw_query,
-        "display": 5,
+        "display": 30,
         "start": 1,
-        "sort": "sim"
+        "sort": "date"
     }
     
     try:
