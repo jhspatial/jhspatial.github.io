@@ -1,6 +1,6 @@
 import os
 import requests
-import google.genai as genai
+import google.generativeai as genai
 from datetime import datetime, timedelta, timezone
 import glob
 import re
