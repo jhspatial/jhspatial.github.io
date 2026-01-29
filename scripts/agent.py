@@ -3,7 +3,7 @@ import requests
 import glob
 import yfinance as yf
 from datetime import datetime, timedelta, timezone
-import google.genai as genai
+import google.generativeai as genai
 
 # API 키 설정
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
