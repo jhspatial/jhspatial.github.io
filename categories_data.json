@@ -11,6 +11,16 @@
         "posts": [
           
             {
+              "title": "2026/01/29 증시 지표 &amp; 빅테크 뉴스 브리핑",
+              "url": "/daily-news/market-tech-briefing/"
+            },
+          
+            {
+              "title": "2026/01/28 증시 지표 &amp; 빅테크 뉴스 브리핑",
+              "url": "/daily-news/market-tech-briefing/"
+            },
+          
+            {
               "title": "2026/01/27 증시 지표 &amp; 빅테크 뉴스 브리핑",
               "url": "/daily-news/market-tech-briefing/"
             },
@@ -122,6 +132,16 @@
         "display_name": "research",
         "url": "/categories/research/",
         "posts": [
+          
+            {
+              "title": "[Research] 2026/01/29 도시·환경 IT 연구 노트",
+              "url": "/research/urban-research/"
+            },
+          
+            {
+              "title": "[Research] 2026/01/28 도시·환경 IT 연구 노트",
+              "url": "/research/urban-research/"
+            },
           
             {
               "title": "[Research] 2026/01/27 도시·환경 IT 연구 노트",
