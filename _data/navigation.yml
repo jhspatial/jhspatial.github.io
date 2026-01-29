@@ -31,10 +31,10 @@ blog:
   - title: "Blog Categories"
     children:
       - title: "Machine Learning Study"
-        url: /ml-study/
+        url: /categories/ml-study/
       - title: "IT Research"
-        url: /it-research/
+        url: /categories/it-research/
       - title: "Research Notes"
-        url: /research/
+        url: /categories/research/
       - title: "Daily News"
-        url: /daily-news/
+        url: /categories/daily-news/
