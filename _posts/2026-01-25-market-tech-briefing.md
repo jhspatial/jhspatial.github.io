@@ -3,13 +3,7 @@ layout: single
 title: "2026/01/25 증시 지표 & 빅테크 뉴스 브리핑"
 date: 2026-01-25
 categories: [daily-news]
----
-
----
-layout: single
-title: "2026/01/25 증시 지표 & 빅테크 뉴스 브리핑"
-date: 2026-01-25
-categories: [daily-news]
+slug: "market-tech-briefing-2026-01-25"
 ---
 
 ### 📊 오늘의 시장 지표

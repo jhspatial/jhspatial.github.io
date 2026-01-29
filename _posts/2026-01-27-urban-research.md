@@ -3,6 +3,7 @@ layout: single
 title: "[Research] 2026/01/27 도시·환경 IT 연구 노트"
 date: 2026-01-27
 categories: [research]
+slug: "urban-research-2026-01-27"
 ---
 
 안녕! 도시와 환경에 관심이 많은 IT 전공 학생이라니, 정말 멋진 조합이다! IT 기술이 우리 삶의 터전인 도시와 환경을 얼마나 똑똑하게 바꿀 수 있는지 알아보는 건 정말 흥미로운 여정이 될 거야.

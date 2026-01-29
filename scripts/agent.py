@@ -85,44 +85,47 @@ def get_bigtech_news():
     except:
         return []
 
-def get_memory(target_category="daily-news"):
+import re
+
+def get_memory(target_category="daily-news", num_files=5):
     """
-    형식(리스트형, 대괄호형)에 상관없이 
-    Front Matter(헤더)에 해당 카테고리가 있는 최신 글을 찾아냅니다.
+    지정된 카테고리에서 최신 'num_files'개의 게시물 내용을 찾아 반환합니다.
     """
     try:
-        # 1. 파일 목록 가져오기
         list_of_files = glob.glob('_posts/*.md')
         if not list_of_files: 
             return "첫 발행입니다."
 
-        # 2. 최신 파일이 먼저 오도록 역순 정렬
         sorted_files = sorted(list_of_files, reverse=True)
+        
+        category_pattern = re.compile(r"categories:\s*\[?[^\]\n]*" + re.escape(target_category) + r"[^\]\n]*\]?")
+        found_posts_content = []
 
         for file_path in sorted_files:
+            if len(found_posts_content) >= num_files:
+                break  # 요청된 개수만큼 찾았으면 중단
+
             try:
                 with open(file_path, 'r', encoding='utf-8') as f:
                     content = f.read()
-                    
-                    # 3. 지킬 Front Matter(헤더) 부분만 분리하기
-                    # '---' 로 구분된 첫 번째 블록이 헤더입니다.
                     parts = content.split('---')
                     
-                    # 파일 구조가 정상적이라면 parts[1]이 헤더 정보입니다.
                     if len(parts) >= 3:
                         front_matter = parts[1]
-                        
-                        # 4. 헤더 안에 카테고리 단어가 포함되어 있는지 확인
-                        # (형식 따지지 않고 'daily-news'라는 글자가 헤더에 있는지만 봅니다)
-                        if target_category in front_matter:
-                            print(f"🔍 [{target_category}] 기록 발견: {file_path}")
-                            # 본문 내용(헤더 제외)만 반환하거나, 전체를 반환
-                            return content
+                        if category_pattern.search(front_matter):
+                            print(f"🔍 [{target_category}] 과거 기록 발견: {file_path}")
+                            # 본문만 간추려서 추가 (메모리 효율성)
+                            body_content = "---".join(parts[2:])
+                            found_posts_content.append(body_content)
                             
             except Exception:
-                continue # 파일 읽기 에러나면 다음 파일로 넘어감
-                    
-        return f"'{target_category}' 카테고리의 이전 기록이 없습니다."
+                continue
+        
+        if not found_posts_content:
+            return f"'{target_category}' 카테고리의 이전 기록이 없습니다."
+        
+        return "\n\n---\n[이전 기록 구분선]\n---\n\n".join(found_posts_content)
+
     except Exception as e:
         return f"메모리 읽기 실패: {str(e)}"
 
@@ -185,6 +188,7 @@ def run_news_agent():
         today_title = now.strftime("%Y/%m/%d")
 
         file_name = f"_posts/{today_file}-market-tech-briefing.md"
+        slug = f"market-tech-briefing-{today_file}"
         os.makedirs('_posts', exist_ok=True)
         
         with open(file_name, "w", encoding="utf-8") as f:
@@ -193,6 +197,7 @@ def run_news_agent():
             f.write(f"title: \"{today_title} 증시 지표 & 빅테크 뉴스 브리핑\"\n")
             f.write(f"date: {today_file}\n")
             f.write(f"categories: [daily-news]\n")
+            f.write(f"slug: \"{slug}\"\n")
             f.write(f"---\n\n")
             f.write(response.text)
             
