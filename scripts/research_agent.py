@@ -2,6 +2,8 @@ import os
 import requests
 import google.generativeai as genai
 from datetime import datetime, timedelta, timezone
+import glob
+import re
 
 # 1. API 설정 (GitHub Secrets에 NAVER_CLIENT_ID, NAVER_CLIENT_SECRET 등록 필요)
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
@@ -10,6 +12,48 @@ NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET")
 
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-2.5-flash')
+
+def get_memory(target_category="research", num_files=5):
+    """
+    지정된 카테고리에서 최신 'num_files'개의 게시물 내용을 찾아 반환합니다.
+    """
+    try:
+        list_of_files = glob.glob('_posts/*.md')
+        if not list_of_files: 
+            return "첫 발행입니다."
+
+        sorted_files = sorted(list_of_files, reverse=True)
+        
+        category_pattern = re.compile(r"categories:\s*\[?[^\]\n]*" + re.escape(target_category) + r"[^\]\n]*\]?")
+        found_posts_content = []
+
+        for file_path in sorted_files:
+            if len(found_posts_content) >= num_files:
+                break  # 요청된 개수만큼 찾았으면 중단
+
+            try:
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                    parts = content.split('---')
+                    
+                    if len(parts) >= 3:
+                        front_matter = parts[1]
+                        if category_pattern.search(front_matter):
+                            print(f"🔍 [{target_category}] 과거 기록 발견: {file_path}")
+                            # 본문만 간추려서 추가 (메모리 효율성)
+                            body_content = "---".join(parts[2:])
+                            found_posts_content.append(body_content)
+                            
+            except Exception:
+                continue
+        
+        if not found_posts_content:
+            return f"'{target_category}' 카테고리의 이전 기록이 없습니다."
+        
+        return "\n\n---\n[이전 기록 구분선]\n---\n\n".join(found_posts_content)
+
+    except Exception as e:
+        return f"메모리 읽기 실패: {str(e)}"
 
 def get_naver_papers():
     """네이버 전문자료(학술논문 등) 검색"""
@@ -48,15 +92,20 @@ def get_naver_papers():
 
 def run_research_agent():
     papers = get_naver_papers()
+    memory = get_memory(target_category="research") # 'research' 카테고리의 과거 기록 가져오기
     
     # 데이터가 있을 경우 Gemini에게 상세 분석 요청
     if papers:
         prompt = f"""
         너는 복잡한 연구 내용을 학부생도 이해하기 쉽게 풀어서 설명해주는 '친절한 전공 멘토'야. 
         도시와 환경에 관심이 많은 IT 전공 3학년 학생이 블로그에 기록할 수 있도록, 아래 논문 리스트를 알기 쉽게 정리해줘.
+        어제 리포트와 겹치지 않는 새로운 내용이나 분석을 추가해줘.
 
         [수집된 데이터]
         {papers}
+
+        [어제 리포트 요약]
+        {memory}
 
         [작성 가이드라인]
         1. **쉬운 설명**: 어려운 학술적 용어보다는 일상적인 비유나 쉬운 단어를 사용해. (예: '열섬 현상' -> '도시가 주변보다 뜨거워지는 현상')
@@ -86,6 +135,7 @@ def run_research_agent():
 
     os.makedirs("_posts", exist_ok=True)
     file_name = f"_posts/{today_file}-urban-research.md"
+    slug = f"urban-research-{today_file}"
 
     # 블로그 Front Matter 설정 (기존 형식 유지)
     with open(file_name, "w", encoding="utf-8") as f:
@@ -94,6 +144,7 @@ def run_research_agent():
         f.write(f"title: \"[Research] {today_title} 도시·환경 IT 연구 노트\"\n")
         f.write(f"date: {today_file}\n")
         f.write("categories: [research]\n") # 요청하신 카테고리 유지
+        f.write(f"slug: \"{slug}\"\n")
         f.write("---\n\n")
         f.write(response.text)
     
